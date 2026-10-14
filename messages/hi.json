@@ -1,0 +1,505 @@
+{
+  "meta": {
+    "title": "Ishaan Saxena · Cloud Security और DevSecOps",
+    "description": "ECE Paris में MSc Cybersecurity का छात्र। मैं असली AWS account में security बनाता हूँ, हर control को जानबूझकर तोड़ता हूँ, और जो फेल हुआ वो लिखकर रखता हूँ। अप्रैल 2027 से end-of-studies internship के लिए उपलब्ध।"
+  },
+  "nav": {
+    "skipToContent": "सीधे कंटेंट पर जाएँ",
+    "home": "होम",
+    "about": "मेरे बारे में",
+    "projects": "प्रोजेक्ट",
+    "skills": "स्किल्स",
+    "experience": "अनुभव",
+    "certificates": "सर्टिफिकेट",
+    "contact": "संपर्क",
+    "getInTouch": "संपर्क करें",
+    "openMenu": "मेन्यू खोलें",
+    "closeMenu": "मेन्यू बंद करें",
+    "menuLabel": "मुख्य नेविगेशन"
+  },
+  "language": {
+    "label": "भाषा",
+    "switchTo": "भाषा बदलें",
+    "comingSoon": "जल्द आ रहा है"
+  },
+  "common": {
+    "backToTop": "ऊपर जाएँ",
+    "readMore": "पूरा लेख पढ़ें",
+    "details": "विवरण",
+    "openOriginal": "ओरिजिनल खोलें",
+    "verify": "वेरिफाई करें",
+    "close": "बंद करें",
+    "brokeLabel": "क्या टूटा और मैंने कैसे ठीक किया",
+    "previousProject": "पिछला प्रोजेक्ट",
+    "nextProject": "अगला प्रोजेक्ट",
+    "backToProjects": "सभी प्रोजेक्ट",
+    "whatIBuilt": "मैंने क्या बनाया",
+    "theNumbers": "आँकड़े",
+    "architecture": "आर्किटेक्चर",
+    "scenario": "सिनेरियो"
+  },
+  "hero": {
+    "badge": "End-of-studies internship के लिए उपलब्ध · अप्रैल 2027",
+    "headlineLine1": "बनाओ। तोड़ो।",
+    "headlineLine2": "साबित करो कि टिकता है।",
+    "subtitle": "मैं Ishaan Saxena हूँ, ECE Paris में MSc Cybersecurity का छात्र। मैं असली AWS account में security बनाता हूँ, हर control को जानबूझकर तोड़ता हूँ, और जो फेल हुआ वो लिखकर रखता हूँ।",
+    "primaryCta": "मेरे प्रोजेक्ट देखें",
+    "secondaryCta": "CV डाउनलोड करें",
+    "cards": {
+      "identity": {
+        "title": "Identity और Access",
+        "body": "MFA से सुरक्षित roles, ABAC और OIDC। कोई स्थायी key नहीं।"
+      },
+      "detection": {
+        "title": "Detection और Logging",
+        "body": "CloudTrail, Config और alerts, जब तक वो सच में न चलें तब तक टेस्ट किए गए।"
+      },
+      "dataProtection": {
+        "title": "Data Protection",
+        "body": "KMS, SSE-KMS और client-side encryption।"
+      },
+      "devsecops": {
+        "title": "DevSecOps",
+        "body": "हर pull request पर security checks।"
+      }
+    },
+    "stats": {
+      "realAccount": "हर प्रोजेक्ट असली AWS account में चलता है",
+      "builds": "AWS security प्रोजेक्ट",
+      "certificates": "सर्टिफिकेट",
+      "cves": "image CVE घटाए",
+      "keysInCi": "AWS key CI में रखी"
+    },
+    "globe": {
+      "paris": "AWS eu-west-3, जहाँ Gatekeeper चलता है",
+      "stockholm": "AWS eu-north-1, जहाँ बाकी प्रोजेक्ट चलते हैं"
+    }
+  },
+  "footer": {
+    "tagline": "Cloud security और DevSecOps · पेरिस",
+    "howSecured": "यह साइट कैसे सुरक्षित है",
+    "privacyNote": "कोई tracking cookie नहीं। फ़ॉर्म के मैसेज सिर्फ़ मेरे inbox में आते हैं।",
+    "copyright": "© {year} Ishaan Saxena",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "styleguide": {
+    "title": "स्टाइल गाइड",
+    "subtitle": "सिर्फ़ डेवलपमेंट के लिए। सिस्टम का हर कंपोनेंट, दोनों साइज़ में, ताकि फ़र्क़ आसानी से दिखे।",
+    "badge": "आंतरिक"
+  },
+  "about": {
+    "badge": "मेरे बारे में",
+    "title": "मैं cloud security बनाकर सीखता हूँ",
+    "lead": "हर प्रोजेक्ट असली AWS account में, एक काल्पनिक कंपनी पर चलता है, ताकि हर फ़ैसले के पीछे कोई वजह हो।",
+    "story": {
+      "p1": "मैं Ishaan हूँ, ECE Paris में cybersecurity का master's छात्र। इस स्कूल के पास ANSSI का SecNumEdu label है। इसी डिग्री के लिए मैं भारत से फ़्रांस आया।",
+      "p2": "मैं cloud security बनाकर सीखता हूँ। हर प्रोजेक्ट असली AWS account में चलता है और उसके पीछे एक काल्पनिक कंपनी होती है, ताकि हर फ़ैसले के पीछे कोई वजह हो। मैं एक control बनाता हूँ, उसे जानबूझकर तोड़ने की कोशिश करता हूँ ताकि पक्का हो कि वो सच में काम करता है, और जो ग़लत हुआ वो भी उतने ही ध्यान से लिखता हूँ जितना जो सही हुआ।",
+      "p3": "Security से पहले मैं web apps बनाता था। बेंगलुरु में Navriti Technologies की internship के दौरान मैंने एक SaaS product पर काम किया, जिसे बड़े automotive और healthcare समूह और भारत सरकार इस्तेमाल करते हैं।",
+      "p4": "मास्टर्स के साथ-साथ मैं McDonald's में हफ़्ते में 15 घंटे काम करता हूँ। शुरुआत सीमित फ़्रेंच के साथ की थी; आज पूरा service अकेले फ़्रेंच में संभालता हूँ।"
+    },
+    "card": {
+      "label": "प्रोफ़ाइल",
+      "name": "Ishaan Saxena",
+      "role": "Cloud Security और DevSecOps · MSc Cybersecurity का छात्र",
+      "study": {
+        "label": "पढ़ाई",
+        "value": "MSc Cybersecurity Management, ECE Paris"
+      },
+      "focus": {
+        "label": "तलाश",
+        "value": "End-of-studies internship, अप्रैल 2027 से 4 से 6 महीने"
+      },
+      "place": {
+        "label": "कहाँ",
+        "value": "पेरिस क्षेत्र, और कहीं भी जाने को तैयार"
+      },
+      "languages": {
+        "label": "भाषाएँ",
+        "value": "अंग्रेज़ी C1 (IELTS) · फ़्रेंच B1 (अनुमानित, रोज़ काम पर इस्तेमाल) · हिन्दी (मातृभाषा)"
+      }
+    },
+    "method": {
+      "label": "मैं कैसे काम करता हूँ",
+      "predict": {
+        "title": "अनुमान",
+        "line": "AWS छूने से पहले लिखो कि क्या होना चाहिए।"
+      },
+      "build": {
+        "title": "बनाओ",
+        "line": "Control को हाथ से, एक-एक कदम करके बनाओ।"
+      },
+      "break": {
+        "title": "तोड़ो",
+        "line": "जानबूझकर उसे पार करने की कोशिश करो।"
+      },
+      "verify": {
+        "title": "जाँचो",
+        "line": "असली सबूत पढ़ो: CLI output, logs, CloudTrail।"
+      },
+      "document": {
+        "title": "लिखो",
+        "line": "क्या चला, क्या फेल हुआ, और क्यों, ये सब छापो।"
+      }
+    }
+  },
+  "skills": {
+    "badge": "स्किल्स",
+    "title": "मेरा टूलबॉक्स",
+    "lead": "किस काम के लिए इस्तेमाल करता हूँ, उस हिसाब से बाँटा गया। यहाँ किसी चीज़ को पाँच में से नंबर नहीं दिए गए।",
+    "panels": {
+      "cloud": "Cloud (AWS)",
+      "security": "Security",
+      "devsecops": "DevSecOps",
+      "systems": "Systems और development"
+    }
+  },
+  "timeline": {
+    "badge": "अनुभव और शिक्षा",
+    "title": "मैं यहाँ तक कैसे पहुँचा",
+    "lead": "नए से पुराने की ओर।",
+    "present": "अब तक",
+    "entries": {
+      "mcdonalds": {
+        "role": "Crew member (équipier polyvalent)",
+        "org": "McDonald's · Épinay-sur-Orge",
+        "bullets": [
+          "सीमित फ़्रेंच के साथ शुरू किया, और काम तथा रोज़मर्रा की फ़्रेंच दोनों साथ-साथ सीखे।",
+          "अब पूरा service अकेले संभालता हूँ, मास्टर्स के साथ हफ़्ते में 15 घंटे।"
+        ]
+      },
+      "ece": {
+        "role": "MSc Cybersecurity Management",
+        "org": "ECE Paris",
+        "bullets": [
+          "SecNumEdu label (ANSSI) और Conférence des Grandes Écoles का MSc label।",
+          "M1 का औसत 16/20।"
+        ]
+      },
+      "navriti": {
+        "role": "Software Engineering Intern",
+        "org": "Navriti Technologies · बेंगलुरु, भारत",
+        "bullets": [
+          "Certiplate पर काम किया, एक SaaS जिसे बड़े automotive और healthcare समूह और भारत सरकार इस्तेमाल करते हैं।",
+          "निवेशकों के लिए CareerMap का React prototype दो हफ़्ते में तैयार किया, जिसमें 7 machine learning API जुड़े थे।",
+          "Internship ख़त्म होने पर full-time नौकरी का ऑफ़र मिला।"
+        ]
+      },
+      "bca": {
+        "role": "Bachelor of Computer Applications",
+        "org": "Bhagwan Mahavir University · भारत",
+        "bullets": ["82.5% औसत, यानी 16.5/20।"]
+      }
+    }
+  },
+  "projects": {
+    "badge": "प्रोजेक्ट",
+    "title": "पाँच प्रोजेक्ट, पाँच चीज़ें जो टूटीं",
+    "lead": "हर एक असली AWS account में, एक काल्पनिक कंपनी के सिनेरियो पर चलता है। हर एक में सबसे दिलचस्प बात यही है कि क्या ग़लत हुआ।",
+    "items": {
+      "gatekeeper": {
+        "title": "Gatekeeper: सुरक्षित CI/CD delivery chain",
+        "scenario": "एक छोटा containerised Flask API। App वो चीज़ है जो डिलीवर होती है; उसके आसपास की chain ही असली प्रोजेक्ट है।",
+        "oneLine": "हर बदलाव को security gates से गुज़रना पड़ता है, तभी image Amazon ECR तक पहुँच सकती है, और कहीं कोई AWS key रखी ही नहीं है।",
+        "built": [
+          "GitHub Actions pipeline, जिसमें gitleaks, Semgrep, dependencies और image दोनों पर Trivy, Checkov, एक OWASP ZAP baseline scan और एक CycloneDX SBOM है।",
+          "S3 state bucket, ECR, और एक GitHub OIDC role के लिए Terraform, जो सिर्फ़ एक repository और एक branch पर भरोसा करता है।",
+          "kind cluster में Pod Security restricted और NetworkPolicy के साथ deployment टेस्ट किया। Image एक ही बार बनती है और commit SHA से tag होती है।"
+        ],
+        "findings": [
+          "पहली image 1.11 GB की थी, 344 HIGH और CRITICAL CVE के साथ। एक hardened Dockerfile ने उसे 125 MB, 44 HIGH और 0 CRITICAL पर ला दिया।",
+          "Trivy को Flask और Werkzeug में 3 HIGH CVE मिले। Upgrade करने पर 0 रह गए।"
+        ],
+        "detail": {
+          "problem": "कोई जोखिम भरा बदलाव production तक नहीं पहुँचना चाहिए, और चोरी हुई key से किसी को push करने का रास्ता नहीं मिलना चाहिए। App जानबूझकर बहुत छोटा रखा है, एक Flask API जिसमें दो ख़ामियाँ जानबूझकर डाली गई हैं, ताकि scanners को कुछ असली मिले।",
+          "steps": [
+            "एक नक़ली key commit की, अगले commit में हटा दी, फिर gitleaks चलाया। उसने फिर भी पकड़ लिया, पहले commit में और image की एक layer के अंदर भी। फिर pre-commit hook जोड़ा।",
+            "Dependencies पर Trivy: Flask और Werkzeug में 3 HIGH CVE। Upgrade किया, 0।",
+            "Code पर Semgrep: दोनों डाली गई ख़ामियों पर 5 findings। ठीक किए, 0।",
+            "एक साधारण image और एक hardened multi-stage image की तुलना: 1.11 GB से 125 MB।",
+            "State bucket, ECR और OIDC role के लिए Terraform। Account में पहले से एक GitHub OIDC provider था, इसलिए उसे यहाँ बनाने के बजाय data source से पढ़ा गया।",
+            "Terraform, Dockerfile, manifests और workflow पर Checkov: 6 findings, 1 ठीक किया और 5 लिखित वजह के साथ skip किए।",
+            "ZAP baseline को security headers ग़ायब मिले, जो app में ठीक किए गए।",
+            "kind cluster job: Pod Security एक जानबूझकर ख़राब pod को ठुकराता है, और NetworkPolicy डिज़ाइन के मुताबिक़ रोकती और छोड़ती है।"
+          ],
+          "findings": [
+            "Secret हटाने से वो मिटता नहीं। gitleaks ने key को पहले commit में हटाने के बाद भी ढूँढ लिया, इसीलिए असली leak का हल key को revoke करना है।",
+            "Pin की हुई base image भी पुरानी पड़ती है। Digest से pin करने के दो हफ़्ते बाद उसी image में 4 HIGH findings निकले जिनके fix मौजूद थे। अब Dependabot हर हफ़्ते वो update सुझाता है।",
+            "Scanner ने मेरी workflow file बिना कुछ कहे छोड़ दी। Expression के रूप में लिखी गई concurrency value की वजह से Checkov 0 resources स्कैन करता था और फिर भी success बताता था। अब कोई check न चले तो job फेल होता है।",
+            "Hardening ने एक feature तोड़ दिया और smoke test ने पकड़ लिया। /ping हर बार 500 देता था क्योंकि hardened image में ping प्रोग्राम ही नहीं है और pod NET_RAW छोड़ देता है। उसकी जगह TCP check लगाया, जिससे command injection की गुंजाइश भी पूरी तरह ख़त्म हो गई।",
+            "GitHub के OIDC subject में numeric ID होते हैं। पहली publish तब तक ठुकराई गई जब तक trust policy असली claim से मेल नहीं खाई। ID दोबारा कभी इस्तेमाल नहीं होते, इसलिए उसी नाम से दोबारा बना repository role नहीं ले सकता।"
+          ],
+          "numbers": {
+            "imageSize": "Container image का साइज़",
+            "cves": "Image में HIGH और CRITICAL CVE",
+            "semgrep": "मेरे code में Semgrep findings",
+            "checkov": "फेल हुए Checkov checks",
+            "zap": "ZAP alerts, Medium / Low",
+            "keys": "CI में रखी AWS keys"
+          },
+          "links": {
+            "greenRun": "एक हरा run जिसने ECR पर publish किया",
+            "blockedPr": "एक pull request जिसे gates ने रोका"
+          }
+        }
+      },
+      "northbeam-lite": {
+        "title": "Northbeam Lite: AWS IAM security",
+        "scenario": "Northbeam, दो लोगों का एक काल्पनिक SaaS startup, जिसने root login और सबके लिए AdministratorAccess से शुरुआत की थी।",
+        "oneLine": "एक बिखरे हुए AWS account को ठीक से दोबारा बनाना, एक-एक IAM control करके, और हर एक को जानबूझकर तोड़कर साबित करना कि वो काम करता है।",
+        "built": [
+          "स्थायी admin users की जगह MFA से सुरक्षित STS roles, least-privilege policies और explicit deny की जाँच करने वाले टेस्ट।",
+          "Principal और resource tags के साथ ABAC, और privilege escalation के बिना role बनाने का अधिकार देने के लिए permissions boundaries।",
+          "IMDSv2 के साथ EC2 instance profile, बिना key रखे GitHub Actions OIDC, और तीन CLI audit scripts।"
+        ],
+        "findings": [
+          "लंबी अवधि वाली access key कभी MFA का निशान नहीं रखती, इसलिए CLI से AssumeRole तब तक फेल होता रहा जब तक profile में mfa_serial सेट नहीं किया।",
+          "README में साफ़-साफ़ एक टेबल है कि क्या बनाया और क्या जानबूझकर टाला। Organizations, SCP और Identity Center मुफ़्त credits बचाने के लिए छोड़े गए, और यह कह देना दिखावे से कहीं बेहतर है।"
+        ],
+        "detail": {
+          "problem": "ऐसे credentials जो कभी expire ही नहीं होते, दो लोग जिनमें से हर कोई production मिटा सकता है, और dev के प्रयोग उसी account में जहाँ ग्राहकों का डेटा है। तकनीकी रूप से कुछ भी आपदा नहीं रोक रहा, सिर्फ़ सावधानी, और सावधानी कोई security control नहीं है।",
+          "steps": [
+            "पहले account की बुनियाद, फिर स्थायी admin credential की जगह STS से MFA-सुरक्षित role assumption।",
+            "Policy evaluation की logic पर तब तक काम किया जब तक explicit deny का व्यवहार पूरी तरह अनुमान लायक़ नहीं हो गया।",
+            "ABAC: एक ही policy जो कई प्रोजेक्ट संभालती है, principal और resource tags के आधार पर।",
+            "Machine identities: IMDSv2 के साथ EC2 instance profile, फिर बिना key रखे GitHub Actions OIDC federation।",
+            "Permissions boundaries, तीन checkpoints में टेस्ट की गईं: boundary के बिना बनाना, boundary के साथ बनाना, और फिर उस सीमित role पर AdministratorAccess लगाकर देखना कि वो सीमित ही रहता है।",
+            "Audit toolkit: access key की उम्र जाँचने वाला scanner, बिना इस्तेमाल के roles ढूँढने वाला टूल, और CloudTrail में AccessDenied खोजने वाला script।"
+          ],
+          "findings": [
+            "लंबी अवधि वाली access key कभी MFA का निशान नहीं रखती, इसलिए CLI से AssumeRole तब तक फेल होता रहा जब तक profile में mfa_serial सेट नहीं किया।",
+            "Permissions boundary तब भी टिकती है जब उसके ऊपर AdministratorAccess लगा दिया जाए। तीसरे checkpoint का यही मक़सद है।",
+            "दायरा साफ़ बताना भी काम का हिस्सा है। Organizations, SCP, अलग centralised logging account और Identity Center जानबूझकर टाले गए, क्योंकि Organization में शामिल होते ही account के credits तुरंत ख़त्म हो जाते और आगे के चरण वहीं रुक जाते।"
+          ]
+        }
+      },
+      "vpc": {
+        "title": "तीन-tier VPC architecture",
+        "scenario": "Northbeam का network, console में हाथ से बनाया गया ताकि automate करने से पहले हर हिस्सा समझ आ जाए।",
+        "oneLine": "दो availability zones में फैला तीन-tier network, और कहीं भी SSH नहीं।",
+        "built": [
+          "तीन tiers में छह subnets, public, app और data, दो availability zones में, एक internet gateway और एक NAT gateway के साथ।",
+          "IP ranges के बजाय reference से tier-दर-tier जुड़े security groups, और एक NACL जो जानबूझकर यह दिखाने के लिए बनाई गई कि वो stateless है।",
+          "एक S3 gateway endpoint और endpoint policy के साथ SSM interface endpoints। हर instance तक SSM Session Manager से पहुँचा जाता है।"
+        ],
+        "findings": [
+          "मैंने failures पढ़ना सीखा। अगर कनेक्शन अटक जाए तो route ही नहीं है। तुरंत मना हो जाए तो security group ने जाने दिया और सामने वाली मशीन ने मना किया। जवाब वापस ही न आए तो लगभग हमेशा NACL का नियम होता है।"
+        ],
+        "detail": {
+          "problem": "एक segmented network हाथ से, console में, बिना Terraform के बनाना, ताकि उसे script में बदलने से पहले हर हिस्सा समझ आ जाए। कहीं SSH नहीं: न key pairs, न खुला port 22।",
+          "steps": [
+            "eu-north-1 में एक 10.0.0.0/16 VPC, तीन tiers और दो availability zones में छह subnets में बँटा।",
+            "Public tier के लिए internet gateway, और एक NAT gateway ताकि app tier बाहर जा सके पर बाहर से पहुँचा न जा सके।",
+            "Group reference से जुड़े security groups, ताकि कोई चीज़ सिर्फ़ सही subnet पर होने से भरोसेमंद न मानी जाए।",
+            "एक NACL जानबूझकर यह दिखाने के लिए कि वो security group की तरह connections याद नहीं रखती।",
+            "एक S3 gateway endpoint ताकि data tier कभी internet को न छुए, साथ में SSM interface endpoints ताकि उसे संभाला जा सके।",
+            "उसके ऊपर एक endpoint policy, ताकि IAM में ग़लती होने पर भी account के सारे buckets न खुल जाएँ।"
+          ],
+          "findings": [
+            "अटकी हुई connection का मतलब है कि कोई route नहीं है। Packet के पास जाने की जगह नहीं होती और वो चुपचाप गिरा दिया जाता है।",
+            "तुरंत मना होना अक्सर अच्छी ख़बर है: security group ने request जाने दी और दूसरी तरफ़ के operating system ने जवाब दिया।",
+            "Request चली जाए पर जवाब कभी न लौटे, तो लगभग हमेशा NACL होती है। वो stateless होती हैं, इसलिए जवाब को अपना अलग नियम चाहिए।"
+          ]
+        }
+      },
+      "data-protection": {
+        "title": "Data protection और secrets management",
+        "scenario": "Casefile, एक काल्पनिक legal-tech कंपनी जो वकीलों के केस दस्तावेज़ रखती है।",
+        "oneLine": "तीन तरह का डेटा, तीन अलग सुरक्षा तरीक़े, सार्वजनिक से लेकर उस स्तर तक जहाँ AWS को सिर्फ़ ciphertext दिखता है।",
+        "built": [
+          "GetObject तक सीमित एक public bucket, और customer-managed key वाले SSE-KMS तथा ज़रूरी TLS के साथ एक confidential bucket।",
+          "AWS Encryption SDK से client-side encryption, ताकि account का admin भी सिर्फ़ ciphertext देखे।",
+          "ख़ुद से लिखे Lambda के साथ secret rotation, और S3 के छह असली exposure मामले दोबारा बनाकर जाँचे गए।"
+        ],
+        "findings": [
+          "किसी public object को private कर देने से उसके पुराने versions सुरक्षित नहीं होते। Versioning चालू होने पर पिछला version पढ़ा जा सकता था।",
+          "Verification वाले चरण पर जानबूझकर तोड़ी गई rotation में पुराना password चलता रहा, क्योंकि promotion सबसे आख़िर में होता है।"
+        ],
+        "detail": {
+          "problem": "पूरा architecture एक ही सवाल से निकलता है: यह किस तरह का डेटा है, और इसे कौन पढ़ पाए? तीन श्रेणियाँ, तीन अलग जवाब, साथ-साथ बनाए गए ताकि फ़र्क़ सैद्धांतिक नहीं बल्कि ठोस दिखे।",
+          "steps": [
+            "सार्वजनिक सामग्री एक ऐसे bucket में जो जानबूझकर internet से पढ़ा जा सकता है, पर सिर्फ़ GetObject तक सीमित।",
+            "गोपनीय केस दस्तावेज़ SSE-KMS, customer-managed key, ज़रूरी TLS और ज़रूरी encryption key के साथ।",
+            "Restricted settlement records upload से पहले client-side encrypt किए जाते हैं, ताकि AWS के पास कभी पढ़ने लायक़ एक byte भी न हो।",
+            "पहले हाथ से envelope encryption बनाया, ताकि दिखे कि SSE-KMS चुपचाप क्या करता है।",
+            "Secrets Manager बनाम Parameter Store, और ख़ुद से लिखा गया rotation function।",
+            "एक misconfiguration lab: exposure के छह असली तरीक़े दोबारा बनाकर जाँचे गए।"
+          ],
+          "findings": [
+            "KMS key policy ही अपनी key पर अकेली अधिकारी है। बिना किसी IAM policy वाला role सफलतापूर्वक encrypt कर पाया क्योंकि key policy में उसका नाम था। वहीं Resource * पर kms:* रखने वाला दूसरा role मना कर दिया गया।",
+            "Secrets Manager की resource policy इसका उल्टा काम करती है: वो सिर्फ़ IAM के ऊपर पहुँच जोड़ती है। शब्द वही, पर काम करने का तरीक़ा सचमुच अलग।",
+            "किसी public object को private कर देने से उसके पुराने versions सुरक्षित नहीं होते। Versioning चालू होने पर पिछला version पढ़ा जा सकता था।",
+            "Verification वाले चरण पर जानबूझकर तोड़ी गई rotation में पुराना password चलता रहा, क्योंकि promotion सबसे आख़िर में होता है।"
+          ],
+          "numbers": {
+            "cost": "लगभग दो हफ़्तों में पूरे प्रोजेक्ट का ख़र्च"
+          }
+        }
+      },
+      "detection": {
+        "title": "Detection, logging और monitoring",
+        "scenario": "Blackpine, पाँच लोगों का एक काल्पनिक invoicing SaaS, जहाँ security का कोई आदमी नहीं है।",
+        "oneLine": "अगर आज रात इस AWS account में कुछ ग़लत हो जाए, तो क्या किसी को पता चलेगा, और क्या कोई समझ पाएगा कि हुआ क्या?",
+        "built": [
+          "Log file validation के साथ multi-region CloudTrail, VPC Flow Logs और तीन rules वाला AWS Config, सब एक ही S3 bucket में।",
+          "EventBridge और SNS से root sign-in पर email alert।",
+          "Athena से सारे logs पर SQL queries।"
+        ],
+        "findings": [
+          "Root sign-in का alert कभी आया ही नहीं: वो events सिर्फ़ us-east-1 में EventBridge तक पहुँचते हैं। सीधे SNS test से पकड़ा, वहीं rule दोबारा बनाया, और email आकर पुष्टि हुई।",
+          "AWS Config ने ख़ुद app के security group को पकड़ा: port 22 पूरी दुनिया (0.0.0.0/0) के लिए खुला था, जो डिज़ाइन के ख़िलाफ़ था। ठीक किया और दोबारा जाँचा।"
+        ],
+        "detail": {
+          "problem": "चार सवालों का जवाब चाहिए: किसने क्या किया और कब, network पर किसने किससे बात की, हर resource वैसा ही सेट है या नहीं जैसा होना चाहिए, और कुछ अहम होने पर किसी इंसान को पता चलेगा या नहीं।",
+          "steps": [
+            "Log file validation चालू करके S3 की ओर एक multi-region CloudTrail trail।",
+            "VPC पर VPC Flow Logs, उसी bucket में।",
+            "थोड़े से resource types पर तीन managed rules के साथ AWS Config।",
+            "Config ने तुरंत app server के security group को पकड़ लिया। ठीक किया।",
+            "Email subscription के साथ एक SNS topic, फिर root console login के लिए एक EventBridge rule।",
+            "जाँचने के लिए root से sign in किया। कोई email नहीं आया।",
+            "वजह ढूँढी, सही region में rule दोबारा बनाया, और email आ गया।",
+            "CloudTrail और Flow Logs पर Athena tables, फिर अपने ही logs पर SQL चलाकर पढ़ा कि वो क्या कहते हैं।"
+          ],
+          "findings": [
+            "Root sign-in का alert इसलिए नहीं आता था क्योंकि वो events सिर्फ़ us-east-1 में EventBridge तक पहुँचते हैं। सीधे SNS test ने साफ़ कर दिया कि दिक़्क़त topic में नहीं, rule में है।",
+            "AWS Config ने ख़ुद app के security group को पकड़ा, जिसमें port 22 पूरी दुनिया के लिए खुला था, जो उसी के डिज़ाइन के ख़िलाफ़ था। ठीक किया और दोबारा जाँचा।",
+            "CloudTrail और Flow Logs कच्चे सबूत हैं। Config उन पर राय देता है। EventBridge और SNS यह पक्का करते हैं कि किसी इंसान तक बात पहुँचे। Athena से बाद में सवाल पूछे जाते हैं।"
+          ]
+        }
+      }
+    },
+    "earlier": {
+      "title": "इससे पहले का web development",
+      "lead": "Cloud security से पहले का काम। जानबूझकर छोटा रखा गया।",
+      "acme": {
+        "name": "Acme",
+        "line": "लंबे payment cycles वाले व्यवसायों के लिए financial tracker। बक़ाया और चुकाए गए लेन-देन पर नज़र रखता है।"
+      },
+      "buzznest": {
+        "name": "BuzzNest",
+        "line": "बिना ध्यान भटकाए चलने वाला social media platform, 10 से ज़्यादा endpoints वाले Express.js REST API के साथ।"
+      },
+      "echoed-thoughts": {
+        "name": "Echoed-thoughts",
+        "line": "जानकारी साझा करने के लिए serverless blogging platform।"
+      },
+      "payverse": {
+        "name": "PayVerse",
+        "line": "पैसे भेजने की वेबसाइट।"
+      },
+      "carluxe": {
+        "name": "CarLuxe",
+        "line": "कार लिस्टिंग की वेबसाइट।"
+      }
+    }
+  },
+  "certificates": {
+    "badge": "सर्टिफिकेट",
+    "title": "मैंने क्या पढ़ा है",
+    "lead": "सब कुछ यहाँ है, सबसे ज़रूरी सबसे ऊपर। किसी पर भी क्लिक करके उसे बड़ा देखें, ओरिजिनल खोलें, या जहाँ संस्था लिंक देती है वहाँ वेरिफाई करें।",
+    "filterLabel": "सर्टिफिकेट को श्रेणी से छाँटें",
+    "featured": "प्रमुख",
+    "verifiable": "ऑनलाइन वेरिफाई किया जा सकता है",
+    "partOfProgram": "Google program का हिस्सा",
+    "credentialId": "Credential ID",
+    "previous": "पिछला सर्टिफिकेट",
+    "next": "अगला सर्टिफिकेट",
+    "imageAlt": "{title}, पूरे आकार में",
+    "filters": {
+      "all": "सभी",
+      "cloud": "Cloud",
+      "security-operations": "Security operations",
+      "cybersecurity-foundations": "Cybersecurity की बुनियाद",
+      "development": "Development"
+    },
+    "types": {
+      "certificate": "Certificate",
+      "course": "Course",
+      "exam": "Exam",
+      "letter": "पत्र"
+    }
+  },
+  "internship": {
+    "badge": "End-of-studies internship के लिए उपलब्ध",
+    "title": "मैं अपनी end-of-studies internship ढूँढ रहा हूँ",
+    "facts": {
+      "when": {
+        "label": "कब",
+        "value": "अप्रैल 2027 से 4 से 6 महीने"
+      },
+      "field": {
+        "label": "क्षेत्र",
+        "value": "Cloud security या DevSecOps"
+      },
+      "where": {
+        "label": "कहाँ",
+        "value": "पेरिस क्षेत्र, और कहीं भी जाने को तैयार"
+      },
+      "agreement": {
+        "label": "काग़ज़ी कार्रवाई",
+        "value": "Internship agreement (convention de stage) ECE Paris देता है"
+      }
+    },
+    "dayOne": {
+      "label": "पहले ही दिन से मैं क्या कर सकता हूँ",
+      "policies": "Least-privilege IAM policies लिखना और उन्हें टेस्ट करना",
+      "alerts": "Logging और alerting लगाना, और जाँचना कि alerts सच में चलते हैं",
+      "pipeline": "CI/CD pipeline में security scans जोड़ना",
+      "document": "फ़ैसलों को अंग्रेज़ी में साफ़-साफ़ लिखना"
+    },
+    "contactCta": "संपर्क करें"
+  },
+  "cv": {
+    "download": "CV डाउनलोड करें",
+    "chooseLanguage": "भाषा चुनें",
+    "languages": {
+      "fr": "फ़्रेंच",
+      "en": "अंग्रेज़ी"
+    },
+    "englishSoon": "अंग्रेज़ी वाला version जल्द आ रहा है।"
+  },
+  "contact": {
+    "badge": "संपर्क",
+    "title": "मुझे मैसेज भेजें",
+    "lead": "यह सीधे मेरे inbox में आता है। मैं सब पढ़ता हूँ और email से जवाब देता हूँ।",
+    "form": {
+      "name": "आपका नाम",
+      "email": "आपका email",
+      "company": "कंपनी (वैकल्पिक)",
+      "topic": "किस बारे में",
+      "message": "मैसेज",
+      "submit": "मैसेज भेजें",
+      "sending": "भेजा जा रहा है",
+      "privacy": "आपका मैसेज सिर्फ़ मेरे inbox में जाता है। इस साइट पर कुछ भी सेव नहीं होता।",
+      "error": "यह भेजा नहीं जा सका। दोबारा कोशिश करें, या दाईं ओर दिए लिंक से सीधे email करें।",
+      "noChallenge": "Spam जाँच अभी सेट नहीं है, इसलिए फ़ॉर्म भेज नहीं सकता। सीधे लिंक इस्तेमाल करें।",
+      "topics": {
+        "internship": "Internship का अवसर",
+        "project": "किसी प्रोजेक्ट के बारे में सवाल",
+        "other": "अन्य"
+      },
+      "errors": {
+        "name": "कृपया अपना नाम लिखें।",
+        "email": "यह email पता सही नहीं लग रहा।",
+        "message": "थोड़ा और विस्तार से लिखें: कम से कम 10 अक्षर।"
+      },
+      "sent": {
+        "title": "धन्यवाद, आपका मैसेज मेरे inbox में पहुँच गया है।",
+        "body": "मैं email से जवाब दूँगा।"
+      }
+    },
+    "direct": {
+      "label": "या मुझसे सीधे संपर्क करें",
+      "linkedin": "LinkedIn",
+      "github": "GitHub",
+      "revealEmail": "मेरा email पता दिखाएँ",
+      "copyEmail": "Email पता कॉपी करें",
+      "copied": "कॉपी हो गया",
+      "location": "पेरिस क्षेत्र, फ़्रांस",
+      "locationLabel": "स्थान",
+      "timezone": "Central European Time",
+      "timezoneLabel": "समय क्षेत्र"
+    }
+  }
+}

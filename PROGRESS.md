@@ -4,7 +4,7 @@ Updated at the end of every phase so a new session can resume. Last update: 14 O
 
 ## Current state
 
-**Phase 5 (Internship, CV, contact) — complete. Waiting for Ishaan's OK to start Phase 6.**
+**Phase 6 (Languages) — complete. Waiting for Ishaan's OK to start Phase 7.**
 
 ### Incident: the site looked empty in Ishaan's browser
 
@@ -509,6 +509,77 @@ behind `SEND_REAL_EMAIL=1`, so a normal run never puts anything in the inbox.
 lint, typecheck, format, build and `audit:ci` pass. Playwright: 73 passed, 3 skipped.
 `npm run test:prod` passes on the isolated build with zero console errors.
 
+
+## Phase 6 — done
+
+### Four locales live
+
+`routing.locales` is now `['en', 'fr', 'es', 'hi']`. English stays unprefixed at `/`; the
+others sit at `/fr`, `/es`, `/hi`. **249 keys each**, all four in step.
+
+`localeDetection` stays off, as section 7 requires: a shared link shows the recipient what
+the sender saw. The browser-language offer is a dismissible pill instead
+(`components/layout/LanguageHint.tsx`), written in the language it is offering, remembered in
+localStorage once dismissed.
+
+### Translation notes
+
+**All three translations are machine-written and need Ishaan's review.** He reads Hindi
+natively and French daily; Spanish should stay simple. Specifically worth his eye:
+
+- **French** uses "vous" throughout, with "stage de fin d'études" and "convention de stage"
+  as the brief requires.
+- **Hindi** is everyday Devanagari with technical terms left in English (cloud security,
+  AWS account, internship, pull request), avoiding heavy Sanskrit register.
+- **Kept in English everywhere**, per section 7: AWS service names, tool names, certificate
+  titles, company and repo names.
+
+### `npm run i18n:check`
+
+Compares every locale against English and fails on a missing key, an extra key, a changed
+shape, an array of a different length, a lost or invented `{placeholder}`, or a long prose
+string left identical to English. Short strings are allowed to match, because tool and
+company names are supposed to.
+
+It also rejects **invisible characters**. Two zero-width joiners I mistyped turned
+"master's" into "master 's" on the Hindi page, and only the screenshot caught it. The check
+now catches that class of bug, and was verified by deliberately planting one.
+
+### Typography
+
+Noto Sans Devanagari loads **only on Hindi pages**; every other locale would pay for a
+script it never renders. A test asserts the font is active on `/hi` and absent on `/`.
+Devanagari needs vertical room, so `.font-hi` loosens body copy to 1.75 and relaxes the
+heading leading from Inter's 1.05 to 1.3. A test asserts the ratio is at least 1.7.
+
+### SEO
+
+hreflang for all four plus `x-default` on English, and `og:locale` per page with the other
+three as `alternateLocale`.
+
+**One real bug caught by checking the built HTML:** every locale's canonical pointed at the
+English URL, which tells a crawler the translations are duplicates not worth indexing. Each
+locale is canonical for itself now, asserted by a test.
+
+### Overflow
+
+French and Spanish run 20 to 30% longer than English. A test scrolls each locale end to end
+and fails if `scrollWidth` exceeds `clientWidth`. All four pass at both viewport sizes.
+
+### Switcher
+
+Keeps the current page: `/projects/gatekeeper` in English goes to `/fr/projects/gatekeeper`,
+not back to the home page. It deliberately does **not** read `useSearchParams`, because a
+client component doing that in the navbar opts every route out of static rendering unless
+it is wrapped in Suspense, and nothing here carries a query string worth keeping.
+
+### Gates
+
+lint, typecheck, format, build, `audit:ci` and `i18n:check` all pass. Playwright: **105
+passed, 3 skipped**, including 13 locale tests. `npm run test:prod` clean on the isolated
+build, and all four locales verified serving from it with the right `lang`, hreflang and
+`og:locale`.
+
 ## Decisions taken (section 16, answered 14 Oct 2026)
 
 | # | Question | Answer |
@@ -630,16 +701,16 @@ a recruiter is probably the per-credential count with the Google program expanda
 
 ## Next
 
-**Phase 6 — Languages.** fr, es and hi translations, the locale switcher wired up, the
-browser-language hint pill, Noto Sans Devanagari for Hindi, `npm run i18n:check`, and
-hreflang.
+**Phase 7 — Hardening and polish.** Security headers and CSP, `security.txt`, the "How this
+site is secured" page the footer already links to, SEO, OG images, `sitemap.xml`, the 404
+page, an accessibility pass, a performance pass, the CI workflow, and Playwright smoke tests.
 
-`i18n/routing.ts` currently lists only `en`. Adding the other three is one line once their
-message files exist; `plannedLocales` already holds all four with native names, and the
-switcher already renders them disabled.
+Carry in:
 
-Note for the translation pass: `messages/en.json` has grown a lot this phase. Every visible
-string is in it, including project prose, certificate labels, form fields and errors.
+- The footer links to `/security`, which **does not exist yet**. That page is Phase 7.
+- The CSP has to let the globe, next/font, Turnstile and the form all keep working. Test it.
+- OG images are one per locale, 1200x630, generated with next/og.
+- `sitemap.xml` needs all four locales and every project page.
 
 ### Still waiting on Ishaan
 

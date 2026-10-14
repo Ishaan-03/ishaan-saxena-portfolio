@@ -9,6 +9,7 @@ import { Tag } from '@/components/ui/Tag';
 import { projectBySlug, projectNeighbours, projects } from '@/content/projects';
 import { Link } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
+import { alternates, openGraphLocale, pageUrl } from '@/lib/metadata';
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -25,7 +26,20 @@ export async function generateMetadata({
   if (!projectBySlug(slug)) return {};
 
   const t = await getTranslations({ locale, namespace: `projects.items.${slug}` });
-  return { title: `${t('title')} · Ishaan Saxena`, description: t('oneLine') };
+  const title = `${t('title')} · Ishaan Saxena`;
+
+  return {
+    title,
+    description: t('oneLine'),
+    alternates: alternates(locale, `projects/${slug}`),
+    openGraph: {
+      type: 'article',
+      title,
+      description: t('oneLine'),
+      locale: openGraphLocale(locale),
+      url: pageUrl(locale, `projects/${slug}`),
+    },
+  };
 }
 
 export default async function ProjectPage({

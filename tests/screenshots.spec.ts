@@ -120,3 +120,36 @@ test('certificate viewer open', async ({ page }, testInfo) => {
     caret: 'initial',
   });
 });
+
+/** One capture per locale, for the French and Hindi overflow review. */
+const LOCALE_SHOTS = [
+  { code: 'fr', path: '/fr' },
+  { code: 'es', path: '/es' },
+  { code: 'hi', path: '/hi' },
+];
+
+for (const locale of LOCALE_SHOTS) {
+  test(`${locale.code} locale shots`, async ({ page }, testInfo) => {
+    await page.goto(locale.path);
+    await settle(page);
+
+    await page.screenshot({
+      path: testInfo.outputPath(`${locale.code}-01-hero-${testInfo.project.name}.png`),
+      animations: 'disabled',
+      caret: 'initial',
+    });
+
+    for (const id of ['about', 'internship', 'contact']) {
+      await page.evaluate((anchor) => {
+        document.getElementById(anchor)?.scrollIntoView({ block: 'start' });
+      }, id);
+      await page.waitForTimeout(600);
+
+      await page.screenshot({
+        path: testInfo.outputPath(`${locale.code}-${id}-${testInfo.project.name}.png`),
+        animations: 'disabled',
+        caret: 'initial',
+      });
+    }
+  });
+}

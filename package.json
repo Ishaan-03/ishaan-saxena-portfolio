@@ -16,7 +16,8 @@
     "test:prod": "playwright test --config=playwright.prod.config.ts",
     "certificates": "tsx scripts/process-certificates.ts",
     "build:prod": "BUILD_DIR=.next-prod next build",
-    "start:prod": "BUILD_DIR=.next-prod next start -p 3700"
+    "start:prod": "BUILD_DIR=.next-prod next start -p 3700",
+    "i18n:check": "tsx scripts/i18n-check.ts"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

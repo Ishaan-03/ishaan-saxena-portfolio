@@ -13,12 +13,11 @@ import { defineRouting } from 'next-intl/routing';
  * The locale cookie stays on, so an explicit choice in the switcher survives a
  * reload. It never triggers a redirect on its own.
  *
- * TODO Phase 6: add 'fr', 'es', 'hi' here once messages/*.json exist for them.
- * Adding a locale before its messages file would render English under a French
- * URL, which is worse than the switcher being inert.
+ * All four locales are live. `npm run i18n:check` fails the build if any of them
+ * drifts from English, which is what makes adding one safe.
  */
 export const routing = defineRouting({
-  locales: ['en'],
+  locales: ['en', 'fr', 'es', 'hi'],
   defaultLocale: 'en',
   localePrefix: 'as-needed',
   localeDetection: false,

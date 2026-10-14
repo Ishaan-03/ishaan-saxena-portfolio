@@ -1,0 +1,505 @@
+{
+  "meta": {
+    "title": "Ishaan Saxena · Sécurité cloud & DevSecOps",
+    "description": "Étudiant en MSc Cybersécurité à l'ECE Paris. Je construis la sécurité AWS dans un vrai compte, je casse chaque contrôle volontairement, et je note ce qui a échoué. Disponible pour un stage de fin d'études dès avril 2027."
+  },
+  "nav": {
+    "skipToContent": "Aller au contenu",
+    "home": "Accueil",
+    "about": "À propos",
+    "projects": "Projets",
+    "skills": "Compétences",
+    "experience": "Parcours",
+    "certificates": "Certificats",
+    "contact": "Contact",
+    "getInTouch": "Me contacter",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "menuLabel": "Navigation principale"
+  },
+  "language": {
+    "label": "Langue",
+    "switchTo": "Changer de langue",
+    "comingSoon": "Bientôt"
+  },
+  "common": {
+    "backToTop": "Haut de page",
+    "readMore": "Lire l'article",
+    "details": "Détails",
+    "openOriginal": "Ouvrir l'original",
+    "verify": "Vérifier",
+    "close": "Fermer",
+    "brokeLabel": "Ce qui a cassé et comment je l'ai corrigé",
+    "previousProject": "Projet précédent",
+    "nextProject": "Projet suivant",
+    "backToProjects": "Tous les projets",
+    "whatIBuilt": "Ce que j'ai construit",
+    "theNumbers": "Les chiffres",
+    "architecture": "Architecture",
+    "scenario": "Scénario"
+  },
+  "hero": {
+    "badge": "Disponible pour un stage de fin d'études · avril 2027",
+    "headlineLine1": "Construire. Casser.",
+    "headlineLine2": "Prouver que ça tient.",
+    "subtitle": "Je suis Ishaan Saxena, étudiant en MSc Cybersécurité à l'ECE Paris. Je construis la sécurité AWS dans un vrai compte, je casse chaque contrôle volontairement, et je note ce qui a échoué.",
+    "primaryCta": "Voir mes projets",
+    "secondaryCta": "Télécharger le CV",
+    "cards": {
+      "identity": {
+        "title": "Identités et accès",
+        "body": "Rôles protégés par MFA, ABAC et OIDC. Aucune clé permanente."
+      },
+      "detection": {
+        "title": "Détection et journalisation",
+        "body": "CloudTrail, Config et des alertes testées jusqu'à ce qu'elles partent."
+      },
+      "dataProtection": {
+        "title": "Protection des données",
+        "body": "KMS, SSE-KMS et chiffrement côté client."
+      },
+      "devsecops": {
+        "title": "DevSecOps",
+        "body": "Des contrôles de sécurité sur chaque pull request."
+      }
+    },
+    "stats": {
+      "realAccount": "Chaque projet tourne dans un vrai compte AWS",
+      "builds": "projets de sécurité AWS",
+      "certificates": "certificats",
+      "cves": "CVE supprimées",
+      "keysInCi": "clé AWS stockée en CI"
+    },
+    "globe": {
+      "paris": "AWS eu-west-3, où tourne Gatekeeper",
+      "stockholm": "AWS eu-north-1, où tournent les autres projets"
+    }
+  },
+  "footer": {
+    "tagline": "Sécurité cloud et DevSecOps · Paris",
+    "howSecured": "Comment ce site est sécurisé",
+    "privacyNote": "Aucun cookie de suivi. Les messages du formulaire arrivent uniquement dans ma boîte mail.",
+    "copyright": "© {year} Ishaan Saxena",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "styleguide": {
+    "title": "Guide de style",
+    "subtitle": "Développement uniquement. Tous les composants du système, aux deux tailles, pour repérer les écarts.",
+    "badge": "Interne"
+  },
+  "about": {
+    "badge": "À propos",
+    "title": "J'apprends la sécurité cloud en la construisant",
+    "lead": "Chaque projet tourne dans un vrai compte AWS, sur une entreprise fictive, pour que chaque choix ait une raison.",
+    "story": {
+      "p1": "Je suis Ishaan, étudiant en master de cybersécurité à l'ECE Paris, une école avec le label SecNumEdu de l'ANSSI. Je suis venu d'Inde en France pour ce diplôme.",
+      "p2": "J'apprends la sécurité cloud en la construisant. Chaque projet tourne dans un vrai compte AWS avec une entreprise fictive derrière, pour que chaque choix ait une raison. Je construis un contrôle, j'essaie de le casser volontairement pour vérifier qu'il tient vraiment, et je note ce qui s'est mal passé autant que ce qui a marché.",
+      "p3": "Avant la sécurité, je développais des applications web. Pendant mon stage chez Navriti Technologies à Bangalore, j'ai travaillé sur un produit SaaS utilisé par de grands groupes de l'automobile et de la santé et par l'État indien.",
+      "p4": "À côté de mon master, je travaille 15 heures par semaine chez McDonald's. J'ai commencé avec un français limité ; aujourd'hui je gère seul tout le service en français."
+    },
+    "card": {
+      "label": "Profil",
+      "name": "Ishaan Saxena",
+      "role": "Sécurité cloud & DevSecOps · Étudiant en MSc Cybersécurité",
+      "study": {
+        "label": "Formation",
+        "value": "MSc Cybersecurity Management, ECE Paris"
+      },
+      "focus": {
+        "label": "Recherche",
+        "value": "Stage de fin d'études, 4 à 6 mois dès avril 2027"
+      },
+      "place": {
+        "label": "Basé en",
+        "value": "Région parisienne, ouvert à la mobilité"
+      },
+      "languages": {
+        "label": "Langues",
+        "value": "Anglais C1 (IELTS) · Français B1 (estimé, pratiqué chaque jour au travail) · Hindi (langue maternelle)"
+      }
+    },
+    "method": {
+      "label": "Ma méthode",
+      "predict": {
+        "title": "Prédire",
+        "line": "Noter ce qui devrait se passer avant de toucher à AWS."
+      },
+      "build": {
+        "title": "Construire",
+        "line": "Mettre en place le contrôle à la main, étape par étape."
+      },
+      "break": {
+        "title": "Casser",
+        "line": "Essayer de le contourner volontairement."
+      },
+      "verify": {
+        "title": "Vérifier",
+        "line": "Lire les vraies preuves : sortie CLI, journaux, CloudTrail."
+      },
+      "document": {
+        "title": "Documenter",
+        "line": "Publier ce qui a marché, ce qui a échoué, et pourquoi."
+      }
+    }
+  },
+  "skills": {
+    "badge": "Compétences",
+    "title": "La boîte à outils",
+    "lead": "Classées par usage. Rien ici n'est noté sur cinq.",
+    "panels": {
+      "cloud": "Cloud (AWS)",
+      "security": "Sécurité",
+      "devsecops": "DevSecOps",
+      "systems": "Systèmes et développement"
+    }
+  },
+  "timeline": {
+    "badge": "Parcours et formation",
+    "title": "Mon parcours",
+    "lead": "Du plus récent au plus ancien.",
+    "present": "aujourd'hui",
+    "entries": {
+      "mcdonalds": {
+        "role": "Équipier polyvalent",
+        "org": "McDonald's · Épinay-sur-Orge",
+        "bullets": [
+          "Arrivé avec un français limité, j'ai appris le métier et le français du quotidien en même temps.",
+          "Je gère aujourd'hui seul tous les échanges du service, 15 heures par semaine en parallèle du master."
+        ]
+      },
+      "ece": {
+        "role": "MSc Cybersecurity Management",
+        "org": "ECE Paris",
+        "bullets": [
+          "Label SecNumEdu (ANSSI) et label MSc de la Conférence des Grandes Écoles.",
+          "Moyenne de M1 : 16/20."
+        ]
+      },
+      "navriti": {
+        "role": "Stagiaire ingénieur logiciel",
+        "org": "Navriti Technologies · Bangalore, Inde",
+        "bullets": [
+          "Travail sur Certiplate, un SaaS utilisé par de grands groupes de l'automobile et de la santé et par l'État indien.",
+          "Prototype React de CareerMap livré en deux semaines pour les investisseurs, avec 7 API de machine learning intégrées.",
+          "Offre d'embauche à l'issue du stage."
+        ]
+      },
+      "bca": {
+        "role": "Bachelor of Computer Applications",
+        "org": "Bhagwan Mahavir University · Inde",
+        "bullets": ["Moyenne de 82,5 %, soit 16,5/20."]
+      }
+    }
+  },
+  "projects": {
+    "badge": "Projets",
+    "title": "Cinq projets, cinq choses qui ont cassé",
+    "lead": "Chacun tourne dans un vrai compte AWS, sur un scénario d'entreprise fictif. Le plus intéressant dans chacun, c'est ce qui a mal tourné.",
+    "items": {
+      "gatekeeper": {
+        "title": "Gatekeeper : chaîne de livraison CI/CD sécurisée",
+        "scenario": "Une petite API Flask conteneurisée. L'application est ce qui est livré ; la chaîne autour d'elle est le projet.",
+        "oneLine": "Chaque changement passe des contrôles de sécurité avant qu'une image puisse atteindre Amazon ECR, et aucune clé AWS n'est stockée nulle part.",
+        "built": [
+          "Pipeline GitHub Actions avec gitleaks, Semgrep, Trivy sur les dépendances et sur l'image, Checkov, un scan OWASP ZAP baseline et un SBOM CycloneDX.",
+          "Terraform pour le bucket d'état S3, ECR, et un rôle OIDC GitHub qui ne fait confiance qu'à un dépôt et une branche.",
+          "Déploiement testé dans un cluster kind sous Pod Security restricted avec NetworkPolicy. L'image est construite une seule fois et taguée avec le SHA du commit."
+        ],
+        "findings": [
+          "La première image faisait 1,11 Go avec 344 CVE HIGH et CRITICAL. Un Dockerfile durci l'a ramenée à 125 Mo, 44 HIGH et 0 CRITICAL.",
+          "Trivy a trouvé 3 CVE HIGH dans Flask et Werkzeug. La mise à jour les a ramenées à 0."
+        ],
+        "detail": {
+          "problem": "Un changement risqué ne doit pas pouvoir atteindre la production, et un secret volé ne doit permettre à personne d'y pousser du code. L'application est volontairement minuscule, une API Flask avec deux failles plantées exprès, pour que les scanners aient quelque chose de réel à trouver.",
+          "steps": [
+            "J'ai commité une fausse clé, je l'ai supprimée au commit suivant, puis j'ai lancé gitleaks. Il l'a quand même trouvée, dans le premier commit et dans une couche de l'image. J'ai ajouté un hook pre-commit.",
+            "Trivy sur les dépendances : 3 CVE HIGH dans Flask et Werkzeug. Mise à jour, 0.",
+            "Semgrep sur le code : 5 résultats sur les deux failles plantées. Corrigés, 0.",
+            "Comparaison d'une image naïve et d'une image multi-étapes durcie : 1,11 Go à 125 Mo.",
+            "Terraform pour le bucket d'état, ECR et le rôle OIDC. Le compte avait déjà un provider OIDC GitHub, donc il est lu avec une data source plutôt que créé ici.",
+            "Checkov sur Terraform, le Dockerfile, les manifests et le workflow : 6 résultats, 1 corrigé et 5 ignorés avec une raison écrite.",
+            "ZAP baseline a trouvé des en-têtes de sécurité manquants, corrigés dans l'application.",
+            "Job cluster kind : Pod Security rejette un pod volontairement mauvais, et NetworkPolicy bloque et autorise comme prévu."
+          ],
+          "findings": [
+            "Supprimer un secret ne l'efface pas. gitleaks a trouvé la clé dans le premier commit même après sa suppression, et c'est pourquoi la vraie correction d'une fuite est de révoquer la clé.",
+            "Une image de base épinglée vieillit. Deux semaines après l'épinglage par digest, la même image avait 4 résultats HIGH avec des correctifs disponibles. Dependabot propose maintenant cette mise à jour chaque semaine.",
+            "Le scanner a ignoré mon fichier de workflow sans rien dire. Une valeur concurrency écrite comme une expression faisait analyser 0 ressource à Checkov tout en renvoyant un succès. Le job échoue maintenant si aucun contrôle ne tourne.",
+            "Le durcissement a cassé une fonctionnalité et le smoke test l'a vu. /ping renvoyait 500 parce qu'il n'y a pas de programme ping dans l'image durcie et que le pod abandonne NET_RAW. Remplacé par un test TCP, ce qui supprime aussi complètement la surface d'injection de commande.",
+            "Le sujet OIDC de GitHub contient des identifiants numériques. La première publication a été refusée jusqu'à ce que la trust policy corresponde au vrai claim. Les identifiants ne sont jamais réutilisés, donc un dépôt recréé avec le même nom ne peut pas assumer le rôle."
+          ],
+          "numbers": {
+            "imageSize": "Taille de l'image conteneur",
+            "cves": "CVE HIGH et CRITICAL dans l'image",
+            "semgrep": "Résultats Semgrep dans mon code",
+            "checkov": "Contrôles Checkov en échec",
+            "zap": "Alertes ZAP, Medium / Low",
+            "keys": "Clés AWS stockées en CI"
+          },
+          "links": {
+            "greenRun": "Une exécution verte qui a publié vers ECR",
+            "blockedPr": "Une pull request bloquée par les contrôles"
+          }
+        }
+      },
+      "northbeam-lite": {
+        "title": "Northbeam Lite : sécurité IAM sur AWS",
+        "scenario": "Northbeam, une startup SaaS fictive de deux personnes qui a démarré avec des connexions root et AdministratorAccess pour tout le monde.",
+        "oneLine": "Reconstruire proprement un compte AWS en désordre, un contrôle IAM à la fois, chacun cassé volontairement pour prouver qu'il fonctionne.",
+        "built": [
+          "Rôles STS protégés par MFA à la place des utilisateurs admin permanents, avec des politiques de moindre privilège et des tests d'évaluation du deny explicite.",
+          "ABAC avec des tags de principal et de ressource, et des permissions boundaries pour déléguer la création de rôles sans escalade de privilèges.",
+          "Profil d'instance EC2 avec IMDSv2, OIDC GitHub Actions sans clé stockée, et trois scripts d'audit en CLI."
+        ],
+        "findings": [
+          "Une clé d'accès longue durée ne porte jamais l'indicateur MFA, donc AssumeRole en CLI échouait tant que mfa_serial n'était pas défini dans le profil.",
+          "Le README garde un tableau honnête de ce qui a été construit face à ce qui a été volontairement reporté. Organizations, les SCP et Identity Center ont été laissés de côté pour protéger les crédits gratuits, et le dire est plus utile que de faire semblant."
+        ],
+        "detail": {
+          "problem": "Des identifiants permanents qui n'expirent jamais, deux personnes capables chacune de supprimer la production, et des expériences de dev qui partagent un compte avec des données clients. Rien n'empêche techniquement la catastrophe, seulement la prudence, qui n'est pas un contrôle de sécurité.",
+          "steps": [
+            "Fondations du compte, puis remplacement de l'identifiant admin permanent par une prise de rôle protégée par MFA via STS.",
+            "Travail sur la logique d'évaluation des politiques jusqu'à ce que le deny explicite se comporte de façon prévisible.",
+            "ABAC : une seule politique couvrant plusieurs projets, pilotée par les tags de principal et de ressource.",
+            "Identités machines : un profil d'instance EC2 avec IMDSv2, puis la fédération OIDC GitHub Actions sans clé stockée.",
+            "Permissions boundaries, testées en trois points de contrôle : créer sans boundary, créer avec, puis attacher AdministratorAccess au rôle plafonné et confirmer qu'il reste plafonné.",
+            "Boîte à outils d'audit : un scanner d'âge des clés d'accès, un détecteur de rôles inutilisés, et un chasseur d'AccessDenied dans CloudTrail."
+          ],
+          "findings": [
+            "Une clé d'accès longue durée ne porte jamais l'indicateur MFA, donc AssumeRole en CLI échouait tant que mfa_serial n'était pas défini dans le profil.",
+            "Une permissions boundary tient même quand AdministratorAccess est attaché par-dessus. C'est tout l'intérêt du troisième point de contrôle.",
+            "Énoncer le périmètre fait partie du travail. Organizations, les SCP, un compte de journalisation centralisé et Identity Center ont été reportés volontairement, parce que rejoindre une Organization aurait fait expirer les crédits du compte immédiatement et mis fin aux phases suivantes."
+          ]
+        }
+      },
+      "vpc": {
+        "title": "Architecture VPC à trois niveaux",
+        "scenario": "Le réseau de Northbeam, construit à la main dans la console pour comprendre chaque pièce avant de l'automatiser.",
+        "oneLine": "Un réseau à trois niveaux sur deux zones de disponibilité, sans SSH nulle part.",
+        "built": [
+          "Six sous-réseaux en trois niveaux, public, app et data, sur deux zones de disponibilité, avec une internet gateway et une NAT gateway.",
+          "Security groups chaînés niveau par niveau par référence plutôt que par plages d'IP, et une NACL construite exprès pour montrer qu'elle est sans état.",
+          "Un endpoint gateway S3 et des endpoints interface SSM avec une endpoint policy. Chaque instance est atteinte via SSM Session Manager."
+        ],
+        "findings": [
+          "J'ai appris à lire les échecs. Un blocage veut dire qu'il n'y a pas de route. Un refus immédiat veut dire que le security group a laissé passer et que la machine a répondu non. Une réponse qui ne revient jamais, c'est presque toujours une règle NACL."
+        ],
+        "detail": {
+          "problem": "Construire un réseau segmenté à la main, dans la console, sans Terraform, pour comprendre chaque pièce avant de l'automatiser. Aucun SSH nulle part : pas de paires de clés et pas de port 22 ouvert.",
+          "steps": [
+            "Un VPC 10.0.0.0/16 découpé en six sous-réseaux sur trois niveaux et deux zones de disponibilité en eu-north-1.",
+            "Une internet gateway pour le niveau public, et une NAT gateway pour que le niveau app puisse sortir sans être joignable.",
+            "Security groups chaînés par référence de groupe, pour que rien ne soit approuvé juste parce qu'il est sur le bon sous-réseau.",
+            "Une NACL construite volontairement pour montrer qu'elle ne mémorise pas les connexions comme le fait un security group.",
+            "Un endpoint gateway S3 pour que le niveau data ne touche jamais internet, plus des endpoints interface SSM pour garder la main dessus.",
+            "Une endpoint policy par-dessus, pour qu'une erreur dans IAM n'ouvre quand même pas tous les buckets du compte."
+          ],
+          "findings": [
+            "Une connexion qui reste bloquée veut dire qu'il n'y a pas de route. Le paquet n'a nulle part où aller et il est jeté en silence.",
+            "Un refus immédiat est souvent bon signe : le security group a autorisé la requête et le système en face a répondu.",
+            "Une requête qui passe alors que la réponse ne revient jamais, c'est presque toujours une NACL. Elles sont sans état, donc la réponse a besoin de sa propre règle."
+          ]
+        }
+      },
+      "data-protection": {
+        "title": "Protection des données et gestion des secrets",
+        "scenario": "Casefile, une entreprise legal-tech fictive qui stocke les dossiers de cabinets d'avocats.",
+        "oneLine": "Trois classes de données, trois stratégies de protection, du public au cas où AWS ne voit jamais que du chiffré.",
+        "built": [
+          "Un bucket public limité à GetObject, et un bucket confidentiel avec SSE-KMS utilisant une clé gérée par le client et TLS imposé.",
+          "Chiffrement côté client avec l'AWS Encryption SDK, pour que même un administrateur du compte ne voie que du chiffré.",
+          "Rotation des secrets avec une Lambda écrite de zéro, et six cas réels d'exposition S3 reproduits et diagnostiqués."
+        ],
+        "findings": [
+          "Rendre privé un objet public ne protège pas ses anciennes versions. Avec le versioning activé, la version précédente restait lisible.",
+          "Une rotation cassée volontairement à son étape de vérification laissait l'ancien mot de passe fonctionner, parce que la promotion arrive en dernier."
+        ],
+        "detail": {
+          "problem": "L'architecture découle d'une seule question : de quel type de données s'agit-il, et qui doit pouvoir les lire ? Trois classes, trois réponses différentes, construites côte à côte pour que la différence soit concrète plutôt que théorique.",
+          "steps": [
+            "Des ressources publiques dans un bucket lisible depuis internet volontairement, limité strictement à GetObject.",
+            "Des dossiers confidentiels avec SSE-KMS, une clé gérée par le client, TLS imposé et la clé de chiffrement imposée.",
+            "Des dossiers de règlement en accès restreint, chiffrés côté client avant l'envoi, pour qu'AWS ne détienne jamais un octet lisible.",
+            "Chiffrement par enveloppe construit à la main d'abord, pour voir ce que SSE-KMS fait en silence.",
+            "Secrets Manager face à Parameter Store, avec une fonction de rotation écrite de zéro.",
+            "Un laboratoire de mauvaises configurations : six schémas d'exposition réels reproduits et diagnostiqués."
+          ],
+          "findings": [
+            "Une key policy KMS est la seule autorité sur sa clé. Un rôle sans aucune politique IAM a chiffré avec succès parce que la key policy le nommait. Un autre rôle avec kms:* sur Resource * a été refusé.",
+            "Une resource policy Secrets Manager fonctionne à l'inverse : elle ne fait qu'ajouter des accès par-dessus IAM. Même vocabulaire, mécanique vraiment différente.",
+            "Rendre privé un objet public ne protège pas ses anciennes versions. Avec le versioning activé, la version précédente restait lisible.",
+            "Une rotation cassée volontairement à son étape de vérification laissait l'ancien mot de passe fonctionner, parce que la promotion arrive en dernier."
+          ],
+          "numbers": {
+            "cost": "Coût total du projet, sur environ deux semaines"
+          }
+        }
+      },
+      "detection": {
+        "title": "Détection, journalisation et supervision",
+        "scenario": "Blackpine, un SaaS de facturation fictif de cinq personnes, sans personne à la sécurité.",
+        "oneLine": "S'il se passait quelque chose de grave dans ce compte AWS cette nuit, est-ce que quelqu'un le saurait, et pourrait-on reconstituer ce qui s'est passé ?",
+        "built": [
+          "CloudTrail multi-région avec validation des fichiers de log, VPC Flow Logs et AWS Config avec trois règles, le tout dans un seul bucket S3.",
+          "Une alerte e-mail sur connexion root, avec EventBridge et SNS.",
+          "Des requêtes SQL sur tous les journaux avec Athena."
+        ],
+        "findings": [
+          "L'alerte de connexion root n'arrivait jamais : ces événements ne parviennent à EventBridge qu'en us-east-1. Isolée avec un test SNS direct, règle reconstruite là-bas, et e-mail vérifié.",
+          "AWS Config a signalé le security group de l'application elle-même : port 22 ouvert à 0.0.0.0/0, contraire au design. Corrigé et revérifié."
+        ],
+        "detail": {
+          "problem": "Quatre questions ont besoin d'une réponse : qui a fait quoi et quand, qui a parlé à qui sur le réseau, chaque ressource est-elle configurée comme elle devrait l'être, et est-ce qu'un humain sera prévenu quand quelque chose d'important arrive.",
+          "steps": [
+            "Un trail CloudTrail multi-région vers S3 avec la validation des fichiers de log activée.",
+            "VPC Flow Logs sur le VPC, dans le même bucket.",
+            "AWS Config avec trois règles managées sur un petit ensemble de types de ressources.",
+            "Config a immédiatement signalé le security group du serveur applicatif. Corrigé.",
+            "Un topic SNS avec un abonnement e-mail, puis une règle EventBridge pour la connexion root à la console.",
+            "Connexion en root pour tester. Aucun e-mail n'est arrivé.",
+            "J'ai trouvé pourquoi, reconstruit la règle dans la bonne région, et l'e-mail est arrivé.",
+            "Des tables Athena sur CloudTrail et les Flow Logs, puis des requêtes SQL sur mes propres journaux pour lire ce qu'ils disaient."
+          ],
+          "findings": [
+            "L'alerte de connexion root n'arrivait jamais parce que ces événements ne parviennent à EventBridge qu'en us-east-1. Un test SNS direct a isolé le problème sur la règle plutôt que sur le topic.",
+            "AWS Config a signalé le security group de l'application elle-même, avec le port 22 ouvert à 0.0.0.0/0, contraire à son propre design. Corrigé et revérifié.",
+            "CloudTrail et les Flow Logs sont les preuves brutes. Config donne un avis dessus. EventBridge et SNS font qu'une personne est prévenue. Athena sert à poser des questions plus tard."
+          ]
+        }
+      }
+    },
+    "earlier": {
+      "title": "Développement web, avant",
+      "lead": "Avant la sécurité cloud. Volontairement court.",
+      "acme": {
+        "name": "Acme",
+        "line": "Suivi financier pour les entreprises à longs délais de paiement. Suit les transactions en attente et réglées."
+      },
+      "buzznest": {
+        "name": "BuzzNest",
+        "line": "Plateforme sociale sans distraction, avec une API REST Express.js de plus de 10 endpoints."
+      },
+      "echoed-thoughts": {
+        "name": "Echoed-thoughts",
+        "line": "Plateforme de blog serverless pour partager des connaissances."
+      },
+      "payverse": {
+        "name": "PayVerse",
+        "line": "Site de transfert d'argent."
+      },
+      "carluxe": {
+        "name": "CarLuxe",
+        "line": "Site d'annonces automobiles."
+      }
+    }
+  },
+  "certificates": {
+    "badge": "Certificats",
+    "title": "Ce que j'ai étudié",
+    "lead": "Tout est listé, du plus pertinent au moins pertinent. Cliquez sur l'un d'eux pour le voir en grand, ouvrir l'original, ou le vérifier quand l'organisme fournit un lien.",
+    "filterLabel": "Filtrer les certificats par catégorie",
+    "featured": "En avant",
+    "verifiable": "Vérifiable en ligne",
+    "partOfProgram": "fait partie du programme Google",
+    "credentialId": "Identifiant du certificat",
+    "previous": "Certificat précédent",
+    "next": "Certificat suivant",
+    "imageAlt": "{title}, en grand",
+    "filters": {
+      "all": "Tous",
+      "cloud": "Cloud",
+      "security-operations": "Sécurité opérationnelle",
+      "cybersecurity-foundations": "Fondamentaux de la cybersécurité",
+      "development": "Développement"
+    },
+    "types": {
+      "certificate": "Certificat",
+      "course": "Formation",
+      "exam": "Examen",
+      "letter": "Attestation"
+    }
+  },
+  "internship": {
+    "badge": "Disponible pour un stage de fin d'études",
+    "title": "Je cherche mon stage de fin d'études",
+    "facts": {
+      "when": {
+        "label": "Quand",
+        "value": "4 à 6 mois dès avril 2027"
+      },
+      "field": {
+        "label": "Domaine",
+        "value": "Sécurité cloud ou DevSecOps"
+      },
+      "where": {
+        "label": "Où",
+        "value": "Région parisienne, et ouvert à la mobilité"
+      },
+      "agreement": {
+        "label": "Administratif",
+        "value": "Convention de stage fournie par l'ECE Paris"
+      }
+    },
+    "dayOne": {
+      "label": "Ce que je peux faire dès le premier jour",
+      "policies": "Écrire des politiques IAM de moindre privilège et les tester",
+      "alerts": "Mettre en place journalisation et alertes, et vérifier que les alertes partent vraiment",
+      "pipeline": "Ajouter des scans de sécurité à un pipeline CI/CD",
+      "document": "Documenter clairement les décisions en anglais"
+    },
+    "contactCta": "Me contacter"
+  },
+  "cv": {
+    "download": "Télécharger le CV",
+    "chooseLanguage": "Choisir une langue",
+    "languages": {
+      "fr": "Français",
+      "en": "Anglais"
+    },
+    "englishSoon": "Une version anglaise arrive bientôt."
+  },
+  "contact": {
+    "badge": "Contact",
+    "title": "Envoyez-moi un message",
+    "lead": "Il arrive directement dans ma boîte mail. Je lis tout et je réponds par e-mail.",
+    "form": {
+      "name": "Votre nom",
+      "email": "Votre e-mail",
+      "company": "Entreprise (facultatif)",
+      "topic": "À quel sujet",
+      "message": "Message",
+      "submit": "Envoyer le message",
+      "sending": "Envoi en cours",
+      "privacy": "Votre message arrive uniquement dans ma boîte mail. Rien n'est stocké sur ce site.",
+      "error": "L'envoi n'a pas abouti. Réessayez, ou écrivez-moi directement avec le lien à droite.",
+      "noChallenge": "La protection anti-spam n'est pas encore configurée, donc le formulaire ne peut pas envoyer. Utilisez les liens directs.",
+      "topics": {
+        "internship": "Proposition de stage",
+        "project": "Question sur un projet",
+        "other": "Autre"
+      },
+      "errors": {
+        "name": "Merci d'indiquer votre nom.",
+        "email": "Cette adresse e-mail ne semble pas valide.",
+        "message": "Un peu plus de détail, merci : au moins 10 caractères."
+      },
+      "sent": {
+        "title": "Merci, votre message est dans ma boîte mail.",
+        "body": "Je répondrai par e-mail."
+      }
+    },
+    "direct": {
+      "label": "Ou joignez-moi directement",
+      "linkedin": "LinkedIn",
+      "github": "GitHub",
+      "revealEmail": "Afficher mon adresse e-mail",
+      "copyEmail": "Copier l'adresse e-mail",
+      "copied": "Copié",
+      "location": "Région parisienne, France",
+      "locationLabel": "Localisation",
+      "timezone": "Heure d'Europe centrale",
+      "timezoneLabel": "Fuseau horaire"
+    }
+  }
+}

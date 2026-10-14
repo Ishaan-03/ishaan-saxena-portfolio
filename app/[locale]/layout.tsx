@@ -1,14 +1,22 @@
 import type { Metadata } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Inter, JetBrains_Mono, Noto_Sans_Devanagari } from 'next/font/google';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { Footer } from '@/components/layout/Footer';
 import { Navbar } from '@/components/layout/Navbar';
 import { ScrollProgress } from '@/components/layout/ScrollProgress';
+import { LanguageHint } from '@/components/layout/LanguageHint';
 import { Starfield } from '@/components/layout/Starfield';
 import { BackToTop } from '@/components/layout/BackToTop';
 import { routing } from '@/i18n/routing';
+import {
+  alternateOpenGraphLocales,
+  alternates,
+  openGraphLocale,
+  pageUrl,
+  SITE_URL,
+} from '@/lib/metadata';
 import '../globals.css';
 
 // Self-hosted by next/font. No external font requests, which keeps the CSP in
@@ -25,6 +33,16 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
+/**
+ * Inter has no Devanagari, so Hindi needs its own face. Loaded only on the
+ * Hindi pages: every other locale would pay for a script it never renders.
+ */
+const notoDevanagari = Noto_Sans_Devanagari({
+  variable: '--font-devanagari',
+  subsets: ['devanagari', 'latin'],
+  display: 'swap',
+});
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
@@ -38,8 +56,24 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: 'meta' });
 
   return {
+    metadataBase: new URL(SITE_URL),
     title: t('title'),
     description: t('description'),
+    // hreflang for all four, with x-default on English. Section 11.
+    alternates: alternates(locale),
+    openGraph: {
+      type: 'website',
+      title: t('title'),
+      description: t('description'),
+      locale: openGraphLocale(locale),
+      alternateLocale: alternateOpenGraphLocales(locale),
+      url: pageUrl(locale),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t('title'),
+      description: t('description'),
+    },
   };
 }
 
@@ -61,7 +95,11 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${inter.variable} ${jetbrainsMono.variable} h-full`}
+      // Devanagari ships only where it is read. `font-hi` in globals.css puts it
+      // in front of Inter and gives the taller line-height the script needs.
+      className={`${inter.variable} ${jetbrainsMono.variable} ${
+        locale === 'hi' ? `${notoDevanagari.variable} font-hi` : ''
+      } h-full`}
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col">
@@ -85,6 +123,7 @@ export default async function LocaleLayout({
 
           <Footer />
           <BackToTop />
+          <LanguageHint />
         </NextIntlClientProvider>
       </body>
     </html>

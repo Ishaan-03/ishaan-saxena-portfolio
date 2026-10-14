@@ -71,6 +71,31 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/**
+ * Hindi. Devanagari sits taller than Latin and its matras need vertical room,
+ * so the whole page loosens up a little and headings stop using the tight
+ * 1.05 leading that suits Inter.
+ */
+.font-hi body,
+body.font-hi,
+.font-hi {
+  font-family: var(--font-devanagari), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-hi p,
+.font-hi li,
+.font-hi dd {
+  line-height: 1.75;
+}
+
+.font-hi h1,
+.font-hi h2,
+.font-hi h3,
+.font-hi h4 {
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
 /* Headings: weight 600, tight tracking, tight leading. */
 h1,
 h2,

@@ -446,7 +446,7 @@
       "policies": "Write least-privilege IAM policies and test them",
       "alerts": "Set up logging and alerting, and check the alerts really fire",
       "pipeline": "Add security scans to a CI/CD pipeline",
-      "document": "Document decisions clearly in English, with working French"
+      "document": "Document decisions clearly in English"
     },
     "contactCta": "Get in touch"
   },
