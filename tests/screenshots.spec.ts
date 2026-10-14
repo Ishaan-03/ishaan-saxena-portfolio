@@ -31,7 +31,15 @@ async function settle(page: import('@playwright/test').Page) {
   await page.waitForTimeout(1000);
 }
 
-const SECTIONS = ['about', 'projects', 'skills', 'experience', 'certificates'];
+const SECTIONS = [
+  'about',
+  'projects',
+  'skills',
+  'experience',
+  'certificates',
+  'internship',
+  'contact',
+];
 
 test('home, section by section', async ({ page }, testInfo) => {
   await page.goto('/');
@@ -40,6 +48,7 @@ test('home, section by section', async ({ page }, testInfo) => {
   await page.screenshot({
     path: testInfo.outputPath(`home-01-hero-${testInfo.project.name}.png`),
     animations: 'disabled',
+    caret: 'initial',
   });
 
   for (const [index, id] of SECTIONS.entries()) {
@@ -51,6 +60,7 @@ test('home, section by section', async ({ page }, testInfo) => {
     await page.screenshot({
       path: testInfo.outputPath(`home-0${index + 2}-${id}-${testInfo.project.name}.png`),
       animations: 'disabled',
+      caret: 'initial',
     });
   }
 });
@@ -70,6 +80,7 @@ for (const target of PAGES) {
       path: testInfo.outputPath(`${target.name}-${testInfo.project.name}.png`),
       fullPage: true,
       animations: 'disabled',
+      caret: 'initial',
     });
   });
 }
@@ -93,6 +104,7 @@ test('navbar turns to glass after scrolling', async ({ page }, testInfo) => {
     path: testInfo.outputPath(`navbar-scrolled-${testInfo.project.name}.png`),
     clip: { x: 0, y: 0, width: testInfo.project.use.viewport!.width, height: 200 },
     animations: 'disabled',
+    caret: 'initial',
   });
 });
 
@@ -105,5 +117,6 @@ test('certificate viewer open', async ({ page }, testInfo) => {
   await page.screenshot({
     path: testInfo.outputPath(`cert-viewer-${testInfo.project.name}.png`),
     animations: 'disabled',
+    caret: 'initial',
   });
 });

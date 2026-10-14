@@ -4,7 +4,7 @@ Updated at the end of every phase so a new session can resume. Last update: 14 O
 
 ## Current state
 
-**Phase 4 (Certificates) — complete. Waiting for Ishaan's OK to start Phase 5.**
+**Phase 5 (Internship, CV, contact) — complete. Waiting for Ishaan's OK to start Phase 6.**
 
 ### Incident: the site looked empty in Ishaan's browser
 
@@ -431,6 +431,84 @@ return 200 from the built server.
    answer selected both "include it" and "timeline proof only", so this is a reading, not a
    confirmed decision.
 
+
+## Phase 5 — done
+
+### Internship band (section 7)
+
+Glass band with the four facts, the "what I can do from day one" chips, and both buttons.
+"Where" reads **Paris region, and open to relocation**, which is Ishaan's answer to question
+3 and overrides the brief's hardcoded "Paris region".
+
+### CV (section 9)
+
+Split button: the main half downloads, the caret opens the language list, and the file size
+sits next to the label. `content/cv.ts` lists the files that actually exist, and `pickCv`
+gives French to the French site and English to everything else, falling back to French.
+
+Only the French CV exists, so every language resolves to it and the menu says an English
+version is on the way rather than pretending otherwise. Dropping an English file into
+`CV_FILES` is the only change needed.
+
+**The file is still the old one**, with "6 mois dès janvier 2027" in its header. Ishaan's
+instruction was to ship the current file and swap it later; the site text says April 2027
+throughout. Replace `public/cv/Ishaan_Saxena_CV_FR.pdf` and update `sizeLabel`.
+
+### Contact (section 8)
+
+Form on the left, direct links on the right. The email address is never in the HTML: two
+halves joined in the browser after a click, with a copy button.
+
+| Layer | Behaviour |
+|---|---|
+| Rate limit | 5 per minute per IP, before anything else runs |
+| Size | 413 above 20 KB, checked on the header and again on the body |
+| Shape | zod, same schema on client and server; the server is the gate |
+| Honeypot | filled means a bot: plain 200, nothing sent |
+| Turnstile | verified server-side; failure is 403 |
+| Send | Resend, Reply-To set to the visitor |
+
+Errors return a bare code. A test asserts no response ever contains the words resend, api
+key, stack, or a stack frame.
+
+UI states: idle, sending (spinner, fieldset disabled), sent (confirmation panel), error
+(keeps what was typed, offers the direct links). Errors are announced through `aria-live`.
+No auto-reply, nothing stored.
+
+### Turnstile without Ishaan's keys
+
+`lib/turnstile.ts` uses Cloudflare's **published testing keys** when no real key is set, and
+only in development, so the whole flow is exercisable now. In production a missing secret
+makes `verifyTurnstile` return false, so the route **fails closed**. Verified against the
+built server: a POST with no real key returns `403 challenge_failed`.
+
+### The real email
+
+Sent through the route with the live Resend key and accepted: `200 ok`. Reply-To carries the
+visitor's address, so replying from Gmail reaches them directly. The key is a send-only
+restricted key, which is why the Resend list endpoints answer 401; that is correct scoping,
+not a broken key.
+
+`npx playwright test contact-api` covers every rejection path. Only the real send is gated
+behind `SEND_REAL_EMAIL=1`, so a normal run never puts anything in the inbox.
+
+### Two bugs the tests found
+
+- **The honeypot was telling bots they had been caught.** The zod schema required `website`
+  to be empty, so a filled one failed validation and returned `400` with the field named.
+  Section 8 wants a plain success and silence. The schema now accepts it and the route
+  handles it, which is what makes the trap work.
+- **`caret-color: transparent` broke the console check.** Playwright hides the text caret
+  before a screenshot by injecting that style into form fields; landing mid-hydration, React
+  reported it as a hydration mismatch. The site was fine. The smoke test no longer takes a
+  screenshot, and the capture tests pass `caret: 'initial'`. Worth remembering that `caret`
+  is a `page.screenshot()` option and setting it in the config `use` block does nothing.
+
+### Gates
+
+lint, typecheck, format, build and `audit:ci` pass. Playwright: 73 passed, 3 skipped.
+`npm run test:prod` passes on the isolated build with zero console errors.
+
 ## Decisions taken (section 16, answered 14 Oct 2026)
 
 | # | Question | Answer |
@@ -552,21 +630,26 @@ a recruiter is probably the per-credential count with the Google program expanda
 
 ## Next
 
-**Phase 5 — Internship band, CV and contact.** The call-to-action band from section 7, the
-CV split button from section 9, the contact form, the `/api/contact` route, Turnstile,
-Resend, and every UI state.
+**Phase 6 — Languages.** fr, es and hi translations, the locale switcher wired up, the
+browser-language hint pill, Noto Sans Devanagari for Hindi, `npm run i18n:check`, and
+hreflang.
 
-Two blockers to clear first, both needing Ishaan:
+`i18n/routing.ts` currently lists only `en`. Adding the other three is one line once their
+message files exist; `plannedLocales` already holds all four with native names, and the
+switcher already renders them disabled.
 
-1. **Turnstile does not exist yet.** `TURNSTILE_SECRET_KEY` and
-   `NEXT_PUBLIC_TURNSTILE_SITE_KEY` are empty in `.env.local`. Brief A2: create the widget
-   at Cloudflare and add the production hostname to its allowed list.
-2. **The CV still says "6 mois dès janvier 2027".** Ishaan is sending a corrected PDF. The
-   site text already says April 2027 everywhere, per his instruction; section 9 blocks
-   copying the file to `/public/cv/` until the replacement lands.
+Note for the translation pass: `messages/en.json` has grown a lot this phase. Every visible
+string is in it, including project prose, certificate labels, form fields and errors.
 
-Also carry in: the internship band must say **open to relocation**, not the brief's
-hardcoded "Paris region".
+### Still waiting on Ishaan
+
+1. **Turnstile.** Both keys are empty, and production fails closed, so the live form cannot
+   send until the widget exists. Create it at Cloudflare, add the production hostname to its
+   allowed list, and put the two keys in `.env.local` and in Vercel.
+2. **The corrected CV.** `public/cv/Ishaan_Saxena_CV_FR.pdf` is still the January 2027
+   version. An English CV would also help, since English is the site default.
+3. **Certificate originals weigh 3.5 MB**, and his photo is printed on the 100xdevs
+   certificate. Both from Phase 4, still open.
 
 ## Translations
 

@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
  * Phase 0 smoke test. Grows each phase: locales, CV link and form validation
  * get added as those parts are built.
  */
-test('home page loads and the browser console is clean', async ({ page }, testInfo) => {
+test('home page loads and the browser console is clean', async ({ page }) => {
   const errors: string[] = [];
   page.on('console', (msg) => {
     if (msg.type() === 'error') errors.push(msg.text());
@@ -14,9 +14,10 @@ test('home page loads and the browser console is clean', async ({ page }, testIn
   const response = await page.goto('/');
   expect(response?.status()).toBe(200);
 
-  // Viewport, not fullPage: Chromium stops painting backdrop-filter when the
-  // viewport is stretched to a 7000px document, which empties every glass panel.
-  await page.screenshot({ path: testInfo.outputPath(`home-${testInfo.project.name}.png`) });
+  // No screenshot here. This test is about the console, and Playwright hides
+  // the text caret by injecting `caret-color: transparent` into form fields,
+  // which React reports as a hydration mismatch if it lands mid-hydration.
+  // Captures belong to screenshots.spec.ts, which passes caret: 'initial'.
 
   expect(errors).toEqual([]);
 });

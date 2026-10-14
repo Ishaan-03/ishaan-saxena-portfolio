@@ -8,7 +8,16 @@ import { test, expect } from '@playwright/test';
  */
 test.use({ reducedMotion: 'no-preference' });
 
-const SECTIONS = ['top', 'about', 'projects', 'skills', 'experience', 'certificates'];
+const SECTIONS = [
+  'top',
+  'about',
+  'projects',
+  'skills',
+  'experience',
+  'certificates',
+  'internship',
+  'contact',
+];
 
 async function hiddenTextIn(page: import('@playwright/test').Page, id: string) {
   return page.evaluate((anchor) => {

@@ -419,5 +419,87 @@
       "exam": "Exam",
       "letter": "Letter"
     }
+  },
+  "internship": {
+    "badge": "Open to an end-of-studies internship",
+    "title": "Looking for my end-of-studies internship",
+    "facts": {
+      "when": {
+        "label": "When",
+        "value": "4 to 6 months from April 2027"
+      },
+      "field": {
+        "label": "Field",
+        "value": "Cloud security or DevSecOps"
+      },
+      "where": {
+        "label": "Where",
+        "value": "Paris region, and open to relocation"
+      },
+      "agreement": {
+        "label": "Paperwork",
+        "value": "Internship agreement (convention de stage) provided by ECE Paris"
+      }
+    },
+    "dayOne": {
+      "label": "What I can do from day one",
+      "policies": "Write least-privilege IAM policies and test them",
+      "alerts": "Set up logging and alerting, and check the alerts really fire",
+      "pipeline": "Add security scans to a CI/CD pipeline",
+      "document": "Document decisions clearly in English, with working French"
+    },
+    "contactCta": "Get in touch"
+  },
+  "cv": {
+    "download": "Download CV",
+    "chooseLanguage": "Choose a language",
+    "languages": {
+      "fr": "French",
+      "en": "English"
+    },
+    "englishSoon": "An English version is on the way."
+  },
+  "contact": {
+    "badge": "Contact",
+    "title": "Send me a message",
+    "lead": "It goes straight to my inbox. I read everything and reply by email.",
+    "form": {
+      "name": "Your name",
+      "email": "Your email",
+      "company": "Company (optional)",
+      "topic": "What is it about",
+      "message": "Message",
+      "submit": "Send message",
+      "sending": "Sending",
+      "privacy": "Your message goes only to my inbox. Nothing is stored on this site.",
+      "error": "That did not go through. Try again, or email me directly using the link on the right.",
+      "noChallenge": "The spam check is not configured yet, so the form cannot send. Use the direct links instead.",
+      "topics": {
+        "internship": "Internship opportunity",
+        "project": "Question about a project",
+        "other": "Other"
+      },
+      "errors": {
+        "name": "Please add your name.",
+        "email": "That does not look like an email address.",
+        "message": "A little more detail, please: at least 10 characters."
+      },
+      "sent": {
+        "title": "Thanks, your message is in my inbox.",
+        "body": "I'll reply by email."
+      }
+    },
+    "direct": {
+      "label": "Or reach me directly",
+      "linkedin": "LinkedIn",
+      "github": "GitHub",
+      "revealEmail": "Show my email address",
+      "copyEmail": "Copy email address",
+      "copied": "Copied",
+      "location": "Paris region, France",
+      "locationLabel": "Location",
+      "timezone": "Central European Time",
+      "timezoneLabel": "Time zone"
+    }
   }
 }

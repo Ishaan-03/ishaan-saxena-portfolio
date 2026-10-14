@@ -16,11 +16,13 @@ test('production hero', async ({ page }, testInfo) => {
   await page.screenshot({
     path: testInfo.outputPath(`prod-hero-${testInfo.project.name}.png`),
     animations: 'disabled',
+    caret: 'initial',
   });
   await page.screenshot({
     path: testInfo.outputPath(`prod-full-${testInfo.project.name}.png`),
     fullPage: true,
     animations: 'disabled',
+    caret: 'initial',
   });
 
   console.log(`[${testInfo.project.name}] errors:`, JSON.stringify(errors));

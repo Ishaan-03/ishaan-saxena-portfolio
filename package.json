@@ -16,7 +16,7 @@
     "test:prod": "playwright test --config=playwright.prod.config.ts",
     "certificates": "tsx scripts/process-certificates.ts",
     "build:prod": "BUILD_DIR=.next-prod next build",
-    "start:prod": "BUILD_DIR=.next-prod next start -p 3600"
+    "start:prod": "BUILD_DIR=.next-prod next start -p 3700"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",
@@ -28,7 +28,9 @@
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-icons": "^5.7.0",
-    "three": "^0.186.1"
+    "resend": "^6.33.0",
+    "three": "^0.186.1",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.0",
