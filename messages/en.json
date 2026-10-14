@@ -36,7 +36,36 @@
     "headlineLine2": "Prove it holds.",
     "subtitle": "I'm Ishaan Saxena, an MSc Cybersecurity student at ECE Paris. I build AWS security in a real account, break every control on purpose, and write down what failed.",
     "primaryCta": "View my projects",
-    "secondaryCta": "Download CV"
+    "secondaryCta": "Download CV",
+    "cards": {
+      "identity": {
+        "title": "Identity & Access",
+        "body": "MFA-gated roles, ABAC and OIDC. No long-lived keys."
+      },
+      "detection": {
+        "title": "Detection & Logging",
+        "body": "CloudTrail, Config and alerts tested until they fire."
+      },
+      "dataProtection": {
+        "title": "Data Protection",
+        "body": "KMS, SSE-KMS and client-side encryption."
+      },
+      "devsecops": {
+        "title": "DevSecOps",
+        "body": "Security gates on every pull request."
+      }
+    },
+    "stats": {
+      "realAccount": "Every project runs in a real AWS account",
+      "builds": "AWS security builds",
+      "certificates": "certificates",
+      "cves": "image CVEs cut",
+      "keysInCi": "AWS keys stored in CI"
+    },
+    "globe": {
+      "paris": "AWS eu-west-3, where Gatekeeper runs",
+      "stockholm": "AWS eu-north-1, where the other builds run"
+    }
   },
   "footer": {
     "tagline": "Cloud security and DevSecOps · Paris",

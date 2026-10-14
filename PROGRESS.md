@@ -4,7 +4,7 @@ Updated at the end of every phase so a new session can resume. Last update: 14 O
 
 ## Current state
 
-**Phase 1 (Design system) — complete. Waiting for Ishaan's OK to start Phase 2.**
+**Phase 2 (Hero and globe) — complete. Waiting for Ishaan's OK to start Phase 3.**
 
 ## Phase 0 — done
 
@@ -138,6 +138,93 @@ navbar, and the mobile menu sheet.
 - `npm run i18n:check` is not written yet. Section 7 asks for it; it belongs with Phase 6
   when there is more than one locale to compare.
 
+
+## Phase 2 — done
+
+### The globe
+
+- **Dot cloud is generated at build time.** `scripts/generate-globe-dots.ts` samples a
+  Fibonacci sphere against Natural Earth land polygons and writes
+  `public/globe/dots.bin`: 6,866 land dots and 240 city dots, Int16-quantised, 41.6 KB.
+  Run it with `npm run globe:dots`.
+  Nothing geographic ships in the JS bundle and there is no parsing at runtime. The first
+  attempt inlined the points as a TypeScript array, which came to 244 KB of bundle.
+  `world-atlas`, `topojson-client` and `d3-geo` are devDependencies used only by that
+  script. Antarctica is dropped: at this dot size it reads as a white smear.
+- Dots are a custom `ShaderMaterial` with round points and depth-based fading, so no sprite
+  texture is needed. Far-side dots dim rather than disappear.
+- Dark core sphere, a tight Fresnel atmosphere on the rim, and a wide soft halo behind.
+- Three tilted orbit rings with glowing particles travelling along them. They are real 3D
+  circles, so the core sphere occludes the half that passes behind.
+- **Jaipur to Paris arc** with a travelling light pulse that pauses before looping.
+  Markers on Paris and Stockholm, tooltip on hover or tap.
+- Auto-rotation at one turn per 90 seconds; mouse tilt capped at 6 degrees, desktop only.
+
+### Performance rules from section 4
+
+| Rule | How |
+|---|---|
+| Canvas after the text paints | `next/dynamic` with `ssr: false`, mounted in `requestIdleCallback` |
+| No layout shift | `GlobeFallback` occupies the same box as the canvas |
+| DPR capped at 1.5 | `dpr={[1, 1.5]}` |
+| Pause when off-screen | IntersectionObserver flips `frameloop` to `never` |
+| Dispose on unmount | geometries and materials freed in a cleanup effect |
+| Fewer dots, no bloom on mobile | `pointer: coarse` or 4 cores or fewer thins the cloud by half |
+| Reduced motion | `frameloop: 'demand'`, one frame, no rotation, no float, no count-up |
+| WebGL missing | capability check falls through to the CSS fallback |
+
+### Hero cards and stats bar
+
+Four glass cards: Identity & Access, Data Protection, Detection & Logging, DevSecOps. Two
+left, two right, staggered, each floating on its own out-of-phase 6s loop and linking to its
+project anchor. Below `lg` they become a 2x2 grid under the globe.
+
+The stats bar replaces the reference's "Trusted by 10,000+ teams": four icon chips plus
+"Every project runs in a real AWS account", then **5** AWS security builds, **14**
+certificates, **344 to 44** image CVEs cut, **0** AWS keys stored in CI. Numbers count up on
+entry and respect reduced motion.
+
+**The 14 is computed, never typed.** `content/certifications.ts` now holds all seven
+credential entries read from the files in Phase 0, and `credentialCount` sums every entry
+that is not the Navriti letter, counting the Google program plus each of its eight course
+certificates. Phase 4 adds thumbnails, categories and the viewer on top of this same data.
+
+### Three things worth remembering
+
+- **A production run caught a bug that dev mode hid.** `CountUp` seeded its state from
+  `useReducedMotion()`, which is null on the server and true on a client that asks for
+  reduced motion, so the server rendered `0` and the client rendered `14`. That is React
+  hydration error #418, and it only surfaces in a minified production build. There is now
+  `npm run test:prod`, which serves the built site and fails on any console error. Worth
+  running before every phase is called done.
+- **The dots were a solid blue disc at first.** `gl_PointSize` is in device pixels, and the
+  original formula produced roughly 175px per dot. It now takes the device pixel ratio and
+  the camera distance as uniforms and `uSize` means "diameter in CSS pixels at the globe's
+  centre".
+- **@react-three/postprocessing was removed.** Its bloom pass resolves to an opaque
+  rectangle over a transparent canvas, which showed as a visible square against the page.
+  The halo is now an additive in-scene shell, which is cheaper and has no alpha problem.
+  Section 2 lists the package, so this is a deliberate departure from the brief.
+
+### Known console warning
+
+`THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.`
+
+It comes from `@react-three/fiber` 9.8.1, which constructs `new THREE.Clock()` in its own
+store (`events-*.esm.js`). three deprecated Clock in r183 and the installed three is r186.
+Nothing in this repo calls it, and there is no newer fiber release. It is a warning, not an
+error; the smoke test fails on errors only. It clears when fiber moves to THREE.Timer.
+
+### Gates
+
+lint, typecheck, format, build and `audit:ci` pass. Playwright: 11 passed, 1 skipped.
+`npm run test:prod`: 2 passed, zero console errors on the built site.
+
+**Screenshots now run with reduced motion forced on.** That is not a workaround: the globe
+draws a single frame under `prefers-reduced-motion` by design, which makes captures
+deterministic and exercises that path. Screenshotting a continuously animating WebGL canvas
+times out waiting for the page to settle.
+
 ## Decisions taken (section 16, answered 14 Oct 2026)
 
 | # | Question | Answer |
@@ -259,14 +346,15 @@ a recruiter is probably the per-credential count with the Google program expanda
 
 ## Next
 
-**Phase 2 — Hero and globe.** Everything in section 4: the centered text block, the dotted
-Earth with inner glow, atmosphere and orbit rings, four glass cards around it, the stats
-bar, the Jaipur to Paris arc, mobile layout, reduced motion, the WebP fallback and the
-performance rules (dynamic import after text paint, DPR capped at 1.5, pause when
-off-screen, dispose on unmount).
+**Phase 3 — Content sections.** About with the method stepper, Projects with generated SVG
+covers and detail pages, the earlier web development row, Skills, and the Experience and
+Education timeline.
 
-Done when a side-by-side with the reference looks right to Ishaan, there is no layout shift
-and the console is clean.
+Done when every fact traces to section 6, the CV or a README, and every GitHub link
+returns 200.
+
+Two things to carry in: the internship location is **open to relocation**, not the brief's
+"Paris region"; and the Gatekeeper CVE figure is **44**, not the 46 in one README diagram.
 
 ## Translations
 

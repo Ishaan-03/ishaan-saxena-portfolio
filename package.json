@@ -11,27 +11,39 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "audit:ci": "npm audit --omit=dev --audit-level=high",
-    "test": "playwright test"
+    "test": "playwright test",
+    "globe:dots": "tsx scripts/generate-globe-dots.ts",
+    "test:prod": "playwright test --config=playwright.prod.config.ts"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.1",
     "lucide-react": "^1.57.0",
     "motion": "^14.2.0",
     "next": "16.4.0",
     "next-intl": "^4.14.9",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "react-icons": "^5.7.0"
+    "react-icons": "^5.7.0",
+    "three": "^0.186.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.0",
     "@tailwindcss/turbopack": "^4",
+    "@types/d3-geo": "^3.1.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/three": "^0.186.0",
+    "@types/topojson-client": "^3.1.5",
+    "d3-geo": "^3.1.1",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
     "prettier": "^3.9.10",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "topojson-client": "^3.1.0",
+    "tsx": "^4.23.15",
+    "typescript": "^5",
+    "world-atlas": "^2.0.2"
   }
 }
