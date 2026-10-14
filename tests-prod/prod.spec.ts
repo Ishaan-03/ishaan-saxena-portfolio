@@ -27,3 +27,21 @@ test('production hero', async ({ page }, testInfo) => {
   console.log(`[${testInfo.project.name}] warnings:`, JSON.stringify(warnings));
   expect(errors).toEqual([]);
 });
+
+test('production project detail page', async ({ page }, testInfo) => {
+  const errors: string[] = [];
+  page.on('console', (m) => {
+    if (m.type() === 'error') errors.push(m.text());
+  });
+  page.on('pageerror', (e) => errors.push(e.message));
+
+  await page.goto('/projects/gatekeeper');
+  await page.evaluate(() => document.fonts.ready);
+  await page.waitForTimeout(1200);
+
+  // A missing message renders as its own key path. It must never reach prod.
+  await expect(page.locator('body')).not.toContainText('projects.items.');
+
+  console.log(`[${testInfo.project.name}] detail errors:`, JSON.stringify(errors));
+  expect(errors).toEqual([]);
+});

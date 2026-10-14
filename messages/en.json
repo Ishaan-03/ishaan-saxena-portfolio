@@ -28,7 +28,15 @@
     "details": "Details",
     "openOriginal": "Open original",
     "verify": "Verify",
-    "close": "Close"
+    "close": "Close",
+    "brokeLabel": "What broke and how I fixed it",
+    "previousProject": "Previous project",
+    "nextProject": "Next project",
+    "backToProjects": "All projects",
+    "whatIBuilt": "What I built",
+    "theNumbers": "The numbers",
+    "architecture": "Architecture",
+    "scenario": "Scenario"
   },
   "hero": {
     "badge": "Open to an end-of-studies internship · April 2027",
@@ -79,5 +87,311 @@
     "title": "Styleguide",
     "subtitle": "Development only. Every component in the system, at both sizes, so drift is easy to spot.",
     "badge": "Internal"
+  },
+  "about": {
+    "badge": "About",
+    "title": "I learn cloud security by building it",
+    "lead": "Every project runs in a real AWS account, on a made-up company, so each choice has a reason behind it.",
+    "story": {
+      "p1": "I'm Ishaan, a cybersecurity master's student at ECE Paris, a school with the ANSSI SecNumEdu label. I moved to France from India for this degree.",
+      "p2": "I learn cloud security by building it. Every project runs in a real AWS account with a made-up company behind it, so each choice has a reason. I build a control, try to break it on purpose to check it really works, and keep notes on what went wrong as well as what went right.",
+      "p3": "Before security I built web apps. During my internship at Navriti Technologies in Bengaluru I worked on a SaaS product used by large automotive and healthcare groups and by the Indian government.",
+      "p4": "Next to my master's I work 15 hours a week at McDonald's. I started there with limited French; today I handle the whole service in French on my own."
+    },
+    "card": {
+      "label": "Profile",
+      "name": "Ishaan Saxena",
+      "role": "Cloud Security & DevSecOps · MSc Cybersecurity student",
+      "study": {
+        "label": "Studying",
+        "value": "MSc Cybersecurity Management, ECE Paris"
+      },
+      "focus": {
+        "label": "Looking for",
+        "value": "End-of-studies internship, 4 to 6 months from April 2027"
+      },
+      "place": {
+        "label": "Based in",
+        "value": "Paris region, open to relocation"
+      },
+      "languages": {
+        "label": "Languages",
+        "value": "English C1 (IELTS) · French B1 (estimated, used every day at work) · Hindi (native)"
+      }
+    },
+    "method": {
+      "label": "How I work",
+      "predict": {
+        "title": "Predict",
+        "line": "Write down what should happen before touching AWS."
+      },
+      "build": {
+        "title": "Build",
+        "line": "Set up the control by hand, one step at a time."
+      },
+      "break": {
+        "title": "Break",
+        "line": "Try to get past it on purpose."
+      },
+      "verify": {
+        "title": "Verify",
+        "line": "Read real evidence: CLI output, logs, CloudTrail."
+      },
+      "document": {
+        "title": "Document",
+        "line": "Publish what worked, what failed, and why."
+      }
+    }
+  },
+  "skills": {
+    "badge": "Skills",
+    "title": "The toolbox",
+    "lead": "Grouped by what I use it for. Nothing here is rated out of five.",
+    "panels": {
+      "cloud": "Cloud (AWS)",
+      "security": "Security",
+      "devsecops": "DevSecOps",
+      "systems": "Systems and development"
+    }
+  },
+  "timeline": {
+    "badge": "Experience and education",
+    "title": "How I got here",
+    "lead": "Newest first.",
+    "present": "now",
+    "entries": {
+      "mcdonalds": {
+        "role": "Crew member (équipier polyvalent)",
+        "org": "McDonald's · Épinay-sur-Orge",
+        "bullets": [
+          "Started with limited French, and learned the job and everyday French at the same time.",
+          "Now handles all service conversations alone, 15 hours a week alongside the master's."
+        ]
+      },
+      "ece": {
+        "role": "MSc Cybersecurity Management",
+        "org": "ECE Paris",
+        "bullets": [
+          "SecNumEdu label (ANSSI) and MSc label from the Conférence des Grandes Écoles.",
+          "M1 average 16/20."
+        ]
+      },
+      "navriti": {
+        "role": "Software Engineering Intern",
+        "org": "Navriti Technologies · Bengaluru, India",
+        "bullets": [
+          "Worked on Certiplate, a SaaS used by large automotive and healthcare groups and by the Indian government.",
+          "Delivered the CareerMap React prototype in two weeks for investors, with 7 machine learning APIs integrated.",
+          "Offered a full-time job at the end of the internship."
+        ]
+      },
+      "bca": {
+        "role": "Bachelor of Computer Applications",
+        "org": "Bhagwan Mahavir University · India",
+        "bullets": ["82.5% average, which is 16.5/20."]
+      }
+    }
+  },
+  "projects": {
+    "badge": "Projects",
+    "title": "Five builds, five things that broke",
+    "lead": "Each one runs in a real AWS account, on a made-up company scenario. The interesting part of each is what went wrong.",
+    "items": {
+      "gatekeeper": {
+        "title": "Gatekeeper: secure CI/CD delivery chain",
+        "scenario": "A small containerised Flask API. The app is the thing delivered; the chain around it is the project.",
+        "oneLine": "Every change passes security gates before an image can reach Amazon ECR, and no AWS key is stored anywhere.",
+        "built": [
+          "GitHub Actions pipeline with gitleaks, Semgrep, Trivy on dependencies and on the image, Checkov, an OWASP ZAP baseline and a CycloneDX SBOM.",
+          "Terraform for the S3 state bucket, ECR, and a GitHub OIDC role that trusts one repository and one branch.",
+          "Deployment tested in a kind cluster under Pod Security restricted with NetworkPolicy. The image is built once and tagged with the commit SHA."
+        ],
+        "findings": [
+          "The first image was 1.11 GB with 344 HIGH and CRITICAL CVEs. A hardened Dockerfile brought it to 125 MB, 44 HIGH and 0 CRITICAL.",
+          "Trivy found 3 HIGH CVEs in Flask and Werkzeug. Upgrading brought it to 0."
+        ],
+        "detail": {
+          "problem": "A risky change should not be able to reach production, and a stolen secret should not let anyone push to it. The app is deliberately small, a Flask API with two planted flaws, so the scanners had something real to find.",
+          "steps": [
+            "Committed a fake key, deleted it in the next commit, then ran gitleaks. It still found it, in the first commit and inside an image layer. Added a pre-commit hook.",
+            "Trivy on the dependencies: 3 HIGH CVEs in Flask and Werkzeug. Upgraded to 0.",
+            "Semgrep on the code: 5 findings on the two planted flaws. Fixed to 0.",
+            "Compared a naive image against a hardened multi-stage one: 1.11 GB to 125 MB.",
+            "Terraform for the state bucket, ECR and the OIDC role. The account already had a GitHub OIDC provider, so it is read with a data source rather than owned here.",
+            "Checkov on Terraform, Dockerfile, manifests and the workflow: 6 findings, 1 fixed and 5 skipped with a written reason.",
+            "ZAP baseline found missing security headers, fixed in the app.",
+            "kind cluster job: Pod Security rejects a deliberately bad pod, and NetworkPolicy blocks and allows as designed."
+          ],
+          "findings": [
+            "Deleting a secret does not remove it. gitleaks found the key in the first commit even after it was deleted, which is why the fix for a real leak is revoking it.",
+            "A pinned base image ages. Two weeks after pinning by digest, the same image had 4 HIGH findings with fixes available. Dependabot now proposes that refresh weekly.",
+            "The scanner skipped the workflow file without saying so. A concurrency value written as an expression made Checkov scan 0 resources and still report success. The job now fails if no checks run.",
+            "Hardening broke a feature and the smoke test caught it. /ping returned 500 because there is no ping program in the hardened image and the pod drops NET_RAW. Replaced with a TCP check, which also removes the command injection surface.",
+            "GitHub's OIDC subject carries numeric IDs. The first publish was refused until the trust policy matched the real claim. IDs are never reused, so a recreated repository with the same name cannot assume the role."
+          ],
+          "numbers": {
+            "imageSize": "Container image size",
+            "cves": "HIGH and CRITICAL CVEs in the image",
+            "semgrep": "Semgrep findings in my code",
+            "checkov": "Checkov failed checks",
+            "zap": "ZAP alerts, Medium / Low",
+            "keys": "AWS keys stored in CI"
+          },
+          "links": {
+            "greenRun": "A green run that published to ECR",
+            "blockedPr": "A pull request the gates blocked"
+          }
+        }
+      },
+      "northbeam-lite": {
+        "title": "Northbeam Lite: AWS IAM security",
+        "scenario": "Northbeam, a fictional two-person SaaS startup that started with root logins and AdministratorAccess for everyone.",
+        "oneLine": "Rebuilding a messy AWS account properly, one IAM control at a time, each one broken on purpose to prove it works.",
+        "built": [
+          "MFA-gated STS roles instead of permanent admin users, with least-privilege policies and explicit-deny evaluation tests.",
+          "ABAC with principal and resource tags, and permissions boundaries to delegate role creation without privilege escalation.",
+          "EC2 instance profile with IMDSv2, GitHub Actions OIDC with no stored key, and three CLI audit scripts."
+        ],
+        "findings": [
+          "A long-term access key never carries the MFA flag, so CLI AssumeRole failed until mfa_serial was set in the profile.",
+          "The README keeps an honest table of what was built against what was deliberately deferred. Organizations, SCPs and Identity Center were left out to protect the free credits, and saying so is more useful than pretending otherwise."
+        ],
+        "detail": {
+          "problem": "Permanent credentials that never expire, two people who can each delete production, and dev experiments sharing an account with customer data. Nothing technically prevents disaster, only carefulness, which is not a security control.",
+          "steps": [
+            "Account foundations, then replaced the standing admin credential with MFA-gated role assumption through STS.",
+            "Worked through policy evaluation logic until explicit deny behaved predictably.",
+            "ABAC: one policy covering many projects, driven by principal and resource tags.",
+            "Machine identities: an EC2 instance profile with IMDSv2, then GitHub Actions OIDC federation with no stored key.",
+            "Permissions boundaries, tested in three checkpoints: create without a boundary, create with one, then attach AdministratorAccess to the capped role and confirm it stays capped.",
+            "Audit toolkit: an access key age scanner, an unused role detector, and a CloudTrail AccessDenied hunter."
+          ],
+          "findings": [
+            "A long-term access key never carries the MFA flag, so CLI AssumeRole failed until mfa_serial was set in the profile.",
+            "A permissions boundary holds even when AdministratorAccess is attached on top of it. That is the point of the third checkpoint.",
+            "The scope statement is part of the work. Organizations, SCPs, a centralised logging account and Identity Center were deferred on purpose, because joining an Organization would have expired the account credits immediately and ended the later phases."
+          ]
+        }
+      },
+      "vpc": {
+        "title": "Multi-tier VPC architecture",
+        "scenario": "Northbeam's network, built by hand in the console to understand every piece before automating it.",
+        "oneLine": "A three-tier network across two availability zones, with no SSH anywhere.",
+        "built": [
+          "Six subnets in three tiers, public, app and data, across two availability zones, with an internet gateway and a NAT gateway.",
+          "Security groups chained tier to tier by reference instead of IP ranges, and a NACL built on purpose to show it is stateless.",
+          "An S3 gateway endpoint and SSM interface endpoints with an endpoint policy. Every instance is reached through SSM Session Manager."
+        ],
+        "findings": [
+          "Learned to read failures. A hang means there is no route. An instant refusal means the security group let it through and the host said no. A missing reply is almost always a NACL rule."
+        ],
+        "detail": {
+          "problem": "Build a segmented network by hand, in the console, with no Terraform, so that every piece is understood before it gets scripted away. No SSH anywhere: no key pairs and no open port 22.",
+          "steps": [
+            "A 10.0.0.0/16 VPC split into six subnets across three tiers and two availability zones in eu-north-1.",
+            "An internet gateway for the public tier, and a NAT gateway so the app tier can reach out without being reachable.",
+            "Security groups chained by group reference, so nothing is trusted just for being on the right subnet.",
+            "A NACL built deliberately to demonstrate that it does not remember connections the way a security group does.",
+            "An S3 gateway endpoint so the data tier never touches the internet, plus SSM interface endpoints to keep it manageable.",
+            "An endpoint policy on top, so a mistake in IAM would still not open every bucket in the account."
+          ],
+          "findings": [
+            "A connection that hangs means there is no route. The packet has nowhere to go and is dropped quietly.",
+            "An instant refusal is often a good sign: the security group allowed the request and the operating system on the other end answered.",
+            "A request that goes through while the reply never returns is almost always a NACL. They are stateless, so the reply needs its own rule."
+          ]
+        }
+      },
+      "data-protection": {
+        "title": "Data protection and secrets management",
+        "scenario": "Casefile, a fictional legal-tech company storing law firms' case documents.",
+        "oneLine": "Three classes of data, three protection strategies, from public to AWS only ever seeing ciphertext.",
+        "built": [
+          "A public bucket limited to GetObject, and a confidential bucket with SSE-KMS using a customer-managed key and TLS enforced.",
+          "Client-side encryption with the AWS Encryption SDK, so even an account admin only ever sees ciphertext.",
+          "Secret rotation with a Lambda written from scratch, and six S3 exposure cases reproduced and diagnosed."
+        ],
+        "findings": [
+          "Making a public object private does not protect its old versions. With versioning on, the previous version stayed readable.",
+          "A rotation broken on purpose at its verification step left the old password working, because promotion happens last."
+        ],
+        "detail": {
+          "problem": "The architecture falls out of one question: what kind of data is this, and who should be able to read it? Three classes, three different answers, built side by side so the difference is concrete rather than theoretical.",
+          "steps": [
+            "Public assets in a bucket that is internet-readable on purpose, scoped narrowly to GetObject only.",
+            "Confidential case documents with SSE-KMS, a customer-managed key, TLS enforced and the encryption key enforced.",
+            "Restricted settlement records encrypted client-side before upload, so AWS never holds a readable byte.",
+            "Envelope encryption built by hand first, to see what SSE-KMS does silently.",
+            "Secrets Manager against Parameter Store, with a rotation function written from scratch.",
+            "A misconfiguration lab: six real exposure patterns reproduced and diagnosed."
+          ],
+          "findings": [
+            "A KMS key policy is the sole authority on its key. A role with no IAM policy at all encrypted successfully because the key policy named it. A different role holding kms:* on Resource * was refused.",
+            "A Secrets Manager resource policy behaves the opposite way: it only adds access on top of IAM. Same vocabulary, genuinely different mechanics.",
+            "Making a public object private does not protect its old versions. With versioning on, the previous version stayed readable.",
+            "A rotation broken on purpose at its verification step left the old password working, because promotion happens last."
+          ],
+          "numbers": {
+            "cost": "Whole build cost, over about two weeks"
+          }
+        }
+      },
+      "detection": {
+        "title": "Detection, logging and monitoring",
+        "scenario": "Blackpine, a fictional five-person invoicing SaaS with no security person.",
+        "oneLine": "If something bad happened in this AWS account tonight, would anyone know, and could anyone work out what happened?",
+        "built": [
+          "Multi-region CloudTrail with log file validation, VPC Flow Logs and AWS Config with three rules, all into one S3 bucket.",
+          "A root sign-in alert by email, using EventBridge and SNS.",
+          "SQL queries over all the logs with Athena."
+        ],
+        "findings": [
+          "The root sign-in alert never arrived: those events only reach EventBridge in us-east-1. Isolated with a direct SNS test, rebuilt the rule there, and verified the email.",
+          "AWS Config flagged the app's own security group: port 22 open to 0.0.0.0/0, against the design. Fixed and re-checked."
+        ],
+        "detail": {
+          "problem": "Four questions need answers: who did what and when, who talked to whom over the network, is each resource set up the way it should be, and will a human actually be told when something important happens.",
+          "steps": [
+            "A multi-region CloudTrail trail to S3 with log file validation on.",
+            "VPC Flow Logs on the VPC, into the same bucket.",
+            "AWS Config with three managed rules over a small set of resource types.",
+            "Config immediately flagged the app server security group. Fixed it.",
+            "An SNS topic with an email subscription, then an EventBridge rule for root console login.",
+            "Signed in as root to test it. No email came.",
+            "Found why, rebuilt the rule in the right region, and the email arrived.",
+            "Athena tables over CloudTrail and Flow Logs, then ran SQL against my own logs and read what they said."
+          ],
+          "findings": [
+            "The root sign-in alert never arrived because those events only reach EventBridge in us-east-1. A direct SNS test isolated it to the rule rather than the topic.",
+            "AWS Config flagged the app's own security group with port 22 open to 0.0.0.0/0, against its own design. Fixed and re-checked.",
+            "CloudTrail and Flow Logs are the raw evidence. Config gives an opinion about it. EventBridge and SNS make sure a person hears about it. Athena is how you ask questions later."
+          ]
+        }
+      }
+    },
+    "earlier": {
+      "title": "Earlier web development work",
+      "lead": "Before cloud security. Kept short on purpose.",
+      "acme": {
+        "name": "Acme",
+        "line": "Financial tracker for businesses with long payment cycles. Tracks pending and paid transactions."
+      },
+      "buzznest": {
+        "name": "BuzzNest",
+        "line": "Distraction-free social media platform with an Express.js REST API of over 10 endpoints."
+      },
+      "echoed-thoughts": {
+        "name": "Echoed-thoughts",
+        "line": "Serverless blogging platform for sharing knowledge."
+      },
+      "payverse": {
+        "name": "PayVerse",
+        "line": "Money transfer website."
+      },
+      "carluxe": {
+        "name": "CarLuxe",
+        "line": "Car listing site."
+      }
+    }
   }
 }

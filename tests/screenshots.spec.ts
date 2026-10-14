@@ -8,13 +8,13 @@ import { test } from '@playwright/test';
  * the capture is deterministic and it exercises the reduced-motion path at the
  * same time. Screenshotting a continuously animating WebGL canvas otherwise
  * times out waiting for the page to settle.
+ *
+ * The home page is captured section by section rather than with `fullPage`.
+ * A fullPage capture resizes the viewport to the whole document, and Chromium
+ * stops painting `backdrop-filter` at that height, so every glass panel comes
+ * out empty. Nothing is wrong with the page; no real viewport is 7000px tall.
  */
 test.use({ reducedMotion: 'reduce' });
-
-const PAGES = [
-  { name: 'home', path: '/' },
-  { name: 'styleguide', path: '/styleguide' },
-];
 
 /** Waits for the globe to have drawn, or gives up if it never appears. */
 async function settle(page: import('@playwright/test').Page) {
@@ -28,31 +28,51 @@ async function settle(page: import('@playwright/test').Page) {
       { timeout: 8000 },
     )
     .catch(() => {});
-  await page.waitForTimeout(1200);
+  await page.waitForTimeout(1000);
 }
 
-for (const page of PAGES) {
-  test(`${page.name} screenshot`, async ({ page: browserPage }, testInfo) => {
-    await browserPage.goto(page.path);
-    await settle(browserPage);
+const SECTIONS = ['about', 'projects', 'skills', 'experience'];
 
-    await browserPage.screenshot({
-      path: testInfo.outputPath(`${page.name}-${testInfo.project.name}.png`),
+test('home, section by section', async ({ page }, testInfo) => {
+  await page.goto('/');
+  await settle(page);
+
+  await page.screenshot({
+    path: testInfo.outputPath(`home-01-hero-${testInfo.project.name}.png`),
+    animations: 'disabled',
+  });
+
+  for (const [index, id] of SECTIONS.entries()) {
+    await page.evaluate((anchor) => {
+      document.getElementById(anchor)?.scrollIntoView({ block: 'start' });
+    }, id);
+    await page.waitForTimeout(700);
+
+    await page.screenshot({
+      path: testInfo.outputPath(`home-0${index + 2}-${id}-${testInfo.project.name}.png`),
+      animations: 'disabled',
+    });
+  }
+});
+
+const PAGES = [
+  { name: 'styleguide', path: '/styleguide' },
+  { name: 'project-gatekeeper', path: '/projects/gatekeeper' },
+  { name: 'project-detection', path: '/projects/detection' },
+];
+
+for (const target of PAGES) {
+  test(`${target.name} screenshot`, async ({ page }, testInfo) => {
+    await page.goto(target.path);
+    await settle(page);
+
+    await page.screenshot({
+      path: testInfo.outputPath(`${target.name}-${testInfo.project.name}.png`),
       fullPage: true,
       animations: 'disabled',
     });
   });
 }
-
-test('hero above the fold', async ({ page }, testInfo) => {
-  await page.goto('/');
-  await settle(page);
-
-  await page.screenshot({
-    path: testInfo.outputPath(`hero-fold-${testInfo.project.name}.png`),
-    animations: 'disabled',
-  });
-});
 
 test('mobile menu sheet opens', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile', 'mobile only');

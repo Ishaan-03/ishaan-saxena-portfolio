@@ -4,7 +4,7 @@ Updated at the end of every phase so a new session can resume. Last update: 14 O
 
 ## Current state
 
-**Phase 2 (Hero and globe) — complete, reworked once for fidelity to the reference. Waiting for Ishaan's OK to start Phase 3.**
+**Phase 3 (Content sections) — complete. Waiting for Ishaan's OK to start Phase 4.**
 
 ## Phase 0 — done
 
@@ -251,6 +251,71 @@ draws a single frame under `prefers-reduced-motion` by design, which makes captu
 deterministic and exercises that path. Screenshotting a continuously animating WebGL canvas
 times out waiting for the page to settle.
 
+
+## Phase 3 — done
+
+### Sections built
+
+About with the glass ID card and the five-step method stepper · Projects, five featured
+cards with generated covers · the earlier web development row · Skills, four panels ·
+Experience and Education, one alternating timeline · five detail pages at
+`/projects/[slug]`.
+
+### Every fact is traceable
+
+All five READMEs were fetched from `raw.githubusercontent.com` and read before any detail
+page was written. **All ten GitHub links return 200**, checked with curl: the five AWS
+repos and the five earlier web ones.
+
+Of the earlier web repos only `Acme` has a README, which is why that row stays at the one
+line section 6 gives each of them. Nothing was added beyond it.
+
+Content is split so Phase 6 has an easy job: `content/projects.ts`, `content/skills.ts`,
+`content/experience.ts` and `content/profile.ts` hold structure only (slugs, URLs, tags,
+figures, ISO dates), and every sentence lives in `messages/en.json`.
+
+### Generated covers and diagrams
+
+Section 3 rules out stock photos, so every image is drawn:
+
+- `components/sections/ProjectCovers.tsx` — one animated SVG per project, in the site's
+  blue. A pipeline whose gates flash and block one package, identity nodes with a
+  short-lived credential travelling a link, three tiers with traffic stopping at a
+  boundary, lock rings closing over text that turns to ciphertext, and a radar sweep with
+  one amber blip.
+- `components/sections/ArchitectureDiagram.tsx` — each README's main diagram redrawn by
+  hand as SVG in the site palette. No Mermaid embedded, as section 3 requires.
+
+### A guard worth keeping
+
+The first build logged `MISSING_MESSAGE: projects.brokeLabel` ten times and **still
+succeeded**, which would have shipped the literal string `projects.brokeLabel` as visible
+text. `i18n/request.ts` now throws on a missing message when `NODE_ENV` is production, so a
+missing key fails the build instead of reaching a page. Development still only logs, so a
+half-written key does not stop the dev server. The smoke test also asserts no page contains
+`projects.items.`.
+
+### Two layout bugs found by looking
+
+- **The timeline dot sat on top of the date** on right-hand entries. `md:left-auto` and
+  `md:-left-[39px]` are both `left` at the same breakpoint, so Tailwind's output order
+  picked the winner, not the class order. `md:left-auto` now belongs only to the left-hand
+  branch. This is the third time that same trap has come up; it is worth remembering that
+  conditional Tailwind classes must never put two rules for one property at one breakpoint.
+- **A `fullPage` screenshot of the home page came out nearly empty.** Chromium stops
+  painting `backdrop-filter` when Playwright stretches the viewport to the full 7,600px
+  document, so every glass panel rendered blank. The page itself was fine: a DOM probe
+  showed `opacity=1` and real heights for every section. Screenshots now capture the home
+  page section by section at a real viewport height, which is more useful for review
+  anyway. No real browser has a 7,600px viewport, so nothing needed fixing in the site.
+
+### Gates
+
+lint, typecheck, format, build and `audit:ci` pass. Playwright: 25 passed, 1 skipped,
+including a render check per detail page and an assertion that every `#project-<slug>`
+anchor the hero cards point at actually exists. `npm run test:prod` passes on the built
+site with zero console errors, now covering a detail page as well.
+
 ## Decisions taken (section 16, answered 14 Oct 2026)
 
 | # | Question | Answer |
@@ -372,15 +437,18 @@ a recruiter is probably the per-credential count with the Google program expanda
 
 ## Next
 
-**Phase 3 — Content sections.** About with the method stepper, Projects with generated SVG
-covers and detail pages, the earlier web development row, Skills, and the Experience and
-Education timeline.
+**Phase 4 — Certificates.** Run the pipeline over `certificates-raw/`: extract title,
+issuer, date, type, credential ID and verification URL from each file, make WebP thumbnails
+into `/public/certificates/thumbs/` and copy originals to `/public/certificates/files/`,
+strip EXIF, then show Ishaan the extracted table and **wait for his confirmation** before
+building the grid, filters and full-screen viewer.
 
-Done when every fact traces to section 6, the CV or a README, and every GitHub link
-returns 200.
+Most of the extraction is already done and recorded in this file from Phase 0, and
+`content/certifications.ts` already holds all seven entries with verify codes. What remains
+is the thumbnails, the file copies, the category assignment and the UI.
 
-Two things to carry in: the internship location is **open to relocation**, not the brief's
-"Paris region"; and the Gatekeeper CVE figure is **44**, not the 46 in one README diagram.
+Carry in: the hero stats bar already reads `credentialCount` from that file, currently 14.
+Whatever Phase 4 settles about counting must keep that number honest.
 
 ## Translations
 
