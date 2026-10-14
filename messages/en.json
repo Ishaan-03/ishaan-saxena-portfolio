@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "title": "Ishaan Saxena · Cloud Security & DevSecOps",
+    "description": "MSc Cybersecurity student at ECE Paris. I build AWS security in a real account, break every control on purpose, and write down what failed. Open to an end-of-studies internship from April 2027."
+  },
+  "nav": {
+    "skipToContent": "Skip to content",
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "skills": "Skills",
+    "experience": "Experience",
+    "certificates": "Certificates",
+    "contact": "Contact",
+    "getInTouch": "Get in touch",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menuLabel": "Main navigation"
+  },
+  "language": {
+    "label": "Language",
+    "switchTo": "Switch language",
+    "comingSoon": "Coming soon"
+  },
+  "common": {
+    "backToTop": "Back to top",
+    "readMore": "Read the write-up",
+    "details": "Details",
+    "openOriginal": "Open original",
+    "verify": "Verify",
+    "close": "Close"
+  },
+  "hero": {
+    "badge": "Open to an end-of-studies internship · April 2027",
+    "headlineLine1": "Build it. Break it.",
+    "headlineLine2": "Prove it holds.",
+    "subtitle": "I'm Ishaan Saxena, an MSc Cybersecurity student at ECE Paris. I build AWS security in a real account, break every control on purpose, and write down what failed.",
+    "primaryCta": "View my projects",
+    "secondaryCta": "Download CV"
+  },
+  "footer": {
+    "tagline": "Cloud security and DevSecOps · Paris",
+    "howSecured": "How this site is secured",
+    "privacyNote": "No tracking cookies. Messages from the form go only to my inbox.",
+    "copyright": "© {year} Ishaan Saxena",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "styleguide": {
+    "title": "Styleguide",
+    "subtitle": "Development only. Every component in the system, at both sizes, so drift is easy to spot.",
+    "badge": "Internal"
+  }
+}

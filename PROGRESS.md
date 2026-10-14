@@ -4,9 +4,7 @@ Updated at the end of every phase so a new session can resume. Last update: 14 O
 
 ## Current state
 
-**Phase 0 (Setup) — complete. Waiting for Ishaan's OK to start Phase 1.**
-
-Two things still need Ishaan to act (B1 and B2 below). Neither blocks Phase 1.
+**Phase 1 (Design system) — complete. Waiting for Ishaan's OK to start Phase 2.**
 
 ## Phase 0 — done
 
@@ -56,6 +54,90 @@ code. Production dependencies are clean. Revisit when `eslint-config-next` bumps
 `fast-glob`. Flagged for Ishaan because a security portfolio should not weaken its own gate
 silently.
 
+
+## Phase 1 — done
+
+### i18n routing (section 7)
+
+- next-intl 4.14.9. `i18n/routing.ts`, `i18n/request.ts`, `i18n/navigation.ts`,
+  `middleware.ts`, plugin wired in `next.config.ts`.
+- `localePrefix: 'as-needed'` so **en** is served at `/` and the others take a prefix.
+- **`localeDetection: false`** on purpose. The brief: "No automatic redirect based on the
+  browser language (recruiters share links; the link must show what they saw)." Phase 6 adds
+  the dismissible "Voir ce site en français ?" pill instead.
+- Locale cookie kept on, named `NEXT_LOCALE`, one year, sameSite lax. A choice made in the
+  switcher survives a reload but never triggers a redirect by itself.
+- **`routing.locales` is `['en']` for now.** Listing fr, es and hi before their message
+  files exist would serve English under a French URL, which is worse than an inert switcher.
+  Phase 6 adds them in one line. `plannedLocales` already holds all four with native names.
+- Every visible string is in `messages/en.json`. No hardcoded copy in components.
+
+### Fonts
+
+next/font self-hosts Inter and JetBrains Mono, so there are no external font requests and
+the CSP in section 10 stays simple. Noto Sans Devanagari is Phase 6, Hindi only.
+
+### Tokens
+
+All of section 3 is in `app/globals.css` as CSS variables, re-exported through Tailwind 4's
+`@theme inline`. Utilities: `glass`, `text-gradient-accent`, `wordmark`, `page-backdrop`,
+`dot-grid`, `section-glow`, `skip-link`, `animate-pulse-dot`.
+
+**Contrast checked, not assumed.** Every token pair passes WCAG AA on `--bg`:
+
+| Pair | Ratio |
+|---|---|
+| `--text` on `--bg` | 18.71:1 |
+| `--text-muted` on `--bg` | 8.00:1 |
+| white on `--primary` | 5.17:1 |
+| `--accent` on `--bg` | 8.06:1 |
+| `--accent-2` on `--bg` | 11.37:1 |
+| `--finding` on `--bg` | 9.55:1 |
+| `--available` on `--bg` | 10.66:1 |
+| `--primary-hover` on `--bg` | 5.57:1 |
+
+### Components
+
+`components/ui/`: Button (primary and secondary, md and lg, arrow chip in a circle),
+Badge (blue or green pulsing dot), GlassCard (icon tile, title, body, optional tag footer,
+optional arrow button, hover lifts 4px and border turns `--border-glow`), SectionHeader
+(badge + H2 + muted line, centered, max-width 640px, glow behind), Tag (mono 11px).
+
+`components/layout/`: Navbar (64px, transparent at top, glass after 24px of scroll, active
+link tracked with IntersectionObserver, full-screen sheet on mobile), Footer, 
+LanguageSwitcher, ScrollProgress (2px `--primary` line), BackToTop (after one screen),
+Reveal (fade in + 16px up, 0.5s, 0.06s stagger, once).
+
+Reduced motion is handled globally in `globals.css` and by `motion-safe:` on the hover
+lifts, so nothing floats, counts up or rotates when the user asks it not to.
+
+`/styleguide` renders every component and returns 404 when `NODE_ENV` is production.
+
+### Two fixes worth remembering
+
+- **lucide-react v1 dropped brand icons.** GitHub now comes from `react-icons/si`
+  (`SiGithub`) and LinkedIn from `react-icons/fa6` (`FaLinkedinIn`), because Simple Icons
+  removed LinkedIn over trademark policy. `react-icons` is listed in section 2 of the brief.
+- **`new Date()` breaks the build under `cacheComponents`.** The footer year is injected at
+  build time through `env.NEXT_PUBLIC_BUILD_YEAR` in `next.config.ts`, which keeps the page
+  static and avoids a client-rendered year shifting the layout.
+- `devIndicators: false` so the Next dev badge stops landing on the footer in screenshots.
+
+### Gates
+
+lint, typecheck, format, build and `audit:ci` all pass. Playwright: 9 passed, 1 skipped
+(a mobile-only test under the desktop project). Browser console clean.
+
+Screenshots in `test-results/`: home and styleguide at both sizes, the scrolled glass
+navbar, and the mobile menu sheet.
+
+### Known gaps, deliberate
+
+- The home page is a placeholder. Hero, globe and the nine sections are Phases 2 and 3.
+- `/security` is linked from the footer but does not exist yet (Phase 7).
+- `npm run i18n:check` is not written yet. Section 7 asks for it; it belongs with Phase 6
+  when there is more than one locale to compare.
+
 ## Decisions taken (section 16, answered 14 Oct 2026)
 
 | # | Question | Answer |
@@ -81,7 +163,24 @@ Experience timeline. If he meant timeline only, drop it from the grid.
 
 ## Open items for Ishaan
 
-### B1 · Rotate two exposed keys (not blocking Phase 1)
+### B1 · Keys · RESOLVED 14 Oct, Ishaan's call
+
+Ishaan decided to keep the existing keys and accept that they appear in the chat
+transcript, on the condition that they never reach git or GitHub. That condition is
+enforced: `.gitignore` covers `.env*` and the dotless `env.*`, the gitleaks pre-commit hook
+is tested in both directions, and `git ls-files` confirms nothing matching is tracked.
+
+`.env.local` was rewritten into proper `KEY=VALUE` form with `RESEND_API_KEY` and
+`CONTACT_TO_EMAIL` set, chmod 600. The two Turnstile variables are empty because the
+Cloudflare widget does not exist yet (brief A2) and Phase 5 needs it.
+
+The GitHub PAT was deliberately left out of `.env.local`. The site never calls the GitHub
+API, and `git push` and Vercel's GitHub integration authenticate on their own.
+
+The original free-text `env.local` (no dot) still sits in the project root, holding both
+keys. It is gitignored and unused. Say the word and it goes.
+
+<details><summary>Original finding</summary>
 
 `/.env.local` and `/env.local` are byte-identical and hold, as free text rather than
 `KEY=VALUE`, a **GitHub personal access token** (`github_pat_11BHY…`) and a **Resend API
@@ -95,22 +194,24 @@ Both were read into an AI session on 14 October 2026 and should be treated as co
 The GitHub token does not belong in this project's env at all. The site never calls the
 GitHub API. `git push` and Vercel's GitHub integration authenticate on their own.
 
-Neither file has been edited or deleted, pending Ishaan's go-ahead. Both are gitignored, and
-the pre-commit hook blocks them. Next currently loads `.env.local` at build time and parses
-that JavaScript snippet as junk variables; harmless today, worth cleaning up.
+</details>
 
-### B2 · CV start date (blocks the CV copy in Phase 5)
+### B2 · CV start date · Ishaan is handling it
 
-The CV header reads **"6 mois dès janvier 2027"**. The brief (A3, section 9) requires
-**April 2027**, so it must become **"Stage de fin d'études de 4 à 6 mois dès avril 2027"**
-before it is copied to `/public/cv/`. Section 9 blocks the copy until then.
+The CV PDF still reads **"6 mois dès janvier 2027"**. Ishaan's instruction on 14 Oct: the
+site uses **April 2027** everywhere, and he will send a corrected PDF later to replace
+`assets-raw/cv/CV_Ishaan_Saxena_FR.pdf`.
+
+So section 9's "stop and tell Ishaan" check is answered: proceed with April 2027 copy, and
+swap the PDF when the new one arrives. Phase 5 must not ship the current file to
+`/public/cv/` without checking whether the replacement has landed.
 
 Only a French CV exists. An English one matters because English is the site default.
 
-### B3 · One number to confirm (Phase 3)
+### B3 · Gatekeeper number · acknowledged 14 Oct
 
-The brief flags it: the Gatekeeper README's table says **44 HIGH** CVEs after hardening but
-one diagram step says 46. The site will use 44. Ishaan should fix the diagram in the repo.
+The Gatekeeper README's table says **44 HIGH** CVEs after hardening, one diagram step says
+46. The site uses **44**. Ishaan will fix the diagram in the repo himself.
 
 ## Certificates found (16 files, 15 distinct credentials)
 
@@ -158,12 +259,14 @@ a recruiter is probably the per-credential count with the Google program expanda
 
 ## Next
 
-**Phase 1 — Design system.** Tokens from section 3, fonts, Button, Badge, GlassCard,
-SectionHeader, Tag, Navbar with switcher placeholder, Footer, section background, a dev-only
-`/styleguide` page, and next-intl routing with English strings.
+**Phase 2 — Hero and globe.** Everything in section 4: the centered text block, the dotted
+Earth with inner glow, atmosphere and orbit rings, four glass cards around it, the stats
+bar, the Jaipur to Paris arc, mobile layout, reduced motion, the WebP fallback and the
+performance rules (dynamic import after text paint, DPR capped at 1.5, pause when
+off-screen, dispose on unmount).
 
-Done when screenshots at 1440x900 and 390x844 show components matching the reference style
-in blue.
+Done when a side-by-side with the reference looks right to Ishaan, there is no layout shift
+and the console is clean.
 
 ## Translations
 
