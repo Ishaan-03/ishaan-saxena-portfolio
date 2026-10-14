@@ -13,16 +13,38 @@ import { GlassCard } from '@/components/ui/GlassCard';
  * grid under the globe, which is what section 4 asks for on mobile.
  */
 const CARDS = [
-  { key: 'identity', icon: KeyRound, href: '#project-northbeam-lite', side: 'left', row: 'top' },
+  {
+    key: 'identity',
+    icon: KeyRound,
+    href: '#project-northbeam-lite',
+    side: 'left',
+    row: 'top',
+    tone: 'lit',
+  },
   {
     key: 'dataProtection',
     icon: Lock,
     href: '#project-data-protection',
     side: 'left',
     row: 'bottom',
+    tone: 'muted',
   },
-  { key: 'detection', icon: Radar, href: '#project-detection', side: 'right', row: 'top' },
-  { key: 'devsecops', icon: GitBranch, href: '#project-gatekeeper', side: 'right', row: 'bottom' },
+  {
+    key: 'detection',
+    icon: Radar,
+    href: '#project-detection',
+    side: 'right',
+    row: 'top',
+    tone: 'lit',
+  },
+  {
+    key: 'devsecops',
+    icon: GitBranch,
+    href: '#project-gatekeeper',
+    side: 'right',
+    row: 'bottom',
+    tone: 'muted',
+  },
 ] as const;
 
 /** Each card drifts on its own 6s loop, out of phase, so they never march in step. */
@@ -43,7 +65,12 @@ export function HeroCards({ variant }: { variant: 'floating' | 'grid' }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 + index * 0.06, ease: [0.22, 1, 0.36, 1] }}
           >
-            <GlassCard icon={card.icon} title={t(`${card.key}.title`)} href={card.href}>
+            <GlassCard
+              icon={card.icon}
+              tone={card.tone}
+              title={t(`${card.key}.title`)}
+              href={card.href}
+            >
               {t(`${card.key}.body`)}
             </GlassCard>
           </motion.div>
@@ -59,9 +86,9 @@ export function HeroCards({ variant }: { variant: 'floating' | 'grid' }) {
           <motion.div
             key={card.key}
             className={
-              'pointer-events-auto absolute w-[236px] ' +
-              (card.side === 'left' ? 'left-0 ' : 'right-0 ') +
-              (card.row === 'top' ? '-top-[70px]' : 'top-[195px]')
+              'pointer-events-auto absolute w-[228px] xl:w-[244px] ' +
+              (card.side === 'left' ? 'left-2 xl:left-0 ' : 'right-2 xl:right-0 ') +
+              (card.row === 'top' ? '-top-[86px]' : 'top-[186px]')
             }
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -76,7 +103,12 @@ export function HeroCards({ variant }: { variant: 'floating' | 'grid' }) {
                 delay: FLOAT_DELAY[index],
               }}
             >
-              <GlassCard icon={card.icon} title={t(`${card.key}.title`)} href={card.href}>
+              <GlassCard
+                icon={card.icon}
+                tone={card.tone}
+                title={t(`${card.key}.title`)}
+                href={card.href}
+              >
                 {t(`${card.key}.body`)}
               </GlassCard>
             </motion.div>

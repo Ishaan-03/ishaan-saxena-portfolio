@@ -5,26 +5,79 @@ import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
 /**
- * Three thin tilted rings. They are real 3D circles, so the part behind the
- * globe is occluded by the core sphere and the depth reads correctly.
+ * The reference's rings are wide, bright and tilted at strong angles, sweeping
+ * well past the planet rather than hugging it. They are real 3D circles, so the
+ * core sphere occludes whichever half passes behind and the depth reads right.
  */
 const RINGS = [
-  { radius: 1.45, tilt: [0.42, 0, 0.18], speed: 0.13, particles: 2 },
-  { radius: 1.68, tilt: [-0.3, 0.5, -0.24], speed: -0.09, particles: 1 },
-  { radius: 1.92, tilt: [0.62, -0.25, 0.4], speed: 0.06, particles: 2 },
+  { radius: 1.32, tilt: [1.15, 0.1, 0.35], speed: 0.07, particles: 2, opacity: 0.95 },
+  { radius: 1.52, tilt: [1.38, 0.55, -0.2], speed: -0.05, particles: 2, opacity: 0.8 },
+  { radius: 1.78, tilt: [1.02, -0.42, 0.62], speed: 0.04, particles: 1, opacity: 0.6 },
+  { radius: 2.05, tilt: [1.3, 0.28, -0.52], speed: -0.03, particles: 1, opacity: 0.42 },
 ] as const;
 
-const RING_COLOR = new THREE.Color('#2563EB');
-const PARTICLE_COLOR = new THREE.Color('#93C5FD');
+const RING_COLOR = new THREE.Color('#5B9BFF');
+const PARTICLE_COLOR = new THREE.Color('#DBEAFE');
 
-function Ring({ radius, tilt, speed, particles }: (typeof RINGS)[number]) {
+/**
+ * Fades the ring along its own circumference so each one reads as a sweep of
+ * light rather than a drawn circle. Vertex alpha, so it costs nothing.
+ */
+function ringMaterial(opacity: number) {
+  return new THREE.ShaderMaterial({
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    uniforms: {
+      uColor: { value: RING_COLOR },
+      uOpacity: { value: opacity },
+    },
+    vertexShader: /* glsl */ `
+      attribute float aAngle;
+      varying float vAngle;
+
+      void main() {
+        vAngle = aAngle;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: /* glsl */ `
+      uniform vec3 uColor;
+      uniform float uOpacity;
+      varying float vAngle;
+
+      void main() {
+        // Two bright arcs per revolution, tapering into darkness between them.
+        float sweep = pow(abs(sin(vAngle)), 2.5);
+        gl_FragColor = vec4(uColor, uOpacity * (0.12 + 0.88 * sweep));
+      }
+    `,
+  });
+}
+
+function Ring({ radius, tilt, speed, particles, opacity }: (typeof RINGS)[number]) {
   const particleRefs = useRef<Array<THREE.Mesh | null>>([]);
 
   const geometry = useMemo(() => {
-    const curve = new THREE.EllipseCurve(0, 0, radius, radius, 0, Math.PI * 2, false, 0);
-    const points = curve.getPoints(128).map((p) => new THREE.Vector3(p.x, p.y, 0));
-    return new THREE.BufferGeometry().setFromPoints(points);
+    const segments = 192;
+    const positions = new Float32Array((segments + 1) * 3);
+    const angles = new Float32Array(segments + 1);
+
+    for (let i = 0; i <= segments; i++) {
+      const angle = (i / segments) * Math.PI * 2;
+      positions[i * 3] = Math.cos(angle) * radius;
+      positions[i * 3 + 1] = Math.sin(angle) * radius;
+      positions[i * 3 + 2] = 0;
+      angles[i] = angle;
+    }
+
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geo.setAttribute('aAngle', new THREE.BufferAttribute(angles, 1));
+    return geo;
   }, [radius]);
+
+  const material = useMemo(() => ringMaterial(opacity), [opacity]);
 
   useFrame(({ clock }) => {
     particleRefs.current.forEach((mesh, index) => {
@@ -41,7 +94,7 @@ function Ring({ radius, tilt, speed, particles }: (typeof RINGS)[number]) {
     <group rotation={tilt as unknown as THREE.Euler}>
       <line>
         <primitive object={geometry} attach="geometry" />
-        <lineBasicMaterial color={RING_COLOR} transparent opacity={0.28} />
+        <primitive object={material} attach="material" />
       </line>
 
       {Array.from({ length: particles }).map((_, index) => (
@@ -51,8 +104,13 @@ function Ring({ radius, tilt, speed, particles }: (typeof RINGS)[number]) {
             particleRefs.current[index] = node;
           }}
         >
-          <sphereGeometry args={[0.022, 10, 10]} />
-          <meshBasicMaterial color={PARTICLE_COLOR} toneMapped={false} />
+          <sphereGeometry args={[0.016, 8, 8]} />
+          <meshBasicMaterial
+            color={PARTICLE_COLOR}
+            toneMapped={false}
+            transparent
+            blending={THREE.AdditiveBlending}
+          />
         </mesh>
       ))}
     </group>

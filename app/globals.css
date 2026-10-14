@@ -163,15 +163,70 @@ p {
   pointer-events: none;
   background-color: var(--bg);
   background-image:
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(10, 26, 63, 0.9), transparent 70%),
-    radial-gradient(ellipse 60% 40% at 85% 20%, rgba(37, 99, 235, 0.1), transparent 70%),
-    radial-gradient(ellipse 60% 40% at 15% 60%, rgba(37, 99, 235, 0.08), transparent 70%);
+    /* The big one, sitting where the globe sits. This is the light source the
+       whole hero is lit by, and the reference leans on it heavily. */
+    radial-gradient(
+      ellipse 58% 42% at 50% 46%,
+      rgba(37, 99, 235, 0.3),
+      rgba(23, 58, 145, 0.14) 38%,
+      transparent 72%
+    ),
+    radial-gradient(ellipse 95% 55% at 50% 30%, rgba(10, 26, 63, 0.85), transparent 72%),
+    radial-gradient(ellipse 45% 35% at 88% 14%, rgba(37, 99, 235, 0.12), transparent 70%),
+    radial-gradient(ellipse 45% 35% at 10% 72%, rgba(37, 99, 235, 0.1), transparent 70%);
+}
+
+/* Darkens the corners so the centre glow has something to read against. */
+@utility page-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 75% 65% at 50% 45%,
+    transparent 35%,
+    rgba(2, 4, 10, 0.8) 100%
+  );
+}
+
+/* A soft blue wash directly behind the hero, under the cards. */
+@utility hero-glow {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  pointer-events: none;
+  width: min(1400px, 150vw);
+  height: 900px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(37, 99, 235, 0.38),
+    rgba(37, 99, 235, 0.13) 38%,
+    transparent 66%
+  );
+}
+
+/* The wide field of light around the globe. Behind the canvas, so it can spill
+   past the canvas edges without being clipped. */
+@utility globe-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  pointer-events: none;
+  width: 190%;
+  height: 190%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(59, 130, 246, 0.34) 0%,
+    rgba(37, 99, 235, 0.18) 22%,
+    rgba(30, 64, 175, 0.07) 40%,
+    transparent 62%
+  );
 }
 
 @utility dot-grid {
   position: absolute;
   inset: 0;
-  opacity: 0.35;
+  opacity: 0.5;
   background-image: radial-gradient(rgba(148, 163, 184, 0.14) 1px, transparent 1px);
   background-size: 32px 32px;
   mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 75%);

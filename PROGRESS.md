@@ -4,7 +4,7 @@ Updated at the end of every phase so a new session can resume. Last update: 14 O
 
 ## Current state
 
-**Phase 2 (Hero and globe) — complete. Waiting for Ishaan's OK to start Phase 3.**
+**Phase 2 (Hero and globe) — complete, reworked once for fidelity to the reference. Waiting for Ishaan's OK to start Phase 3.**
 
 ## Phase 0 — done
 
@@ -188,6 +188,32 @@ entry and respect reduced motion.
 credential entries read from the files in Phase 0, and `credentialCount` sums every entry
 that is not the Navriti letter, counting the Google program plus each of its eight course
 certificates. Phase 4 adds thumbnails, categories and the viewer on top of this same data.
+
+
+### Rework after Ishaan's review
+
+The first pass read as roughly a third of the reference. Studying the screenshot at 3x in
+five crops showed what was actually missing, and each of these is now in:
+
+| Reference detail | What was wrong | Fix |
+|---|---|---|
+| The sphere is a **lat/lon graticule mesh**, rows visibly horizontal, dots bunching toward the pole | A Fibonacci scatter spreads evenly and destroys that texture | Dot script regenerates on a 1.15 degree lat/lon grid |
+| **Coastlines are the brightest thing on the planet** | One flat land cloud, so continents had no edges | The script now tags any land point with a non-land neighbour as coast and ships it as its own brighter layer |
+| The globe is **lit from one side**, with a bright limb and a shadowed half | Flat, unlit dots; the sphere read as a disc | A key light in object space drives dot brightness, core shading and rim intensity, so the lit side turns with the globe |
+| A faint grid runs **over the oceans too** | Nothing between the continents | Procedural graticule in the core sphere's fragment shader. A second point cloud would have doubled the data file |
+| **Wide bright arcs** sweeping well past the planet | Thin, dim, globe-hugging rings | Four rings at bigger radii and stronger tilts, with a shader that fades each along its own circumference so it reads as a sweep of light |
+| The dark areas carry **scattered stars** | Flat black | `components/layout/Starfield.tsx`, inline SVG, 216 stars from a seeded generator so server and client markup match. No JavaScript ships |
+| A **large field of light** behind the globe reaching the cards | A thin halo hugging the sphere | CSS `globe-glow` behind the canvas plus a stronger `hero-glow` and a corner vignette |
+| Cards are **tinted and lit**, brightest at the top-left, with circular icon tiles, two filled and two neutral | Flat translucent panels with rounded-square tiles, all identical | Diagonal gradient fill, masked gradient border, circular tiles, `tone="lit"` and `tone="muted"` alternating as the reference does |
+
+**One trap worth recording.** Widening the in-scene halo to 1.95 units put it outside the
+camera frustum, and it clipped to the canvas bounds as a hard-edged blue rectangle sitting
+behind the globe. Anything wider than roughly `cameraDistance * tan(fov/2)` will do this.
+The in-scene halo is capped at 1.34 and the broad glow is CSS behind the canvas, where it
+can spill past the canvas edges freely. Same class of problem as the bloom pass.
+
+`dots.bin` grew from 41.6 KB to 71.0 KB: 9,538 land, 2,163 coast and 420 city dots. Still
+fetched lazily alongside the globe chunk, so it is not on the LCP path.
 
 ### Three things worth remembering
 

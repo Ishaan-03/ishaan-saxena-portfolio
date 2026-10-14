@@ -62,7 +62,11 @@ export function Hero() {
 
   return (
     <section id="top" className="relative overflow-hidden">
-      <div className="mx-auto max-w-6xl px-5 pt-14 pb-16 sm:pt-16">
+      {/* Wash of light behind the whole hero, so the cards sit in the glow
+          rather than floating on flat black. */}
+      <div aria-hidden className="hero-glow top-[120px]" />
+
+      <div className="relative mx-auto max-w-6xl px-5 pt-14 pb-16 sm:pt-16">
         {/* Text block. Sits above the globe, which tucks in behind it. */}
         <div className="relative z-20 text-center">
           <motion.div {...fadeUp} transition={{ duration: 0.5, ease: EASE }}>
@@ -70,7 +74,7 @@ export function Hero() {
           </motion.div>
 
           <motion.h1
-            className="mt-7"
+            className="mt-6"
             {...fadeUp}
             transition={{ duration: 0.5, delay: 0.06, ease: EASE }}
           >
@@ -79,7 +83,7 @@ export function Hero() {
           </motion.h1>
 
           <motion.p
-            className="mx-auto mt-6 max-w-xl text-[var(--text-muted)]"
+            className="mx-auto mt-5 max-w-xl text-[var(--text-muted)]"
             {...fadeUp}
             transition={{ duration: 0.5, delay: 0.12, ease: EASE }}
           >
@@ -87,7 +91,7 @@ export function Hero() {
           </motion.p>
 
           <motion.div
-            className="mt-8 flex flex-wrap items-center justify-center gap-3"
+            className="mt-7 flex flex-wrap items-center justify-center gap-3"
             {...fadeUp}
             transition={{ duration: 0.5, delay: 0.18, ease: EASE }}
           >
@@ -105,13 +109,15 @@ export function Hero() {
           text without the surrounding layout depending on it. The cards are
           positioned against this box on desktop.
         */}
-        <div className="relative z-10 h-[300px] sm:h-[400px] lg:h-[460px]">
+        <div className="relative z-10 h-[300px] sm:h-[430px] lg:h-[500px]">
           {/*
             On phones the globe sits just under the text rather than behind it,
             so it never covers the two buttons. From sm up it tucks in behind,
             the way the reference does.
           */}
-          <div className="pointer-events-none absolute left-1/2 aspect-square w-[min(84vw,600px)] -translate-x-1/2 top-[4px] sm:-top-[90px] lg:-top-[130px]">
+          <div className="pointer-events-none absolute left-1/2 aspect-square w-[min(84vw,620px)] -translate-x-1/2 top-[4px] sm:-top-[120px] sm:w-[min(80vw,720px)] lg:-top-[170px] lg:w-[min(64vw,820px)]">
+            <div aria-hidden className="globe-glow" />
+
             <div className="pointer-events-auto absolute inset-0">
               {globeState === 'ready' ? (
                 <Globe

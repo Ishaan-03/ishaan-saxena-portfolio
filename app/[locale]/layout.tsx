@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { Footer } from '@/components/layout/Footer';
 import { Navbar } from '@/components/layout/Navbar';
 import { ScrollProgress } from '@/components/layout/ScrollProgress';
+import { Starfield } from '@/components/layout/Starfield';
 import { BackToTop } from '@/components/layout/BackToTop';
 import { routing } from '@/i18n/routing';
 import '../globals.css';
@@ -66,7 +67,9 @@ export default async function LocaleLayout({
       <body className="flex min-h-full flex-col">
         <NextIntlClientProvider>
           <div aria-hidden className="page-backdrop">
+            <Starfield />
             <div className="dot-grid" />
+            <div className="page-vignette" />
           </div>
 
           <a href="#main" className="skip-link glass rounded-full px-4 py-2 text-sm">

@@ -9,6 +9,7 @@ import { decodeDots, thinOut } from './geo';
 import { Orbits } from './Orbits';
 
 type Markers = { paris: string; stockholm: string };
+type Dots = { land: Float32Array; coast: Float32Array; city: Float32Array };
 
 /** One turn every 90 seconds, per section 4. */
 const ROTATION_PER_SECOND = (Math.PI * 2) / 90;
@@ -16,14 +17,13 @@ const MAX_TILT = (6 * Math.PI) / 180;
 
 function Scene({
   land,
+  coast,
   city,
   dotSize,
   animate,
   tiltFromMouse,
   markers,
-}: {
-  land: Float32Array;
-  city: Float32Array;
+}: Dots & {
   dotSize: number;
   animate: boolean;
   tiltFromMouse: boolean;
@@ -50,7 +50,7 @@ function Scene({
 
   return (
     <group ref={group} rotation={[0.25, 0, 0.1]}>
-      <Earth land={land} city={city} dotSize={dotSize} />
+      <Earth land={land} coast={coast} city={city} dotSize={dotSize} />
       <Orbits />
       <Arc animate={animate} markers={markers} />
     </group>
@@ -68,7 +68,7 @@ function RenderOnce() {
 
 export default function Globe({ markers }: { markers: Markers }) {
   const hostRef = useRef<HTMLDivElement>(null);
-  const [dots, setDots] = useState<{ land: Float32Array; city: Float32Array } | null>(null);
+  const [dots, setDots] = useState<Dots | null>(null);
   const [visible, setVisible] = useState(true);
   const [failed, setFailed] = useState(false);
 
@@ -99,7 +99,13 @@ export default function Globe({ markers }: { markers: Markers }) {
         if (cancelled) return;
         const decoded = decodeDots(buffer);
         setDots(
-          lowPower ? { land: thinOut(decoded.land, 2), city: thinOut(decoded.city, 2) } : decoded,
+          lowPower
+            ? {
+                land: thinOut(decoded.land, 2),
+                coast: thinOut(decoded.coast, 2),
+                city: thinOut(decoded.city, 2),
+              }
+            : decoded,
         );
       })
       .catch(() => !cancelled && setFailed(true));
@@ -144,8 +150,9 @@ export default function Globe({ markers }: { markers: Markers }) {
         >
           <Scene
             land={dots.land}
+            coast={dots.coast}
             city={dots.city}
-            dotSize={lowPower ? 2.6 : 2.1}
+            dotSize={lowPower ? 2.4 : 2.0}
             animate={!reducedMotion}
             tiltFromMouse={!lowPower && !reducedMotion}
             markers={markers}

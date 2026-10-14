@@ -52,9 +52,10 @@ export function arcBetween(
 export function decodeDots(buffer: ArrayBuffer) {
   const header = new DataView(buffer);
   const landCount = header.getUint16(0, true);
-  const cityCount = header.getUint16(2, true);
+  const coastCount = header.getUint16(2, true);
+  const cityCount = header.getUint16(4, true);
 
-  const values = new Int16Array(buffer, 4, (landCount + cityCount) * 3);
+  const values = new Int16Array(buffer, 6, (landCount + coastCount + cityCount) * 3);
 
   const toFloats = (source: Int16Array) => {
     const out = new Float32Array(source.length);
@@ -62,9 +63,13 @@ export function decodeDots(buffer: ArrayBuffer) {
     return out;
   };
 
+  const landEnd = landCount * 3;
+  const coastEnd = landEnd + coastCount * 3;
+
   return {
-    land: toFloats(values.subarray(0, landCount * 3)),
-    city: toFloats(values.subarray(landCount * 3)),
+    land: toFloats(values.subarray(0, landEnd)),
+    coast: toFloats(values.subarray(landEnd, coastEnd)),
+    city: toFloats(values.subarray(coastEnd)),
   };
 }
 

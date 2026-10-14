@@ -8,9 +8,9 @@
  *
  * Layout (little-endian):
  *   u16 landCount
+ *   u16 coastCount
  *   u16 cityCount
- *   i16 * 3 * landCount   unit-sphere xyz, scaled by 32767
- *   i16 * 3 * cityCount   same
+ *   i16 * 3 * each, in that order: unit-sphere xyz scaled by 32767
  *
  * Run with: npm run globe:dots
  *
@@ -26,20 +26,18 @@ import type { Topology } from 'topojson-specification';
 
 const require = createRequire(import.meta.url);
 
-/** Fibonacci sphere: even coverage without clustering at the poles. */
-function fibonacciSphere(count: number) {
+/**
+ * Uniform latitude/longitude grid. The reference globe is clearly a graticule
+ * mesh, not an even scatter: rows run visibly horizontal and the dots bunch
+ * toward the pole. A Fibonacci sphere spreads evenly and loses that texture.
+ */
+function latLonGrid(stepDeg: number) {
   const points: Array<{ lat: number; lon: number }> = [];
-  const golden = Math.PI * (3 - Math.sqrt(5));
 
-  for (let i = 0; i < count; i++) {
-    const y = 1 - (i / (count - 1)) * 2;
-    const radius = Math.sqrt(1 - y * y);
-    const theta = golden * i;
-
-    points.push({
-      lat: (Math.asin(y) * 180) / Math.PI,
-      lon: (Math.atan2(Math.sin(theta) * radius, Math.cos(theta) * radius) * 180) / Math.PI,
-    });
+  for (let lat = -58; lat <= 84; lat += stepDeg) {
+    for (let lon = -180; lon < 180; lon += stepDeg) {
+      points.push({ lat, lon });
+    }
   }
 
   return points;
@@ -59,25 +57,37 @@ const land = topojson.feature(topology, topology.objects.land) as unknown as Fea
   Polygon | MultiPolygon
 >;
 
-// ~7k land dots reads as a solid continent shape at this size without the cloud
-// turning into a blob.
-const SAMPLES = 26_000;
+// 1.15 degrees gives a mesh fine enough to read as continents at hero size
+// while the individual rows stay visible, which is what the reference shows.
+const STEP = 1.15;
 
 const landDots: number[] = [];
-for (const { lat, lon } of fibonacciSphere(SAMPLES)) {
-  // Antarctica reads as a white smear at this dot size and adds nothing.
-  if (lat < -60) continue;
+const coastDots: number[] = [];
 
-  if (land.features.some((feature) => geoContains(feature, [lon, lat]))) {
-    landDots.push(...latLonToVec3(lat, lon));
-  }
+const isLand = (lat: number, lon: number) =>
+  land.features.some((feature) => geoContains(feature, [lon, lat]));
+
+for (const { lat, lon } of latLonGrid(STEP)) {
+  if (!isLand(lat, lon)) continue;
+
+  // A point with a non-land neighbour is on a coastline. The reference lights
+  // those edges brightly, which is what makes the continents legible.
+  const onCoast =
+    !isLand(lat + STEP, lon) ||
+    !isLand(lat - STEP, lon) ||
+    !isLand(lat, lon + STEP) ||
+    !isLand(lat, lon - STEP);
+
+  const vec = latLonToVec3(lat, lon);
+  if (onCoast) coastDots.push(...vec);
+  else landDots.push(...vec);
 }
 
 // A scattering of brighter dots spread through the land set rather than
 // clustered, standing in for city lights.
 const cityDots: number[] = [];
 const landCount = landDots.length / 3;
-const CITY_COUNT = 240;
+const CITY_COUNT = 420;
 const stride = Math.floor(landCount / CITY_COUNT);
 
 for (let i = 0; i < CITY_COUNT; i++) {
@@ -85,12 +95,15 @@ for (let i = 0; i < CITY_COUNT; i++) {
   cityDots.push(landDots[index], landDots[index + 1], landDots[index + 2]);
 }
 
-const buffer = Buffer.alloc(4 + (landDots.length + cityDots.length) * 2);
-buffer.writeUInt16LE(landCount, 0);
-buffer.writeUInt16LE(CITY_COUNT, 2);
+const coastCount = coastDots.length / 3;
 
-let offset = 4;
-for (const value of [...landDots, ...cityDots]) {
+const buffer = Buffer.alloc(6 + (landDots.length + coastDots.length + cityDots.length) * 2);
+buffer.writeUInt16LE(landCount, 0);
+buffer.writeUInt16LE(coastCount, 2);
+buffer.writeUInt16LE(CITY_COUNT, 4);
+
+let offset = 6;
+for (const value of [...landDots, ...coastDots, ...cityDots]) {
   buffer.writeInt16LE(Math.round(value * 32767), offset);
   offset += 2;
 }
@@ -99,5 +112,5 @@ mkdirSync('public/globe', { recursive: true });
 writeFileSync('public/globe/dots.bin', buffer);
 
 console.log(
-  `public/globe/dots.bin: ${landCount} land dots, ${CITY_COUNT} city dots, ${(buffer.length / 1024).toFixed(1)} KB`,
+  `public/globe/dots.bin: ${landCount} land, ${coastCount} coast, ${CITY_COUNT} city, ${(buffer.length / 1024).toFixed(1)} KB`,
 );
