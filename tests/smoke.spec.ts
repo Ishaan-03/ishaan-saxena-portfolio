@@ -104,3 +104,49 @@ test('filter chips narrow the grid', async ({ page }) => {
   await page.getByRole('button', { name: /^All/ }).click();
   await expect(page.locator('#certificates li')).toHaveCount(15);
 });
+
+/**
+ * Guards the bug that shipped through three phases unnoticed: the hero was
+ * animated in with motion's `animate` prop, which writes opacity:0 into the
+ * server HTML and relies on a mount animation firing. It did not fire, so the
+ * headline, subtitle, buttons, cards and stats bar were invisible in a real
+ * browser.
+ *
+ * Every screenshot test forces prefers-reduced-motion for deterministic
+ * captures, and under reduced motion the final state renders immediately. That
+ * is exactly why nothing caught it. This test runs with motion ENABLED.
+ */
+test.describe('hero is visible with motion enabled', () => {
+  test.use({ reducedMotion: 'no-preference' });
+
+  test('nothing in the hero is stuck at opacity 0', async ({ page }) => {
+    await page.goto('/');
+    await page.waitForTimeout(2000);
+
+    const hidden = await page.evaluate(() => {
+      const hero = document.querySelector('#top');
+      if (!hero) return ['#top is missing'];
+
+      return [...hero.querySelectorAll('h1, p, a, button, div')]
+        .filter((el) => {
+          const style = getComputedStyle(el);
+          if (Number(style.opacity) > 0.01) return false;
+          // Ignore things that are meant to be invisible or are not rendered.
+          const rect = el.getBoundingClientRect();
+          return rect.width > 0 && rect.height > 0 && el.textContent?.trim();
+        })
+        .map((el) => `${el.tagName}: ${el.textContent?.trim().slice(0, 40)}`);
+    });
+
+    expect(hidden).toEqual([]);
+  });
+
+  test('the headline is actually painted', async ({ page }) => {
+    await page.goto('/');
+    await page.waitForTimeout(2000);
+
+    const h1 = page.getByRole('heading', { level: 1 });
+    await expect(h1).toBeVisible();
+    await expect(h1).toHaveCSS('opacity', '1');
+  });
+});

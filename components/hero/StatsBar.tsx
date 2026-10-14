@@ -1,7 +1,7 @@
 'use client';
 
 import { Cloud, Lock, ShieldCheck, Terminal } from 'lucide-react';
-import { motion, useInView, useReducedMotion } from 'motion/react';
+import { useInView, useReducedMotion } from 'motion/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 import { credentialCount } from '@/content/certifications';
@@ -111,13 +111,9 @@ export function StatsBar() {
 
 function Stat({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: 0.35 }}
-    >
+    <div className="animate-rise [animation-delay:350ms]">
       <dd className="text-gradient-accent text-xl font-semibold tabular-nums">{children}</dd>
       <dt className="mt-0.5 text-[11px] whitespace-nowrap text-[var(--text-muted)]">{label}</dt>
-    </motion.div>
+    </div>
   );
 }

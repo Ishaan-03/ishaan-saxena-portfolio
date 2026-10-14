@@ -6,3 +6,4 @@ certificates-raw/
 design-reference/
 assets-raw/
 *.md
+.next-prod/

@@ -14,7 +14,9 @@
     "test": "playwright test",
     "globe:dots": "tsx scripts/generate-globe-dots.ts",
     "test:prod": "playwright test --config=playwright.prod.config.ts",
-    "certificates": "tsx scripts/process-certificates.ts"
+    "certificates": "tsx scripts/process-certificates.ts",
+    "build:prod": "BUILD_DIR=.next-prod next build",
+    "start:prod": "BUILD_DIR=.next-prod next start -p 3600"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

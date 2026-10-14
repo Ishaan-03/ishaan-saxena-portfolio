@@ -6,6 +6,40 @@ Updated at the end of every phase so a new session can resume. Last update: 14 O
 
 **Phase 4 (Certificates) — complete. Waiting for Ishaan's OK to start Phase 5.**
 
+### Incident: the site looked empty in Ishaan's browser
+
+He reported every section showing only its heading, with all the body content missing, and
+no globe. Two separate things, worth keeping apart.
+
+**The cause: I corrupted the dev server's cache.** `next build` and `next dev` both write to
+`.next`. Across phases 2 to 4 I ran production builds repeatedly while the dev server was
+live, and it ended up serving a stale tree that still threw
+`MISSING_MESSAGE: projects.brokeLabel` — a bug fixed hours earlier in the source. That error
+broke hydration, so no scroll reveal ever attached and every section below its heading
+stayed at opacity 0. The built site was healthy throughout; only the dev server was broken.
+
+Fixed by `distDir: process.env.BUILD_DIR || '.next'` in `next.config.ts`, with `build:prod`
+and `start:prod` using `.next-prod`. The two can no longer touch each other. Recorded in
+CLAUDE.md as a rule.
+
+**What let it go unnoticed: my screenshot strategy.** Every screenshot test forces
+`prefers-reduced-motion`, which I introduced in Phase 2 to make the animating globe
+capturable. Under reduced motion every final state renders immediately, so a screenshot can
+never show content stuck waiting on an animation. Three phases of green screenshots proved
+nothing about the real-motion path.
+
+`tests/visibility.spec.ts` now runs with **motion on**, scrolls each section in full, and
+fails if any text ends up invisible. `test:prod` runs with motion on too.
+
+**One honest correction.** While diagnosing I measured the hero as stuck at opacity 0 and
+concluded motion's mount animation never fired. That reading came from the in-app browser
+pane, which stops compositing when it is not displayed and freezes both CSS animations and
+requestAnimationFrame at time zero. It was a measurement artifact, not a bug.
+
+The hero's entrance was moved from motion to a CSS keyframe anyway, and that change stands
+on its own merit: the headline is the LCP element, and its visibility should not depend on a
+JavaScript animation succeeding. It now renders with no JavaScript at all.
+
 ## Phase 0 — done
 
 ### Files staged from Part A

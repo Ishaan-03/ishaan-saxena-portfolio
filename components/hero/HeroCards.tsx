@@ -59,11 +59,10 @@ export function HeroCards({ variant }: { variant: 'floating' | 'grid' }) {
     return (
       <div className="mt-8 grid grid-cols-2 gap-3 lg:hidden">
         {CARDS.map((card, index) => (
-          <motion.div
+          <div
             key={card.key}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 + index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+            className="animate-rise"
+            style={{ animationDelay: `${300 + index * 60}ms` }}
           >
             <GlassCard
               icon={card.icon}
@@ -73,7 +72,7 @@ export function HeroCards({ variant }: { variant: 'floating' | 'grid' }) {
             >
               {t(`${card.key}.body`)}
             </GlassCard>
-          </motion.div>
+          </div>
         ))}
       </div>
     );
@@ -83,16 +82,14 @@ export function HeroCards({ variant }: { variant: 'floating' | 'grid' }) {
     <>
       <div className="pointer-events-none absolute inset-0 hidden lg:block">
         {CARDS.map((card, index) => (
-          <motion.div
+          <div
             key={card.key}
             className={
-              'pointer-events-auto absolute w-[228px] xl:w-[244px] ' +
+              'animate-rise pointer-events-auto absolute w-[228px] xl:w-[244px] ' +
               (card.side === 'left' ? 'left-2 xl:left-0 ' : 'right-2 xl:right-0 ') +
               (card.row === 'top' ? '-top-[86px]' : 'top-[186px]')
             }
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 + index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+            style={{ animationDelay: `${300 + index * 60}ms` }}
           >
             <motion.div
               animate={reduced ? undefined : { y: [-6, 6, -6] }}
@@ -112,7 +109,7 @@ export function HeroCards({ variant }: { variant: 'floating' | 'grid' }) {
                 {t(`${card.key}.body`)}
               </GlassCard>
             </motion.div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </>

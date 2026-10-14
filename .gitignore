@@ -44,3 +44,6 @@ PORTFOLIO_BRIEF.pdf
 
 # playwright output
 /test-results/
+
+# production verification build, see BUILD_DIR
+/.next-prod/

@@ -4,7 +4,9 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests-prod',
   reporter: 'line',
-  use: { baseURL: 'http://localhost:3500', reducedMotion: 'reduce' },
+  // Motion stays ON here: reduced motion renders every final state
+  // immediately, which would hide content stuck waiting on an animation.
+  use: { baseURL: 'http://localhost:3600' },
   projects: [
     {
       name: 'desktop',

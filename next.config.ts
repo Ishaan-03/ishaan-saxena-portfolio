@@ -3,6 +3,14 @@ import createNextIntlPlugin from 'next-intl/plugin';
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  /**
+   * Production checks build into their own directory. `next build` and
+   * `next dev` otherwise share `.next`, and building while the dev server is
+   * live corrupts its cache: the dev server kept serving a stale tree whose
+   * errors broke hydration, so every motion element stayed at opacity 0 and the
+   * page looked empty while the real build was fine.
+   */
+  distDir: process.env.BUILD_DIR || '.next',
   cacheComponents: true,
   partialPrefetching: true,
   // The dev overlay badge sits on top of the footer and lands in screenshots.

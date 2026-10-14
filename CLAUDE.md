@@ -60,11 +60,19 @@ Respect `prefers-reduced-motion` everywhere: no floating, no count-up, no auto-r
 1. `npm run lint`, `npm run typecheck`, `npm run build`, `npm run format:check` and
    `npm run audit:ci` all pass.
 2. `npx playwright test` passes and the browser console is clean.
-3. **`npm run test:prod` passes.** Build, `next start -p 3200`, then run it. Dev mode hides
-   real bugs: a hydration mismatch in the stats count-up only appeared in a minified
-   production build.
-4. Screenshots at **1440x900** and **390x844**, compared against the reference.
-5. `PROGRESS.md` updated so a fresh session can resume.
+3. **`npm run test:prod` passes.** `npm run build:prod` then `npm run start:prod`, then run
+   it. Dev mode hides real bugs: a hydration mismatch in the stats count-up only appeared in
+   a minified production build.
+4. **`npx playwright test visibility` passes.** It runs with motion ON and fails if any text
+   is stuck at opacity 0 after scrolling. Screenshot tests force reduced motion, which
+   renders every final state immediately and so can never catch invisible content.
+5. Screenshots at **1440x900** and **390x844**, compared against the reference.
+6. `PROGRESS.md` updated so a fresh session can resume.
+
+**Never run `npm run build` while the dev server is running.** They share `.next`, and
+building under a live dev server corrupts its cache: it then serves a stale tree whose
+errors break hydration, leaving the page looking empty while the real build is fine.
+`build:prod` and `start:prod` use `.next-prod` through `BUILD_DIR` for exactly this reason.
 
 Screenshot tests force `prefers-reduced-motion`. The globe draws one still frame in that
 mode by design, which makes captures deterministic. Without it, Playwright times out waiting

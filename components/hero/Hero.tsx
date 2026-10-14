@@ -1,7 +1,6 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { Badge } from '@/components/ui/Badge';
@@ -33,13 +32,6 @@ function supportsWebGL() {
 
 type GlobeState = 'pending' | 'ready' | 'unsupported';
 
-const fadeUp = {
-  initial: { opacity: 0, y: 14 },
-  animate: { opacity: 1, y: 0 },
-};
-
-const EASE = [0.22, 1, 0.36, 1] as const;
-
 export function Hero() {
   const t = useTranslations('hero');
   const [globeState, setGlobeState] = useState<GlobeState>('pending');
@@ -67,41 +59,33 @@ export function Hero() {
       <div aria-hidden className="hero-glow top-[120px]" />
 
       <div className="relative mx-auto max-w-6xl px-5 pt-14 pb-16 sm:pt-16">
-        {/* Text block. Sits above the globe, which tucks in behind it. */}
+        {/*
+          Text block. The entrance is the `animate-rise` CSS keyframe rather than
+          a motion mount animation. This is the LCP content, and it must never
+          depend on a JavaScript animation firing in order to become visible.
+        */}
         <div className="relative z-20 text-center">
-          <motion.div {...fadeUp} transition={{ duration: 0.5, ease: EASE }}>
+          <div className="animate-rise">
             <Badge tone="green">{t('badge')}</Badge>
-          </motion.div>
+          </div>
 
-          <motion.h1
-            className="mt-6"
-            {...fadeUp}
-            transition={{ duration: 0.5, delay: 0.06, ease: EASE }}
-          >
+          <h1 className="animate-rise mt-6 [animation-delay:60ms]">
             <span className="block text-[var(--text)]">{t('headlineLine1')}</span>
             <span className="text-gradient-accent block">{t('headlineLine2')}</span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            className="mx-auto mt-5 max-w-xl text-[var(--text-muted)]"
-            {...fadeUp}
-            transition={{ duration: 0.5, delay: 0.12, ease: EASE }}
-          >
+          <p className="animate-rise mx-auto mt-5 max-w-xl text-[var(--text-muted)] [animation-delay:120ms]">
             {t('subtitle')}
-          </motion.p>
+          </p>
 
-          <motion.div
-            className="mt-7 flex flex-wrap items-center justify-center gap-3"
-            {...fadeUp}
-            transition={{ duration: 0.5, delay: 0.18, ease: EASE }}
-          >
+          <div className="animate-rise mt-7 flex flex-wrap items-center justify-center gap-3 [animation-delay:180ms]">
             <ButtonLink href="#projects" size="lg" withArrow>
               {t('primaryCta')}
             </ButtonLink>
             <ButtonLink href="#internship" variant="secondary" size="lg">
               {t('secondaryCta')}
             </ButtonLink>
-          </motion.div>
+          </div>
         </div>
 
         {/*
