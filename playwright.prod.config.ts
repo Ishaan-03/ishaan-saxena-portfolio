@@ -4,7 +4,7 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests-prod',
   reporter: 'line',
-  use: { baseURL: 'http://localhost:3400', reducedMotion: 'reduce' },
+  use: { baseURL: 'http://localhost:3500', reducedMotion: 'reduce' },
   projects: [
     {
       name: 'desktop',

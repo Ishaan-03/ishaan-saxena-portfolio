@@ -12,7 +12,7 @@
  *
  * certificates-raw/ is gitignored. Only the processed output in public/ ships.
  */
-import { copyFileSync, existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readdirSync, rmSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import sharp from 'sharp';
@@ -117,7 +117,7 @@ async function main() {
       .webp({ quality: 78 })
       .toFile(thumbTarget);
 
-    const originalKb = Buffer.byteLength(require('node:fs').readFileSync(originalTarget)) / 1024;
+    const originalKb = statSync(originalTarget).size / 1024;
     report.push({
       slug: entry.slug,
       thumbKb: info.size / 1024,

@@ -4,7 +4,7 @@ Updated at the end of every phase so a new session can resume. Last update: 14 O
 
 ## Current state
 
-**Phase 3 (Content sections) — complete. Waiting for Ishaan's OK to start Phase 4.**
+**Phase 4 (Certificates) — complete. Waiting for Ishaan's OK to start Phase 5.**
 
 ## Phase 0 — done
 
@@ -316,6 +316,87 @@ including a render check per detail page and an assertion that every `#project-<
 anchor the hero cards point at actually exists. `npm run test:prod` passes on the built
 site with zero console errors, now covering a detail page as well.
 
+
+## Phase 4 — done
+
+### The pipeline
+
+`npm run certificates` renders page one of each document, writes an 800px WebP thumbnail
+into `public/certificates/thumbs/`, and copies the original into
+`public/certificates/files/` for the "Open original" link.
+
+sharp writes no metadata unless asked, so the thumbnails carry **no EXIF, ICC, XMP or
+IPTC** — verified by reading all 15 back. Originals are copied byte for byte, because a
+certificate is evidence and re-encoding it defeats the purpose. `certificates-raw/` stays
+gitignored; only the processed output ships.
+
+Weight: thumbnails 352 KB, originals 3.5 MB.
+
+`sharp` was added as a devDependency. It was already present transitively through Next, but
+a build script should not depend on another package's hoisting. It never ships.
+
+### Flat, not nested
+
+The brief suggested collapsing a program's courses into an expandable list under one card.
+That was built first and it was wrong: it hid eight real Coursera certificates behind a
+single tile, and the section read as far thinner than the work behind it. Ishaan said so
+directly, and asked for everything to be listed with the most relevant on top.
+
+So the list is flat. **15 cards**, ordered: the four featured first (Google program, AWS
+Cloud Practitioner Essentials, Splunk, Tech Away level 3), then the eight Google courses
+most-relevant-first, then development, then the Navriti letter. `programSlug` keeps the
+relationship visible with a "part of the Google program" label instead of hiding it.
+
+**Nothing was ever missing.** There are exactly 9 Google credentials — the program badge
+plus its 8 courses — and all 9 were extracted in Phase 0. They were collapsed, not absent.
+
+Counting: `credentialCount` is now simply every entry that is not the letter, which is
+**14**. Because the list is flat, that number is exactly what a visitor can count on screen,
+which is a better guarantee than the old nested arithmetic.
+
+### What ships per credential
+
+| | |
+|---|---|
+| Thumbnail | 800px WebP, metadata stripped |
+| Original | byte-identical copy, opened in a new tab |
+| Type badge | Certificate / Course / Exam / Letter, never blurred together |
+| `printedTitle` | recorded wherever the displayed title differs from the document's own wording |
+| Verify | only where the issuer prints a durable public link |
+
+Verification links exist for the Google badge (Credly) and its 8 courses (Coursera). Liora,
+DataScientest and 100xdevs print a credential ID but no link. The URL on the Splunk
+certificate is a **browser print footer**, not a verification endpoint, so it is
+deliberately absent.
+
+### The nav link now goes somewhere
+
+The navbar's Certificates link pointed at `#certificates`, which did not exist until this
+phase. A smoke test now asserts the anchor is present, that clicking the nav link lands on
+it, that there are 15 cards, and that 9 of them are Google credentials.
+
+### Accessibility
+
+The viewer takes focus on open, traps Tab inside itself, returns focus to the card that
+opened it, closes on Esc, and walks the filtered list with left and right arrows. Covered
+by a test rather than asserted.
+
+### Gates
+
+lint, typecheck, format, build and `audit:ci` pass. Playwright: 33 passed, 1 skipped.
+`npm run test:prod` passes with zero console errors, and both a thumbnail and an original
+return 200 from the built server.
+
+### Open questions for Ishaan
+
+1. **Originals are 3.5 MB.** If that is too much to carry, the 9 Google ones could link to
+   Credly and Coursera instead of being hosted, cutting it to roughly 700 KB.
+2. **His photo is printed on the 100xdevs certificate.** He chose no photo for the About
+   section, so it is worth knowing it appears in that one thumbnail. Croppable on request.
+3. **The Navriti letter** is in the grid as a Letter and excluded from the 14. His Phase 0
+   answer selected both "include it" and "timeline proof only", so this is a reading, not a
+   confirmed decision.
+
 ## Decisions taken (section 16, answered 14 Oct 2026)
 
 | # | Question | Answer |
@@ -437,18 +518,21 @@ a recruiter is probably the per-credential count with the Google program expanda
 
 ## Next
 
-**Phase 4 — Certificates.** Run the pipeline over `certificates-raw/`: extract title,
-issuer, date, type, credential ID and verification URL from each file, make WebP thumbnails
-into `/public/certificates/thumbs/` and copy originals to `/public/certificates/files/`,
-strip EXIF, then show Ishaan the extracted table and **wait for his confirmation** before
-building the grid, filters and full-screen viewer.
+**Phase 5 — Internship band, CV and contact.** The call-to-action band from section 7, the
+CV split button from section 9, the contact form, the `/api/contact` route, Turnstile,
+Resend, and every UI state.
 
-Most of the extraction is already done and recorded in this file from Phase 0, and
-`content/certifications.ts` already holds all seven entries with verify codes. What remains
-is the thumbnails, the file copies, the category assignment and the UI.
+Two blockers to clear first, both needing Ishaan:
 
-Carry in: the hero stats bar already reads `credentialCount` from that file, currently 14.
-Whatever Phase 4 settles about counting must keep that number honest.
+1. **Turnstile does not exist yet.** `TURNSTILE_SECRET_KEY` and
+   `NEXT_PUBLIC_TURNSTILE_SITE_KEY` are empty in `.env.local`. Brief A2: create the widget
+   at Cloudflare and add the production hostname to its allowed list.
+2. **The CV still says "6 mois dès janvier 2027".** Ishaan is sending a corrected PDF. The
+   site text already says April 2027 everywhere, per his instruction; section 9 blocks
+   copying the file to `/public/cv/` until the replacement lands.
+
+Also carry in: the internship band must say **open to relocation**, not the brief's
+hardcoded "Paris region".
 
 ## Translations
 

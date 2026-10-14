@@ -12,7 +12,6 @@ import { ProjectCover } from './ProjectCovers';
  */
 export function ProjectCard({ project, featured }: { project: Project; featured?: boolean }) {
   const t = useTranslations(`projects.items.${project.slug}`);
-  const tc = useTranslations('projects');
   const tCommon = useTranslations('common');
 
   const built = t.raw('built') as string[];

@@ -393,5 +393,31 @@
         "line": "Car listing site."
       }
     }
+  },
+  "certificates": {
+    "badge": "Certificates",
+    "title": "What I have studied",
+    "lead": "Everything is listed, most relevant first. Click any one to see it full size, open the original, or verify it where the issuer provides a link.",
+    "filterLabel": "Filter certificates by category",
+    "featured": "Featured",
+    "verifiable": "Verifiable online",
+    "partOfProgram": "part of the Google program",
+    "credentialId": "Credential ID",
+    "previous": "Previous certificate",
+    "next": "Next certificate",
+    "imageAlt": "{title}, full size",
+    "filters": {
+      "all": "All",
+      "cloud": "Cloud",
+      "security-operations": "Security operations",
+      "cybersecurity-foundations": "Cybersecurity foundations",
+      "development": "Development"
+    },
+    "types": {
+      "certificate": "Certificate",
+      "course": "Course",
+      "exam": "Exam",
+      "letter": "Letter"
+    }
   }
 }

@@ -31,7 +31,7 @@ async function settle(page: import('@playwright/test').Page) {
   await page.waitForTimeout(1000);
 }
 
-const SECTIONS = ['about', 'projects', 'skills', 'experience'];
+const SECTIONS = ['about', 'projects', 'skills', 'experience', 'certificates'];
 
 test('home, section by section', async ({ page }, testInfo) => {
   await page.goto('/');
@@ -92,6 +92,18 @@ test('navbar turns to glass after scrolling', async ({ page }, testInfo) => {
   await page.screenshot({
     path: testInfo.outputPath(`navbar-scrolled-${testInfo.project.name}.png`),
     clip: { x: 0, y: 0, width: testInfo.project.use.viewport!.width, height: 200 },
+    animations: 'disabled',
+  });
+});
+
+test('certificate viewer open', async ({ page }, testInfo) => {
+  await page.goto('/#certificates');
+  await page.waitForTimeout(600);
+  await page.locator('#certificates li button').first().click();
+  await page.waitForTimeout(500);
+
+  await page.screenshot({
+    path: testInfo.outputPath(`cert-viewer-${testInfo.project.name}.png`),
     animations: 'disabled',
   });
 });
