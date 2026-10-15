@@ -60,9 +60,9 @@ Respect `prefers-reduced-motion` everywhere: no floating, no count-up, no auto-r
 1. `npm run lint`, `npm run typecheck`, `npm run build`, `npm run format:check` and
    `npm run audit:ci` all pass.
 2. `npx playwright test` passes and the browser console is clean.
-3. **`npm run test:prod` passes.** `npm run build:prod` then `npm run start:prod`, then run
-   it. Dev mode hides real bugs: a hydration mismatch in the stats count-up only appeared in
-   a minified production build.
+3. **`npm run test:prod` passes.** `npm run build:prod` first, then `npm run test:prod`,
+   which starts its own server on 3700 against `.next-prod`. Dev mode hides real bugs: a
+   hydration mismatch in the stats count-up only appeared in a minified production build.
 4. **`npx playwright test visibility` passes.** It runs with motion ON and fails if any text
    is stuck at opacity 0 after scrolling. Screenshot tests force reduced motion, which
    renders every final state immediately and so can never catch invisible content.
@@ -73,6 +73,14 @@ Respect `prefers-reduced-motion` everywhere: no floating, no count-up, no auto-r
 building under a live dev server corrupts its cache: it then serves a stale tree whose
 errors break hydration, leaving the page looking empty while the real build is fine.
 `build:prod` and `start:prod` use `.next-prod` through `BUILD_DIR` for exactly this reason.
+
+**A routing or middleware change is not verified until a fresh server has served it.**
+`playwright.config.ts` sets `reuseExistingServer` outside CI, so a local run answers from
+whatever dev server happens to be up. A four-hour-old process served a whole suite once and
+`/api/contact` came back 404 on every clean machine: next-intl was rewriting it onto the
+default locale and the locale catch-all was answering. Nine tests caught it in CI and none
+locally. Restart the dev server, or trust CI, before believing a green local run on anything
+that touches `middleware.ts`, `i18n/`, or the route tree.
 
 Screenshot tests force `prefers-reduced-motion`. The globe draws one still frame in that
 mode by design, which makes captures deterministic. Without it, Playwright times out waiting

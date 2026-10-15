@@ -828,5 +828,68 @@ Ishaan handles GitHub and Vercel auth himself. Nothing has been pushed anywhere.
 
 ## Translations
 
-Not started. When written, note here that all four locales are machine-written and need
-review: Ishaan reviews Hindi (native) and French; Spanish stays simple.
+Delivered in Phase 6, all four locales. See "Translation notes" above. Every string is
+machine-written and still needs Ishaan's review: he reads Hindi natively and French well,
+Spanish stays deliberately simple. `npm run i18n:check` guards shape, placeholders, array
+length and invisible characters, not meaning.
+
+## Phase 8 · first push to GitHub, 15 Oct 2026
+
+Pushed to `Ishaan-03/ishaan-saxena-portfolio` (public, it was empty). All 11 commits,
+141 files. Nothing else is deployed: no Vercel import, no domain, no env vars set.
+
+Before pushing: `gitleaks git` over the full history found nothing across 11 commits, and
+no tracked file matched a credential shape. `gitleaks dir` reports 40 findings, every one
+inside `.next/`, `.next-prod/`, `.env.local` or `env.local` — all gitignored, none tracked.
+Build output contains real secrets, which is why it must never be committed.
+
+### The first CI run went red, and it was right to
+
+**The contact endpoint was unreachable.** `GET /api/contact` answered 404, not 405, and nine
+contact-api tests failed. The middleware matcher includes `/api` on purpose so API responses
+carry the security headers, but it also handed those paths to next-intl, and
+`localePrefix: 'as-needed'` rewrote `/api/contact` onto the default locale. No route handler
+lives at `/en/api/contact`, so the locale catch-all added in Phase 7 answered it. The form
+could not submit at all, in dev or in production.
+
+`middleware.ts` now skips the locale rewrite for `/api` paths and still stamps every
+security header on them. Verified in both a fresh dev server and a production build: GET
+405, POST 400 with field errors, and CSP, HSTS, nosniff, COOP, CORP, Referrer-Policy and
+Permissions-Policy all present on the API response. `tests/contact-api.spec.ts` gained a
+test asserting both halves together, so skipping the rewrite can never quietly mean
+skipping the headers.
+
+**Why Phase 7's "109 tests passing" missed it.** The dev Playwright config sets
+`reuseExistingServer` outside CI, and a dev server four hours older than the change served
+the whole suite. Every clean machine 404s. That claim was not trustworthy and the gate is
+now written down in CLAUDE.md.
+
+**`npm run test:prod` could not have been passing either.** Its config pointed at port 3900
+while `start:prod` serves 3700, and it had no `webServer` block, so it had nothing to
+connect to. It now starts its own server on 3700 with `reuseExistingServer: false`, so it
+always tests the current `.next-prod` and a busy port fails loudly instead of passing
+against a stale build. Timeout raised to 90s: the mobile hero needs 24s alone, which left
+no margin under the 30s default.
+
+**The gitleaks CI job failed without finding anything.** gitleaks-action scans only the
+pushed range, built as `<first>^..<last>`. A first push includes the root commit, whose
+parent does not exist, so git errored, the action scanned ~0 bytes and exited 1 anyway. It
+is replaced by a direct `gitleaks git` over the full history, pinned to 8.30.1 and verified
+by sha256, which is what the job always claimed to do.
+
+### Verified after the fixes
+
+Full dev suite on a fresh server, lint, typecheck, format:check, i18n:check, audit:ci,
+build:prod and all 12 `test:prod` tests. Note that 19 dev tests fail on this machine at
+`--workers=2` and pass serially: the WebGL globe tests take 13 to 19s each and starve each
+other locally. CI runs the same two workers on a clean runner and passed all of them.
+
+### Still not done
+
+Vercel import, env vars, domain, a live form test, securityheaders.com and Lighthouse on the
+real URL. Still blocked on the Turnstile keys and the corrected CV.
+
+`core.hooksPath` is local git config and does not travel with a clone. A fresh checkout needs
+`git config core.hooksPath .githooks` or the gitleaks pre-commit hook silently does nothing.
+
+`/[locale]/styleguide` builds and will be publicly reachable on the deployed site.

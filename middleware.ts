@@ -1,5 +1,5 @@
 import createMiddleware from 'next-intl/middleware';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { routing } from './i18n/routing';
 import {
   contentSecurityPolicy,
@@ -31,7 +31,21 @@ export default function middleware(request: NextRequest) {
   requestHeaders.set('x-nonce', nonce);
   requestHeaders.set('content-security-policy', csp);
 
-  const response = handleIntl(new NextRequest(request, { headers: requestHeaders }));
+  /**
+   * The API is not localised, so it must never go through next-intl.
+   *
+   * `localePrefix: 'as-needed'` rewrites an unprefixed path onto the default
+   * locale, which turned `/api/contact` into `/en/api/contact`. No route
+   * handler lives there, so it fell through to the locale catch-all and every
+   * request to the contact endpoint answered 404: the form could not submit at
+   * all. API paths stay in the matcher so they still carry the headers set
+   * below, they just skip the locale rewrite.
+   */
+  const isApi = request.nextUrl.pathname.startsWith('/api');
+
+  const response = isApi
+    ? NextResponse.next({ request: { headers: requestHeaders } })
+    : handleIntl(new NextRequest(request, { headers: requestHeaders }));
 
   response.headers.set('content-security-policy', csp);
 
@@ -52,6 +66,7 @@ export default function middleware(request: NextRequest) {
 
 export const config = {
   // Skip Next internals and anything with a file extension. API routes stay in
-  // so they carry the headers too.
+  // so they carry the security headers too; middleware() skips only the locale
+  // rewrite for them.
   matcher: ['/((?!_next|_vercel|.*\\..*).*)'],
 };

@@ -115,3 +115,27 @@ test('sends a real email', async ({ request }) => {
   expect(res.status()).toBe(200);
   expect((await res.json()).ok).toBe(true);
 });
+
+/**
+ * The API must not pass through next-intl.
+ *
+ * `localePrefix: 'as-needed'` rewrote `/api/contact` onto the default locale,
+ * where no route handler exists. It fell through to the locale catch-all added
+ * in Phase 7, so the endpoint answered 404 with an HTML error page and the form
+ * could not submit at all. The middleware still has to stamp the security
+ * headers onto API responses, so both halves are asserted together: skipping
+ * the locale rewrite must not mean skipping the headers.
+ */
+test('the API skips the locale rewrite but keeps the security headers', async ({ request }) => {
+  const res = await request.get('/api/contact', { failOnStatusCode: false });
+  const headers = res.headers();
+
+  // JSON from the route handler, not Next's HTML 404 page.
+  expect(res.status()).toBe(405);
+  expect(headers['content-type']).toContain('application/json');
+  expect((await res.json()).code).toBe('method_not_allowed');
+
+  expect(headers['content-security-policy']).toContain("'strict-dynamic'");
+  expect(headers['x-content-type-options']).toBe('nosniff');
+  expect(headers['referrer-policy']).toBe('strict-origin-when-cross-origin');
+});
