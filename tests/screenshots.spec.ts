@@ -41,6 +41,11 @@ const SECTIONS = [
   'contact',
 ];
 
+// Eight sequential captures with a settle between each. It fits the default
+// 30s alone but not under parallel load, where it was failing on time rather
+// than on anything being wrong.
+test.setTimeout(90_000);
+
 test('home, section by section', async ({ page }, testInfo) => {
   await page.goto('/');
   await settle(page);

@@ -7,6 +7,7 @@ import { Footer } from '@/components/layout/Footer';
 import { Navbar } from '@/components/layout/Navbar';
 import { ScrollProgress } from '@/components/layout/ScrollProgress';
 import { LanguageHint } from '@/components/layout/LanguageHint';
+import { PersonSchema } from '@/components/layout/PersonSchema';
 import { Starfield } from '@/components/layout/Starfield';
 import { BackToTop } from '@/components/layout/BackToTop';
 import { routing } from '@/i18n/routing';
@@ -42,6 +43,14 @@ const notoDevanagari = Noto_Sans_Devanagari({
   subsets: ['devanagari', 'latin'],
   display: 'swap',
 });
+
+/**
+ * Rendered per request so the CSP nonce in the middleware reaches Next's own
+ * script tags. A statically prerendered shell is built before any request
+ * exists, so it cannot carry one, and every chunk gets refused under
+ * `strict-dynamic`. See the note in next.config.ts.
+ */
+export const dynamic = 'force-dynamic';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -91,6 +100,7 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   const t = await getTranslations({ locale, namespace: 'nav' });
+  const tAbout = await getTranslations({ locale, namespace: 'about' });
 
   return (
     <html
@@ -103,6 +113,8 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col">
+        <PersonSchema jobTitle={tAbout('card.role')} />
+
         <NextIntlClientProvider>
           <div aria-hidden className="page-backdrop">
             <Starfield />

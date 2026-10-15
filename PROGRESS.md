@@ -4,7 +4,7 @@ Updated at the end of every phase so a new session can resume. Last update: 14 O
 
 ## Current state
 
-**Phase 6 (Languages) — complete. Waiting for Ishaan's OK to start Phase 7.**
+**Phase 7 (Hardening and polish) — complete. Waiting for Ishaan's OK to start Phase 8.**
 
 ### Incident: the site looked empty in Ishaan's browser
 
@@ -580,6 +580,97 @@ passed, 3 skipped**, including 13 locale tests. `npm run test:prod` clean on the
 build, and all four locales verified serving from it with the right `lang`, hreflang and
 `og:locale`.
 
+
+## Phase 7 — done
+
+### Security headers and CSP
+
+Set in `middleware.ts` on every route, including the API. Nonce-based CSP with
+`strict-dynamic`, and **no `unsafe-inline` or `unsafe-eval` in `script-src` in production**.
+Plus `object-src 'none'`, `base-uri 'self'`, `form-action 'self'`, `frame-ancestors 'none'`,
+HSTS for two years, `nosniff`, `strict-origin-when-cross-origin`, both Cross-Origin
+policies at `same-origin`, and a Permissions-Policy that switches off everything unused.
+
+HSTS only adds `preload` off a vercel.app host, because submitting a shared Vercel subdomain
+to the preload list is not ours to do.
+
+**The architectural decision worth knowing about.** `cacheComponents` and
+`partialPrefetching` were removed. They prerender a static shell at build time, and a
+build-time shell cannot carry a per-request nonce, so in production every one of Next's own
+chunks was refused: "'strict-dynamic' is present, so host-based allowlisting is disabled".
+The only way to keep static prerendering would have been `script-src 'unsafe-inline'`, which
+is exactly what the /security page says this site does not do.
+
+Pages render per request instead. Measured: TTFB 20ms to 100ms locally, home LCP 1.8s,
+detail pages under 750ms, **CLS 0.0000**. The brief anticipated this with "nonce-based *if
+it works cleanly with the App Router*"; it does not, with static rendering, so the tradeoff
+was taken deliberately rather than silently.
+
+### Everything else in section 10 and 11
+
+`security.txt` at `/.well-known/` per RFC 9116, with a one-year Expires. `/security`, the
+page the footer has linked to since Phase 1 and which 404'd until now, in all four locales.
+`robots.txt` and a `sitemap.xml` covering every page in every locale with hreflang
+alternates. Per-locale OG images generated with next/og. JSON-LD Person. A localised 404,
+reached through a catch-all inside `[locale]` so unmatched URLs keep the navbar and footer
+instead of falling to Next's bare default.
+
+The JSON-LD block deliberately carries **no nonce**: `application/ld+json` is data, never
+executed, so `script-src` does not apply, and reading the nonce would mean calling
+`headers()` in the layout.
+
+### CI
+
+`.github/workflows/ci.yml` runs lint, typecheck, format, i18n:check, audit and build on
+every push and pull request, with gitleaks over the full history in its own job and the
+Playwright suite after. **Every action is pinned to a commit SHA**, not a tag. Dependabot
+proposes npm and action updates weekly.
+
+### Accessibility
+
+`tests/a11y.spec.ts` asserts rather than assumes: the skip link is first in the tab order,
+every image has an alt attribute, the globe is hidden from assistive technology, every
+interactive element paints a focus ring, the certificate viewer and mobile menu trap focus
+and close on Esc, form errors sit in an aria-live region, and headings never skip a level.
+
+That last one caught a real defect: the hero cards were `h3` directly under the `h1`. They
+are `h2` now, via a `headingLevel` prop on GlassCard.
+
+### The regression that fix caused, and what it exposed
+
+Ishaan reported the French hero cards overlapping with their text cut off. Two faults, one
+of them mine from this phase.
+
+**Base styles in `globals.css` were unlayered.** Unlayered CSS beats anything inside a
+layer, so a bare `h2 { font-size: clamp(2rem, 4vw, 3rem) }` silently overrode Tailwind's
+`text-[15px]` on every heading that carried it. The project cards had been rendering at 20px
+instead of 15px **since Phase 1** and nobody noticed; when the hero cards became `h2` for the
+heading-order fix they jumped to **48px**, grew tall enough to collide, and long French words
+were clipped by the card's own `overflow-hidden`. The base block now lives in `@layer base`.
+
+**The floating cards sat at fixed offsets** measured against English: `-top-[86px]` and
+`top-[186px]`. French runs longer, so the top card grew past the gap. Each side is one flex
+column with a gap now, which cannot overlap whatever the language.
+
+Measured before the fix: up to **95px of overlap** in the right column at every desktop
+width in French. After: zero overlap, zero clipping, nothing off screen, across en, fr, es
+and hi at 1024, 1280, 1440 and 1920.
+
+`tests/layout.spec.ts` guards both, and asserts directly that a card title carrying
+`text-[15px]` actually computes to 15px.
+
+**Why the existing tests missed it:** the visibility suite only checks opacity, the overflow
+check measures `document.scrollWidth` and the cards were clipped *inside* their own box
+rather than pushing the document wide, and I reviewed the Phase 7 screenshots in English
+only after changing the heading level.
+
+### Gates
+
+lint, typecheck, format, build, `audit:ci` and `i18n:check` pass. Playwright: **109 passed**
+across layout, a11y, security, smoke, visibility, locales, contact-api and screenshots.
+`npm run test:prod` passes on the production build with zero console errors and no CSP
+violations.
+
 ## Decisions taken (section 16, answered 14 Oct 2026)
 
 | # | Question | Answer |
@@ -701,16 +792,29 @@ a recruiter is probably the per-credential count with the Google program expanda
 
 ## Next
 
-**Phase 7 — Hardening and polish.** Security headers and CSP, `security.txt`, the "How this
-site is secured" page the footer already links to, SEO, OG images, `sitemap.xml`, the 404
-page, an accessibility pass, a performance pass, the CI workflow, and Playwright smoke tests.
+**Phase 8 — Deploy.** Push to GitHub, import to Vercel, set the environment variables,
+connect the domain, test the form in production, run securityheaders.com and Lighthouse
+against the live URL, and write README.md.
 
-Carry in:
+Ishaan handles GitHub and Vercel auth himself. Nothing has been pushed anywhere.
 
-- The footer links to `/security`, which **does not exist yet**. That page is Phase 7.
-- The CSP has to let the globe, next/font, Turnstile and the form all keep working. Test it.
-- OG images are one per locale, 1200x630, generated with next/og.
-- `sitemap.xml` needs all four locales and every project page.
+### Blocking the deploy
+
+1. **Turnstile.** Both keys are still empty. Production fails closed, so the live contact
+   form **cannot send** until the widget exists. Create it, add the production hostname to
+   its allowed list, and set both keys in Vercel.
+2. **The corrected CV.** `public/cv/Ishaan_Saxena_CV_FR.pdf` is still the January 2027
+   version, shipping on his instruction. Replace it and update `sizeLabel` in
+   `content/cv.ts`.
+
+### Worth doing at deploy time
+
+- `NEXT_PUBLIC_SITE_URL` should be set in Vercel. It defaults to
+  `https://ishaansaxena.vercel.app`, which is right for now but is baked into canonical
+  URLs, the sitemap and security.txt.
+- Real Lighthouse numbers come from the deployed site. Local figures: LCP 1.8s home, under
+  750ms on detail pages, CLS 0.
+- securityheaders.com needs the live URL, and the /security page already links to the scan.
 
 ### Still waiting on Ishaan
 

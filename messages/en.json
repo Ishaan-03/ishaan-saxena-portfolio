@@ -501,5 +501,75 @@
       "timezone": "Central European Time",
       "timezoneLabel": "Time zone"
     }
+  },
+  "notFound": {
+    "badge": "Lost",
+    "title": "This page doesn't exist",
+    "body": "The link may be old, or I may have moved something. Everything is one scroll away from the home page.",
+    "home": "Back home",
+    "projects": "See the projects"
+  },
+  "security": {
+    "back": "Back to the site",
+    "badge": "Security",
+    "title": "How this site is secured",
+    "lead": "I apply for cloud security roles, so it would be odd to hand you a site that ignores its own advice. Here is what is actually configured, and how to check it yourself.",
+    "groups": {
+      "headers": {
+        "title": "Headers and Content Security Policy",
+        "lead": "Set in middleware, on every route, including the API.",
+        "items": [
+          "A nonce-based Content-Security-Policy with strict-dynamic. No unsafe-inline for scripts anywhere in production.",
+          "object-src 'none', base-uri 'self' and form-action 'self', so injected content cannot load plugins, rewrite relative URLs or repoint the contact form.",
+          "frame-ancestors 'none' plus X-Frame-Options: DENY, so the site cannot be framed.",
+          "Strict-Transport-Security for two years, including subdomains.",
+          "X-Content-Type-Options: nosniff and Referrer-Policy: strict-origin-when-cross-origin.",
+          "Cross-Origin-Opener-Policy and Cross-Origin-Resource-Policy both same-origin.",
+          "Permissions-Policy switches off camera, microphone, geolocation, USB, payment and the rest, because none of them are used."
+        ]
+      },
+      "privacy": {
+        "title": "Privacy",
+        "lead": "There is nothing to consent to, which is why there is no cookie banner.",
+        "items": [
+          "No tracking cookies and no analytics. The only cookie is NEXT_LOCALE, which remembers the language you picked.",
+          "The only third-party script is Cloudflare Turnstile, the spam check on the contact form.",
+          "Messages from the form are emailed to me and stored nowhere. There is no database on this site.",
+          "My email address is never written in the HTML. It is assembled in your browser when you ask for it, which keeps it away from scrapers."
+        ]
+      },
+      "repo": {
+        "title": "The repository",
+        "lead": "The same checks I put on my AWS projects, applied to this one.",
+        "items": [
+          "gitleaks runs before every commit and again in CI over the full history.",
+          "Every push and pull request runs lint, typecheck, translation checks, a production build and npm audit.",
+          "GitHub Actions are pinned to commit SHAs, so a moved tag cannot change what runs.",
+          "Dependabot proposes dependency updates weekly.",
+          "No secret has ever been committed. Environment variables only, and .env files are ignored."
+        ]
+      },
+      "contact": {
+        "title": "Reporting something",
+        "lead": "If you find a problem here, I would genuinely like to know.",
+        "items": [
+          "There is a security.txt at /.well-known/security.txt, following RFC 9116.",
+          "The contact form reaches me fastest, and my email is on it too.",
+          "This is a personal site with no bug bounty, but every report gets read and answered."
+        ]
+      }
+    },
+    "verify": {
+      "title": "Check it yourself",
+      "body": "None of the above is worth much unless you can verify it. These all work from outside.",
+      "headers": "Scan the headers",
+      "securityTxt": "Read security.txt",
+      "source": "Read the source"
+    }
+  },
+  "og": {
+    "available": "Open to internship · April 2027",
+    "title": "Cloud Security & DevSecOps",
+    "line": "MSc Cybersecurity at ECE Paris. Five AWS security builds, each one broken on purpose."
   }
 }

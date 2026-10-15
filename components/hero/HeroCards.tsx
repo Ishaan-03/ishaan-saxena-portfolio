@@ -69,6 +69,7 @@ export function HeroCards({ variant }: { variant: 'floating' | 'grid' }) {
               tone={card.tone}
               title={t(`${card.key}.title`)}
               href={card.href}
+              headingLevel="h2"
             >
               {t(`${card.key}.body`)}
             </GlassCard>
@@ -78,17 +79,29 @@ export function HeroCards({ variant }: { variant: 'floating' | 'grid' }) {
     );
   }
 
-  return (
-    <>
-      <div className="pointer-events-none absolute inset-0 hidden lg:block">
-        {CARDS.map((card, index) => (
+  /**
+   * Each side is one flex column rather than two absolutely positioned cards.
+   *
+   * The cards used to sit at fixed offsets measured against the English text.
+   * French runs longer, the top card grew past the gap, and the two overlapped
+   * by up to 95px. A column with a gap cannot do that whatever the language.
+   * The right column starts lower to keep the staggered look from the
+   * reference.
+   */
+  const column = (side: 'left' | 'right') => (
+    <div
+      className={
+        'pointer-events-none absolute flex w-[228px] flex-col gap-6 xl:w-[244px] ' +
+        (side === 'left' ? 'left-2 -top-[86px] xl:left-0' : 'right-2 -top-[20px] xl:right-0')
+      }
+    >
+      {CARDS.filter((card) => card.side === side).map((card) => {
+        const index = CARDS.indexOf(card);
+
+        return (
           <div
             key={card.key}
-            className={
-              'animate-rise pointer-events-auto absolute w-[228px] xl:w-[244px] ' +
-              (card.side === 'left' ? 'left-2 xl:left-0 ' : 'right-2 xl:right-0 ') +
-              (card.row === 'top' ? '-top-[86px]' : 'top-[186px]')
-            }
+            className="animate-rise pointer-events-auto"
             style={{ animationDelay: `${300 + index * 60}ms` }}
           >
             <motion.div
@@ -105,13 +118,21 @@ export function HeroCards({ variant }: { variant: 'floating' | 'grid' }) {
                 tone={card.tone}
                 title={t(`${card.key}.title`)}
                 href={card.href}
+                headingLevel="h2"
               >
                 {t(`${card.key}.body`)}
               </GlassCard>
             </motion.div>
           </div>
-        ))}
-      </div>
-    </>
+        );
+      })}
+    </div>
+  );
+
+  return (
+    <div className="pointer-events-none absolute inset-0 hidden lg:block">
+      {column('left')}
+      {column('right')}
+    </div>
   );
 }

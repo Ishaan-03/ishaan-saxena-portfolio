@@ -7,7 +7,7 @@ export default defineConfig({
   // Motion stays ON here: reduced motion renders every final state
   // immediately, which would hide content stuck waiting on an animation.
   use: {
-    baseURL: 'http://localhost:3700',
+    baseURL: 'http://localhost:3900',
   },
   projects: [
     {

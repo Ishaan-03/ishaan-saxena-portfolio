@@ -99,7 +99,16 @@ export function Hero() {
             so it never covers the two buttons. From sm up it tucks in behind,
             the way the reference does.
           */}
-          <div className="pointer-events-none absolute left-1/2 aspect-square w-[min(84vw,620px)] -translate-x-1/2 top-[4px] sm:-top-[120px] sm:w-[min(80vw,720px)] lg:-top-[170px] lg:w-[min(64vw,820px)]">
+          {/*
+            Section 11: the globe is decoration. The hero text carries every
+            fact it illustrates, so the canvas, its markers and its tooltips
+            are hidden from assistive technology rather than read out as a
+            wall of unlabelled graphics.
+          */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute left-1/2 aspect-square w-[min(84vw,620px)] -translate-x-1/2 top-[4px] sm:-top-[120px] sm:w-[min(80vw,720px)] lg:-top-[170px] lg:w-[min(64vw,820px)]"
+          >
             <div aria-hidden className="globe-glow" />
 
             <div className="pointer-events-auto absolute inset-0">

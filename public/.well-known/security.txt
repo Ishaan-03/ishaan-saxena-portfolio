@@ -1,0 +1,11 @@
+# Security contact for ishaansaxena.vercel.app
+# https://www.rfc-editor.org/rfc/rfc9116
+
+Contact: https://ishaansaxena.vercel.app/#contact
+Contact: mailto:saxenaishaan03@gmail.com
+Expires: 2027-10-14T22:33:53Z
+Preferred-Languages: en, fr
+Canonical: https://ishaansaxena.vercel.app/.well-known/security.txt
+
+# This is a personal portfolio. There is no bug bounty and no reward, but a
+# report will be read and answered. The contact form is the fastest route.

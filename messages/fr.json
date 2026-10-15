@@ -501,5 +501,75 @@
       "timezone": "Heure d'Europe centrale",
       "timezoneLabel": "Fuseau horaire"
     }
+  },
+  "notFound": {
+    "badge": "Perdu",
+    "title": "Cette page n'existe pas",
+    "body": "Le lien est peut-être ancien, ou j'ai déplacé quelque chose. Tout se trouve à un défilement de la page d'accueil.",
+    "home": "Retour à l'accueil",
+    "projects": "Voir les projets"
+  },
+  "security": {
+    "back": "Retour au site",
+    "badge": "Sécurité",
+    "title": "Comment ce site est sécurisé",
+    "lead": "Je postule à des postes en sécurité cloud, donc ce serait étrange de vous présenter un site qui ignore ses propres conseils. Voici ce qui est réellement configuré, et comment le vérifier vous-même.",
+    "groups": {
+      "headers": {
+        "title": "En-têtes et Content Security Policy",
+        "lead": "Définis dans le middleware, sur chaque route, y compris l'API.",
+        "items": [
+          "Une Content-Security-Policy basée sur un nonce avec strict-dynamic. Aucun unsafe-inline pour les scripts en production.",
+          "object-src 'none', base-uri 'self' et form-action 'self', pour qu'un contenu injecté ne puisse ni charger de plugin, ni réécrire les URL relatives, ni rediriger le formulaire.",
+          "frame-ancestors 'none' et X-Frame-Options: DENY, pour que le site ne puisse pas être mis dans une iframe.",
+          "Strict-Transport-Security pendant deux ans, sous-domaines inclus.",
+          "X-Content-Type-Options: nosniff et Referrer-Policy: strict-origin-when-cross-origin.",
+          "Cross-Origin-Opener-Policy et Cross-Origin-Resource-Policy en same-origin.",
+          "Permissions-Policy désactive caméra, micro, géolocalisation, USB, paiement et le reste, parce qu'aucun n'est utilisé."
+        ]
+      },
+      "privacy": {
+        "title": "Vie privée",
+        "lead": "Il n'y a rien à accepter, et c'est pour cela qu'il n'y a pas de bandeau cookies.",
+        "items": [
+          "Aucun cookie de suivi et aucune analytique. Le seul cookie est NEXT_LOCALE, qui retient la langue choisie.",
+          "Le seul script tiers est Cloudflare Turnstile, la protection anti-spam du formulaire.",
+          "Les messages du formulaire me sont envoyés par e-mail et ne sont stockés nulle part. Ce site n'a pas de base de données.",
+          "Mon adresse e-mail n'est jamais écrite dans le HTML. Elle est assemblée dans votre navigateur quand vous la demandez, ce qui la met hors de portée des robots."
+        ]
+      },
+      "repo": {
+        "title": "Le dépôt",
+        "lead": "Les mêmes contrôles que sur mes projets AWS, appliqués à celui-ci.",
+        "items": [
+          "gitleaks s'exécute avant chaque commit, puis en CI sur tout l'historique.",
+          "Chaque push et chaque pull request lance lint, typecheck, vérification des traductions, build de production et npm audit.",
+          "Les GitHub Actions sont épinglées à des commits SHA, pour qu'un tag déplacé ne change pas ce qui s'exécute.",
+          "Dependabot propose les mises à jour des dépendances chaque semaine.",
+          "Aucun secret n'a jamais été commité. Uniquement des variables d'environnement, et les fichiers .env sont ignorés."
+        ]
+      },
+      "contact": {
+        "title": "Signaler quelque chose",
+        "lead": "Si vous trouvez un problème ici, je veux vraiment le savoir.",
+        "items": [
+          "Un security.txt est disponible sur /.well-known/security.txt, conformément à la RFC 9116.",
+          "Le formulaire de contact est le plus rapide, et mon e-mail y figure aussi.",
+          "C'est un site personnel sans bug bounty, mais chaque signalement est lu et reçoit une réponse."
+        ]
+      }
+    },
+    "verify": {
+      "title": "Vérifiez vous-même",
+      "body": "Rien de tout cela ne vaut grand-chose si vous ne pouvez pas le vérifier. Tout ceci fonctionne depuis l'extérieur.",
+      "headers": "Analyser les en-têtes",
+      "securityTxt": "Lire security.txt",
+      "source": "Lire le code source"
+    }
+  },
+  "og": {
+    "available": "Disponible en stage · avril 2027",
+    "title": "Sécurité cloud & DevSecOps",
+    "line": "MSc Cybersécurité à l'ECE Paris. Cinq projets de sécurité AWS, chacun cassé volontairement."
   }
 }

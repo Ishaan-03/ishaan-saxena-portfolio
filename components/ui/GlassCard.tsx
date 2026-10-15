@@ -19,6 +19,14 @@ type Props = {
    * four hero cards rather than making them all identical.
    */
   tone?: 'lit' | 'muted';
+  /**
+   * The heading level this card's title should use.
+   *
+   * Defaults to h3, which is right inside a section that already has an h2.
+   * The hero has no h2 above its cards, so they pass 'h2' and the outline stops
+   * jumping h1 to h3.
+   */
+  headingLevel?: 'h2' | 'h3';
 };
 
 /**
@@ -39,6 +47,7 @@ export function GlassCard({
   className = '',
   footer,
   tone = 'lit',
+  headingLevel: Heading = 'h3',
 }: Props) {
   const inner = (
     <>
@@ -70,7 +79,9 @@ export function GlassCard({
           </span>
         )}
 
-        <h3 className="text-[15px] font-semibold tracking-[-0.01em] text-[var(--text)]">{title}</h3>
+        <Heading className="text-[15px] font-semibold tracking-[-0.01em] text-[var(--text)]">
+          {title}
+        </Heading>
 
         {children && (
           <div className="mt-2 text-[13px] leading-relaxed text-[var(--text-muted)]">

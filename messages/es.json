@@ -501,5 +501,75 @@
       "timezone": "Hora de Europa central",
       "timezoneLabel": "Zona horaria"
     }
+  },
+  "notFound": {
+    "badge": "Perdido",
+    "title": "Esta página no existe",
+    "body": "Puede que el enlace sea antiguo, o que yo haya movido algo. Todo está a un scroll de la página de inicio.",
+    "home": "Volver al inicio",
+    "projects": "Ver los proyectos"
+  },
+  "security": {
+    "back": "Volver al sitio",
+    "badge": "Seguridad",
+    "title": "Cómo está protegido este sitio",
+    "lead": "Me presento a puestos de seguridad cloud, así que sería raro enseñarle un sitio que ignora sus propios consejos. Esto es lo que está configurado de verdad, y cómo comprobarlo usted mismo.",
+    "groups": {
+      "headers": {
+        "title": "Cabeceras y Content Security Policy",
+        "lead": "Definidas en el middleware, en todas las rutas, incluida la API.",
+        "items": [
+          "Una Content-Security-Policy basada en nonce con strict-dynamic. Ningún unsafe-inline para scripts en producción.",
+          "object-src 'none', base-uri 'self' y form-action 'self', para que el contenido inyectado no pueda cargar plugins, reescribir URL relativas ni redirigir el formulario.",
+          "frame-ancestors 'none' y X-Frame-Options: DENY, para que el sitio no pueda ponerse en un iframe.",
+          "Strict-Transport-Security durante dos años, subdominios incluidos.",
+          "X-Content-Type-Options: nosniff y Referrer-Policy: strict-origin-when-cross-origin.",
+          "Cross-Origin-Opener-Policy y Cross-Origin-Resource-Policy en same-origin.",
+          "Permissions-Policy desactiva cámara, micrófono, geolocalización, USB, pago y el resto, porque no se usa ninguno."
+        ]
+      },
+      "privacy": {
+        "title": "Privacidad",
+        "lead": "No hay nada que aceptar, y por eso no hay aviso de cookies.",
+        "items": [
+          "Sin cookies de seguimiento y sin analítica. La única cookie es NEXT_LOCALE, que recuerda el idioma elegido.",
+          "El único script de terceros es Cloudflare Turnstile, la protección antispam del formulario.",
+          "Los mensajes del formulario me llegan por correo y no se guardan en ningún sitio. Esta web no tiene base de datos.",
+          "Mi dirección de correo nunca aparece en el HTML. Se compone en su navegador cuando la pide, lo que la mantiene fuera del alcance de los rastreadores."
+        ]
+      },
+      "repo": {
+        "title": "El repositorio",
+        "lead": "Los mismos controles que pongo en mis proyectos de AWS, aplicados a este.",
+        "items": [
+          "gitleaks se ejecuta antes de cada commit y otra vez en CI sobre todo el historial.",
+          "Cada push y cada pull request ejecuta lint, typecheck, comprobación de traducciones, build de producción y npm audit.",
+          "Las GitHub Actions están fijadas a commits SHA, para que una etiqueta movida no cambie lo que se ejecuta.",
+          "Dependabot propone actualizaciones de dependencias cada semana.",
+          "Nunca se ha subido ningún secreto. Solo variables de entorno, y los ficheros .env están ignorados."
+        ]
+      },
+      "contact": {
+        "title": "Informar de algo",
+        "lead": "Si encuentra un problema aquí, de verdad quiero saberlo.",
+        "items": [
+          "Hay un security.txt en /.well-known/security.txt, siguiendo la RFC 9116.",
+          "El formulario de contacto es lo más rápido, y mi correo también está ahí.",
+          "Es un sitio personal sin bug bounty, pero todos los informes se leen y se responden."
+        ]
+      }
+    },
+    "verify": {
+      "title": "Compruébelo usted mismo",
+      "body": "Nada de lo anterior vale mucho si no puede verificarlo. Todo esto funciona desde fuera.",
+      "headers": "Analizar las cabeceras",
+      "securityTxt": "Leer security.txt",
+      "source": "Leer el código"
+    }
+  },
+  "og": {
+    "available": "Disponible para prácticas · abril de 2027",
+    "title": "Seguridad cloud y DevSecOps",
+    "line": "MSc en Ciberseguridad en ECE Paris. Cinco proyectos de seguridad AWS, cada uno roto a propósito."
   }
 }

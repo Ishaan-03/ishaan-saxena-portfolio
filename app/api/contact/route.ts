@@ -13,11 +13,8 @@ import { contactSchema, fieldErrors, MAX_BODY_BYTES } from '@/lib/validation';
  * nothing that describes the inside of this route.
  */
 
-/**
- * No `export const runtime`: Next 16 rejects that alongside `cacheComponents`,
- * and route handlers already run on Node unless edge is opted into, which is
- * what the Resend SDK needs.
- */
+// Route handlers run on Node unless edge is opted into, which is what the
+// Resend SDK needs, so no runtime export is required.
 
 type Failure = 'too_large' | 'invalid' | 'challenge_failed' | 'send_failed' | 'rate_limited';
 

@@ -501,5 +501,75 @@
       "timezone": "Central European Time",
       "timezoneLabel": "समय क्षेत्र"
     }
+  },
+  "notFound": {
+    "badge": "रास्ता भटक गए",
+    "title": "यह पेज मौजूद नहीं है",
+    "body": "शायद link पुराना है, या मैंने कुछ हटा दिया है। सब कुछ होम पेज से एक scroll की दूरी पर है।",
+    "home": "होम पर वापस",
+    "projects": "प्रोजेक्ट देखें"
+  },
+  "security": {
+    "back": "साइट पर वापस",
+    "badge": "Security",
+    "title": "यह साइट कैसे सुरक्षित है",
+    "lead": "मैं cloud security की नौकरियों के लिए आवेदन करता हूँ, तो ऐसी साइट दिखाना अजीब होगा जो अपनी ही सलाह न माने। यहाँ वो सब है जो सच में सेट किया गया है, और आप उसे ख़ुद कैसे जाँच सकते हैं।",
+    "groups": {
+      "headers": {
+        "title": "Headers और Content Security Policy",
+        "lead": "Middleware में सेट, हर route पर, API समेत।",
+        "items": [
+          "Strict-dynamic के साथ nonce पर आधारित Content-Security-Policy। Production में scripts के लिए कहीं unsafe-inline नहीं।",
+          "object-src 'none', base-uri 'self' और form-action 'self', ताकि कोई injected content न plugin लोड कर सके, न relative URL बदल सके, न फ़ॉर्म का रुख़ मोड़ सके।",
+          "frame-ancestors 'none' और X-Frame-Options: DENY, ताकि साइट को iframe में न डाला जा सके।",
+          "दो साल के लिए Strict-Transport-Security, subdomains समेत।",
+          "X-Content-Type-Options: nosniff और Referrer-Policy: strict-origin-when-cross-origin।",
+          "Cross-Origin-Opener-Policy और Cross-Origin-Resource-Policy, दोनों same-origin।",
+          "Permissions-Policy camera, microphone, geolocation, USB, payment वग़ैरह बंद कर देती है, क्योंकि इनमें से कोई इस्तेमाल ही नहीं होता।"
+        ]
+      },
+      "privacy": {
+        "title": "निजता",
+        "lead": "यहाँ मानने के लिए कुछ है ही नहीं, इसीलिए कोई cookie banner नहीं है।",
+        "items": [
+          "कोई tracking cookie नहीं और कोई analytics नहीं। सिर्फ़ एक cookie है, NEXT_LOCALE, जो आपकी चुनी भाषा याद रखती है।",
+          "सिर्फ़ एक third-party script है, Cloudflare Turnstile, जो फ़ॉर्म पर spam रोकती है।",
+          "फ़ॉर्म के मैसेज मुझे email से आते हैं और कहीं सेव नहीं होते। इस साइट पर कोई database है ही नहीं।",
+          "मेरा email पता HTML में कभी नहीं लिखा होता। माँगने पर वो आपके browser में जुड़ता है, जिससे वो scrapers की पहुँच से बाहर रहता है।"
+        ]
+      },
+      "repo": {
+        "title": "Repository",
+        "lead": "वही checks जो मैं अपने AWS प्रोजेक्ट पर लगाता हूँ, इस पर भी लगे हैं।",
+        "items": [
+          "हर commit से पहले gitleaks चलता है, और CI में पूरे history पर दोबारा।",
+          "हर push और pull request पर lint, typecheck, translation check, production build और npm audit चलते हैं।",
+          "GitHub Actions commit SHA पर pin हैं, ताकि कोई tag खिसकने से चलने वाला code न बदल जाए।",
+          "Dependabot हर हफ़्ते dependency updates सुझाता है।",
+          "कोई secret कभी commit नहीं हुआ। सिर्फ़ environment variables, और .env फ़ाइलें ignore हैं।"
+        ]
+      },
+      "contact": {
+        "title": "कुछ बताना हो तो",
+        "lead": "अगर आपको यहाँ कोई दिक़्क़त मिले, तो मैं सचमुच जानना चाहूँगा।",
+        "items": [
+          "RFC 9116 के मुताबिक़ /.well-known/security.txt पर एक security.txt मौजूद है।",
+          "Contact फ़ॉर्म सबसे तेज़ रास्ता है, और मेरा email भी वहीं है।",
+          "यह एक निजी साइट है, कोई bug bounty नहीं, पर हर रिपोर्ट पढ़ी जाती है और जवाब मिलता है।"
+        ]
+      }
+    },
+    "verify": {
+      "title": "ख़ुद जाँचिए",
+      "body": "ऊपर लिखी किसी बात की क़ीमत तब तक नहीं जब तक आप उसे जाँच न सकें। ये सब बाहर से काम करते हैं।",
+      "headers": "Headers स्कैन करें",
+      "securityTxt": "security.txt पढ़ें",
+      "source": "Source code पढ़ें"
+    }
+  },
+  "og": {
+    "available": "Internship के लिए उपलब्ध · अप्रैल 2027",
+    "title": "Cloud Security और DevSecOps",
+    "line": "ECE Paris में MSc Cybersecurity। पाँच AWS security प्रोजेक्ट, हर एक जानबूझकर तोड़ा गया।"
   }
 }

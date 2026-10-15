@@ -43,21 +43,50 @@ export function ContactForm({ siteKey }: { siteKey?: string }) {
 
   const widgetRef = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | null>(null);
-  const [scriptReady, setScriptReady] = useState(false);
 
-  // Render the Turnstile widget once its script is in.
+  /**
+   * Render the widget once the Turnstile script has defined its global.
+   *
+   * This polls rather than relying on next/script's `onReady`. The script often
+   * finishes before React hydrates this component, and in that order the ready
+   * callback has already been and gone, so the widget never rendered and the
+   * form could not be submitted at all. Polling does not care about the order.
+   */
   useEffect(() => {
-    if (!scriptReady || !siteKey || !widgetRef.current || widgetId.current) return;
+    if (!siteKey) return;
 
-    widgetId.current =
-      window.turnstile?.render(widgetRef.current, {
+    let cancelled = false;
+
+    const render = () => {
+      if (cancelled || widgetId.current || !widgetRef.current) return true;
+      if (!window.turnstile) return false;
+
+      widgetId.current = window.turnstile.render(widgetRef.current, {
         sitekey: siteKey,
         theme: 'dark',
         callback: (value) => setToken(value),
         'expired-callback': () => setToken(null),
         'error-callback': () => setToken(null),
-      }) ?? null;
-  }, [scriptReady, siteKey]);
+      });
+      return true;
+    };
+
+    if (render()) return;
+
+    const timer = setInterval(() => {
+      if (render()) clearInterval(timer);
+    }, 120);
+
+    // Give up quietly after 15s. The submit button still refuses without a
+    // token, and the direct links are right there.
+    const stop = setTimeout(() => clearInterval(timer), 15_000);
+
+    return () => {
+      cancelled = true;
+      clearInterval(timer);
+      clearTimeout(stop);
+    };
+  }, [siteKey]);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -135,10 +164,7 @@ export function ContactForm({ siteKey }: { siteKey?: string }) {
   return (
     <form onSubmit={onSubmit} noValidate className="glass rounded-2xl p-6">
       {siteKey && (
-        <Script
-          src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
-          onReady={() => setScriptReady(true)}
-        />
+        <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" />
       )}
 
       <fieldset disabled={busy} className="space-y-4">
